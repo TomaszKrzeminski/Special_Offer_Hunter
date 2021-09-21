@@ -12,6 +12,7 @@ using Special_Offer_Hunter.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Special_Offer_Hunter.Models;
 
 namespace Special_Offer_Hunter
 {
@@ -28,16 +29,22 @@ namespace Special_Offer_Hunter
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseLazyLoadingProxies().UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")),
+         ServiceLifetime.Transient);
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddTransient<IRepository, Repository>();
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context,IRepository repository)
         {
             if (env.IsDevelopment())
             {
@@ -62,9 +69,17 @@ namespace Special_Offer_Hunter
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Panel}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+
+
+            SeedData data = new SeedData(context,repository);
+            data.EnsurePopulated();
+
+
+
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Special_Offer_Hunter.Models;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Special_Offer_Hunter.Data
 {
@@ -14,14 +15,17 @@ namespace Special_Offer_Hunter.Data
         {
         }
 
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+           
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
-         
+
             builder.Entity<Shop>()
             .HasOne<Location>(s => s.Location)
             .WithOne(ad => ad.Shop)
@@ -32,18 +36,27 @@ namespace Special_Offer_Hunter.Data
             .HasOne<Product_Code>(s => s.Product_Code)
             .WithOne(ad => ad.Product)
             .HasForeignKey<Product_Code>(ad => ad.ProductCodeId);
-        }
-        public DbSet<Shop> Shop { get; set; }
-        public DbSet<Product> Product { get; set; }
-        public DbSet<Location> Location { get; set; }
-        public DbSet<Shopping_Cart_Day> Shopping_Cart_Day { get; set; }
-        public DbSet<Shopping_Cart_Week> Shopping_Cart_Week { get; set; }
 
-        public DbSet<Product_Code> Product_Code { get; set; }      
-        public DbSet<Shop_Rank> Shop_Rank { get; set; }
-        public DbSet<Product_Rank> Product_Rank { get; set; }
-        public DbSet<Product_Comment> Product_Comment { get; set; }
-        public DbSet<Shop_Comment> Shop_Comment { get; set; }
+
+            builder.Entity<ProductCategory>().HasKey(sc => new { sc.ProductId, sc.CategoryId });
+
+
+        }
+        public DbSet<Shop> Shops { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Location> Locations { get; set; }
+
+        public DbSet<Product_Price> Product_Prices { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Shopping_Cart_Day> Shopping_Carts_Day { get; set; }
+        public DbSet<Shopping_Cart_Week> Shopping_Carts_Week { get; set; }
+
+        public DbSet<Product_Code> Product_Codes { get; set; }      
+        public DbSet<Shop_Rank> Shop_Ranks { get; set; }
+        public DbSet<Product_Rank> Product_Ranks { get; set; }
+        public DbSet<Product_Comment> Product_Comments { get; set; }
+        public DbSet<Shop_Comment> Shop_Comments { get; set; }
 
 
 
