@@ -3,6 +3,7 @@ using Special_Offer_Hunter.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Special_Offer_Hunter.Models
 {
@@ -23,6 +24,15 @@ namespace Special_Offer_Hunter.Models
 
 
 
+    }
+
+
+    public static class ExtensionForOffers
+    {
+        public static IQueryable<Product> WhereOnSale(this IQueryable<Shop> source)
+        {
+            return source.Where(x => x.Name == "xx").FirstOrDefault().Products.AsQueryable();
+        }
     }
 
     public class Repository : IRepository
@@ -128,11 +138,87 @@ namespace Special_Offer_Hunter.Models
             {
                 List<Shop> shops = context.Shops.ToList();
                 List<Product> list = new List<Product>();
+                //                string Name = "";
 
-                foreach (var s in shops)
-                {
-                    list = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Where(x => x.ShopId == s.ShopId).FirstOrDefault().Products.Where(x=>x.ProductCategory.Any(x=>x.Category.Name==offer.Category)).ToList();
-                }
+
+                //                static Expression<Func<Shop, bool>>
+                //              SearchShop(string Name)
+                //                {
+                //                    return (Shop s) => s.Name == Name;
+
+
+                //                }
+
+
+                //                static Expression<Func<Shop, bool>>
+                //              SearchShops(string Name)
+                //                {
+                //                    return (Shop s) => true;
+                //                }
+
+
+
+                //                Expression<Func<Shop, bool>> SearchShopX;
+
+
+
+
+
+                //                static Expression<Func<Product, bool>>
+                //SearchProductByCategory(string Category)
+                //                {
+                //                    return (Product c) => c.ProductCategory.Any(x => x.Category.Name == Category);
+                //                }
+
+                //                static Expression<Func<Product, bool>>
+                //SearchProductByCategoryAll(string Category)
+                //                {
+                //                    return (Product c) => true;
+                //                }
+
+
+                //                static Expression<Func<Product, bool>>
+                //SearchProductByProductName(string productName)
+                //                {
+                //                    return (Product c) => c.Name==productName;
+                //                }
+
+                //                static Expression<Func<Product, bool>>
+                //SearchProductByProductNameAll(string productName)
+                //                {
+                //                    return (Product c) => true;
+                //                }
+
+
+                //                static Expression<Func<Product, bool>>
+                //SearchProductByPriceHigher(double productPrice)
+                //                {
+                //                    return (Product c) => c.Product_Price.Price >productPrice;
+                //                }
+
+                //                static Expression<Func<Product, bool>>
+                //SearchProductByPriceLower(double productPrice)
+                //                {
+                //                    return (Product c) => c.Product_Price.Price < productPrice;
+                //                }
+
+                //                static Expression<Func<Product, bool>>
+                //SearchProductByPriceAll(double productPrice)
+                //                {
+                //                    return (Product c) => true;
+                //                }
+
+
+               
+
+
+                //List<Product> listOfProducts= context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Where(SearchShop("Tesco")).FirstOrDefault().Products.AsQueryable().Where(SearchProductByCategory("Przekąski")).Where(SearchProductByProductName(offer.ProductName)).Where(SearchProductByPriceAll(100)).ToList();
+
+                
+                    //list = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Where(SearchShop(Name)).FirstOrDefault().Products.Where(x=>x.ProductCategory.Any(x=>x.Category.Name==offer.Category)).ToList();
+                List<Product>   listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Where(offer.SearchShop).FirstOrDefault().Products.AsQueryable().Where(offer.SearchProductByCategory).Where(offer.SearchProductByProductName).Where(offer.SearchProductByPrice).ToList();
+                    list.AddRange(listProd);
+               
 
                 return list;
 

@@ -306,12 +306,12 @@ namespace Special_Offer_Hunter.Models
                       Product p1=   SeedProducts("Winterfresh Original Guma Do Ucia Bez Cukru 35 G");
                     SeedCode("4009900382250", "EAN13", "", "Winterfresh", "Winterfresh Original Guma Do Ucia Bez Cukru 35 G");
                     SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4009900382250");
-                        SeedAddProductToCategory(p1, "Kosmetyki");
+                        SeedAddProductToCategory(p1,"Przekąski" );
 
                         Product p2 = SeedProducts("Blend-a-Med 3D White Fresh Cool Water Wybielajca");
                     SeedCode("4015600620035", "EAN13", "", "Winterfresh", "Blend-a-Med 3D White Fresh Cool Water Wybielajca");
                     SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4015600620035");
-                        SeedAddProductToCategory(p2, "Przekąski");
+                        SeedAddProductToCategory(p2,"Kosmetyki" );
 
                         Product p3 = SeedProducts("Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)");
                     SeedCode("5906204007898", "EAN13", "", "Vitalsss plus", "Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)");
