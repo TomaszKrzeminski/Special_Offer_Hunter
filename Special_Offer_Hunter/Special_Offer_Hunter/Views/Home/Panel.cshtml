@@ -15,7 +15,7 @@
     </div>
     <div class="row block bg-light">
         <div class="col-lg-12">
-
+            @await Component.InvokeAsync("OffersInNeighborhoodComponent") 
         </div>
     </div>
     <div class="row block bg-secondary">
@@ -58,5 +58,102 @@
 
 
 </div>
+
+<div>
+    <form id="Coordinates" asp-action="ChangeCoordinates" asp-controller="Home">
+        <input type="hidden" id="Longitude" />
+        <input type="hidden" id="Latitude" />
+
+
+    </form>
+</div>
+
+
+@section Scripts {
+    <script>
+
+
+        $(document).ready(function () {
+
+
+//let latText = document.getElementById("Latitude");
+//    let longText = document.getElementById("Longitude");
+
+
+    function SetCoordinates()
+    {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let lat = position.coords.latitude;
+            let long = position.coords.longitude;
+
+           let x = lat.toFixed(2);
+           let y = long.toFixed(2);
+
+
+            //var form = $('#Coordinates');
+        //var x = $("#Latitude").val();
+        //var y = $("#Longitude").val();
+        //var token = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                url: '@Url.Action("ChangeCoordinates", "Home")',
+               type: "post",
+                data: {
+                    //__RequestVerificationToken: token,
+                    Latitude:x /* $("#Latitude").val()*/,
+                    Longitude:y /*$("#Longitude").val()*/
+                },
+                success: function (result) {
+
+
+                }
+            });
+
+
+
+
+        });
+    }
+
+
+    SetCoordinates();
+
+    function SendCoordinates()
+    {
+        var form = $('#Coordinates');
+        var x = $("#Latitude").val();
+        var y = $("#Longitude").val();
+        //var token = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                url: '@Url.Action("ChangeCoordinates", "Home")',
+               type: "post",
+                data: {
+                    //__RequestVerificationToken: token,
+                    Latitude:x /* $("#Latitude").val()*/,
+                    Longitude:y /*$("#Longitude").val()*/
+                },
+                success: function (result) {
+
+
+                }
+            });
+    }
+
+
+    //SendCoordinates();
+
+
+
+
+
+  });
+
+
+
+
+
+
+
+    </script>
+}
 
 

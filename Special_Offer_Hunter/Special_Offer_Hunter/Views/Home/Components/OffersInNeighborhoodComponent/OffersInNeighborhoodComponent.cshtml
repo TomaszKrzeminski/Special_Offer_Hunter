@@ -1,0 +1,71 @@
+﻿@using Special_Offer_Hunter.Models;
+@model SpecialOfferViewModel
+
+
+
+<div class="row">
+    <div class="col col-lg-12">
+        <form asp-action="OffersInNeighborhood" asp-controller="SpecialOfferController">
+
+            <div style="min-height:200px; " class="col-lg-2 ">
+                <label class="font-weight-bold" asp-for="PriceValue">Cena</label>
+                <input style="height:140px" @*class="form-control"*@ asp-for="PriceValue" />
+            </div>
+
+            <div style="min-height:200px; " class="col-lg-2 ">
+                <label class="font-weight-bold" asp-for="ProductName">Nazwa</label>
+                <input style="height:140px" @*class="form-control"*@ asp-for="ProductName" />
+            </div>
+
+            <div style="min-height:200px; " class="col-lg-2 ">
+                <label class="font-weight-bold" asp-for="CategoryName">Kategoria</label>
+                <input style="height:140px" @*class="form-control"*@ asp-for="CategoryName" />
+            </div>
+
+            <div style="min-height:200px; " class="col-lg-2 ">
+                <label class="font-weight-bold" asp-for="ShopName">Sklep</label>
+                <input style="height:140px" class="form-control" asp-for="ShopName" />
+            </div>
+
+            <div style="min-height:200px; " class="col-lg-2 ">
+                <label class="font-weight-bold" asp-for="Distance">Odległość</label>
+                <input style="height:140px" class="form-control" asp-for="Distance" />
+            </div>
+
+            <div style="min-height:200px; " class="col-lg-12 @*form-group*@">
+                <button type="submit">Filtruj</button>
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Sklep</th>
+                <th scope="col">Odległość</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var p in Model.list)
+            {
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@p.Name</td>
+                    <td>@p.Product_Price.Price</td>
+                    <td>@p.Shop.Name</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

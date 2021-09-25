@@ -6,13 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using Special_Offer_Hunter.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
+
 namespace Special_Offer_Hunter.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+
+            
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

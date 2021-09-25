@@ -15,6 +15,9 @@ namespace Special_Offer_Hunter.Models
         public string City { get; set; }
         public DateTime Dateofbirth { get; set; }
 
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+
 
       
 

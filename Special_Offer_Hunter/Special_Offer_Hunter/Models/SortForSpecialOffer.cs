@@ -29,10 +29,19 @@ namespace Special_Offer_Hunter.Models
     public class SortDistance : SingleSort
     {
         Expression<Func<Shop, bool>>
-      SearchShopByDistance(double Distance)
+      SearchShopByDistance(Location location,double distance)
         {
-            return (Shop c) => 
-            true;
+            CalculateDistance calculate = new CalcutateDistanceNet();
+            return  s => {
+                Location loc = s.Location;
+                double distance1 = calculate.GetDistance(loc, location);
+
+
+               return true;
+                };
+            //return (Shop s) => true;
+            
+
         }
         public SingleSort Next { get; set; }
 
@@ -47,7 +56,7 @@ namespace Special_Offer_Hunter.Models
             if(model.Distance>0)
             {
 
-                model.SearchShopByDistance = SearchShopByDistance(model.Distance);
+                model.SearchShopByDistance = SearchShopByDistance(model.MyLocation,model.Distance);
             }
 
             if (Next != null)
@@ -248,34 +257,5 @@ SearchProductByPriceAll(double productPrice)
     }
 
 
-
-
-
-
-    //public interface SortForSpecialOffer
-    //{
-      
-    //    public int Distance { get; set; }
-    //    public string CategoryName { get; set; }
-    //    public string ShopName { get; set; }
-    //    public string ProductName { get; set; }
-    //    public double PriceValue { get; set; }
-    //    public PriceDescription priceDescription { get; set; }
-
-    //    public List<Product> list { get; set; }
-
-
-    //    void  SetSortByShopDistance(int Distance);
-    //    void SetSortByShopName(string ShopName);
-    //    void SetSortByProductCategoryName(string ProductCategory);       
-    //    void SetSortByProductName(string ProductName);
-    //    void SetSortByProductPrice(double ProductPrice);
-
-
-
-
-
-
-
-    //}
+  
 }

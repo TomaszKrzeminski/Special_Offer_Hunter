@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Special_Offer_Hunter.Data;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,14 @@ namespace Special_Offer_Hunter.Models
         Product GetProductById(int Id);
         Product GetProductByName(string Name);
         Product GetProductByCode(string Code);
+        Location GetUserLocation(string UserId);
 
         List<Product> GetProductsWithSpecialOffer(SpecialOfferViewModel offer);
         bool AddPriceToProduct(int ProductId, double Price);
 
         bool AddProduct(Product product);
 
-
+        bool SaveCoordinatesAppUser(double Latitude, double Longitude, string UserId);
 
 
 
@@ -136,96 +138,62 @@ namespace Special_Offer_Hunter.Models
         {
             try
             {
-                List<Shop> shops = context.Shops.ToList();
-                List<Product> list = new List<Product>();
-                //                string Name = "";
 
-
-                //                static Expression<Func<Shop, bool>>
-                //              SearchShop(string Name)
-                //                {
-                //                    return (Shop s) => s.Name == Name;
-
-
-                //                }
-
-
-                //                static Expression<Func<Shop, bool>>
-                //              SearchShops(string Name)
-                //                {
-                //                    return (Shop s) => true;
-                //                }
+                List<Shop> ccc = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                    .Where(offer.SearchShopByDistance).ToList(); 
 
 
 
-                //                Expression<Func<Shop, bool>> SearchShopX;
+                List<Product>   listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x=>x.Location)
+                    .Where(offer.SearchShopByDistance)
+                    .Where(offer.SearchShop)
+                    .FirstOrDefault()
+                    .Products.AsQueryable()
+                    .Where(offer.SearchProductByCategory)
+                    .Where(offer.SearchProductByProductName)
+                    .Where(offer.SearchProductByPrice).ToList();
 
 
-
-
-
-                //                static Expression<Func<Product, bool>>
-                //SearchProductByCategory(string Category)
-                //                {
-                //                    return (Product c) => c.ProductCategory.Any(x => x.Category.Name == Category);
-                //                }
-
-                //                static Expression<Func<Product, bool>>
-                //SearchProductByCategoryAll(string Category)
-                //                {
-                //                    return (Product c) => true;
-                //                }
-
-
-                //                static Expression<Func<Product, bool>>
-                //SearchProductByProductName(string productName)
-                //                {
-                //                    return (Product c) => c.Name==productName;
-                //                }
-
-                //                static Expression<Func<Product, bool>>
-                //SearchProductByProductNameAll(string productName)
-                //                {
-                //                    return (Product c) => true;
-                //                }
-
-
-                //                static Expression<Func<Product, bool>>
-                //SearchProductByPriceHigher(double productPrice)
-                //                {
-                //                    return (Product c) => c.Product_Price.Price >productPrice;
-                //                }
-
-                //                static Expression<Func<Product, bool>>
-                //SearchProductByPriceLower(double productPrice)
-                //                {
-                //                    return (Product c) => c.Product_Price.Price < productPrice;
-                //                }
-
-                //                static Expression<Func<Product, bool>>
-                //SearchProductByPriceAll(double productPrice)
-                //                {
-                //                    return (Product c) => true;
-                //                }
-
-
-               
-
-
-                //List<Product> listOfProducts= context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Where(SearchShop("Tesco")).FirstOrDefault().Products.AsQueryable().Where(SearchProductByCategory("Przekąski")).Where(SearchProductByProductName(offer.ProductName)).Where(SearchProductByPriceAll(100)).ToList();
-
-                
-                    //list = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Where(SearchShop(Name)).FirstOrDefault().Products.Where(x=>x.ProductCategory.Any(x=>x.Category.Name==offer.Category)).ToList();
-                List<Product>   listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Where(offer.SearchShop).FirstOrDefault().Products.AsQueryable().Where(offer.SearchProductByCategory).Where(offer.SearchProductByProductName).Where(offer.SearchProductByPrice).ToList();
-                    list.AddRange(listProd);
-               
-
-                return list;
+                return listProd;
 
             }
             catch (Exception ex)
             {
+                return new List<Product>();
+            }
+        }
+
+        public Location GetUserLocation(string UserId)
+        {
+            try
+            {
+                Location location = new Location();
+                ApplicationUser user = context.Users.Find(UserId);
+                location.Latitude = user.Latitude;
+                location.Longitude = user.Longitude;
+                return location;
+            }
+            catch(Exception ex)
+            {
                 return null;
+            }
+        }
+
+        public bool SaveCoordinatesAppUser(double Latitude, double Longitude, string UserId)
+        {
+            try
+            {
+
+                ApplicationUser user = context.Users.Find(UserId);
+                user.Longitude = Longitude;
+                user.Latitude = Latitude;
+                context.SaveChanges();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
             }
         }
     }

@@ -37,7 +37,8 @@ namespace Special_Offer_Hunter.Models
         }
 
         public ProductCategory category;
-        public int Distance { get; set; }
+        public Location MyLocation { get; set; }
+        public double Distance { get; set; }
         public string CategoryName { get; set; }
         public string ShopName { get; set; }
         public string ProductName { get; set; }
@@ -46,5 +47,6 @@ namespace Special_Offer_Hunter.Models
         public PriceDescription priceDescription { get; set; }
 
         public List<Product> list { get; set; }
+        public List<Shop> shopList { get; set; }
     }
 }
