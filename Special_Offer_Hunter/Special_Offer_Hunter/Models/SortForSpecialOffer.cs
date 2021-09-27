@@ -8,6 +8,10 @@ namespace Special_Offer_Hunter.Models
 {
 
 
+
+
+   
+
     public class SortintOffers
     {
 
@@ -31,14 +35,11 @@ namespace Special_Offer_Hunter.Models
         Expression<Func<Shop, bool>>
       SearchShopByDistance(Location location,double distance)
         {
-            CalculateDistance calculate = new CalcutateDistanceNet();
-            return  s => {
-                Location loc = s.Location;
-                double distance1 = calculate.GetDistance(loc, location);
-
-
-               return true;
-                };
+            //CalculateDistance calculate = new CalcutateDistanceNet();
+            return s =>true;
+                //Location loc = s.Location;
+                //double distance1 = calculate.GetDistance(loc, location);              
+                
             //return (Shop s) => true;
             
 

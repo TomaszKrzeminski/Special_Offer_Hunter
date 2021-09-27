@@ -18,14 +18,19 @@ namespace Special_Offer_Hunter.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
 
+        public virtual NetTopologySuite.Geometries.Point userlocation { get; set; }
 
-      
+
+
 
 
         public ApplicationUser()
         {
             Shopping_Cart_Day = new List<Shopping_Cart_Day>();
-            Shopping_Cart_Week = new List<Shopping_Cart_Week>();
+            Shopping_Cart_Week = new List<Shopping_Cart_Week>();   
+            userlocation= new NetTopologySuite.Geometries.Point(0, 0) { SRID = 4326 };
+            Longitude = 0;
+            Latitude = 0;
 
         }
 
@@ -162,7 +167,7 @@ namespace Special_Offer_Hunter.Models
 
         public Location()
         {
-            Country = "Polska";
+            Country = "Polska";           
         }
 
         public int LocationId { get; set; }
@@ -174,6 +179,8 @@ namespace Special_Offer_Hunter.Models
         public string City { get; set; }
         public string Street { get; set; }
         public int Number { get; set; }
+
+        public virtual NetTopologySuite.Geometries.Point location { get; set; }
         public string SecondNumber { get; set; }
         public virtual Shop Shop { get; set; }
         public int? ShopLocationId { get; set; } 

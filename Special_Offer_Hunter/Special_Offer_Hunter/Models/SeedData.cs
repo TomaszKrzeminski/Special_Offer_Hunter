@@ -40,7 +40,7 @@ namespace Special_Offer_Hunter.Models
 
                     var roleStore = new RoleStore<IdentityRole>(context);
 
-                    if (!context.Roles.Any(r => r.Name == "NewUser"))
+                    if (!context.Roles.Any(r => r.Name == "NewUser"||r.Name=="UserRole"||r.Name=="Administrator"))
                     {
 
                          roleStore.CreateAsync(new IdentityRole { Name = "Administrator", NormalizedName = "Administrator" });
@@ -87,6 +87,26 @@ namespace Special_Offer_Hunter.Models
         
          void SeedLocalization(string Name,double Latitude,double Longitude, string PostalCode, string Country, string City, string Street, int Number, string SecondNumber)
            {
+                //Location location = new Location();
+                //location.Name = Name;
+                //location.Country = Country;
+                //location.Latitude = Latitude;
+                //location.Longitude = Longitude;
+                //location.PostalCode = PostalCode;
+                //location.Country = Country;
+                //location.City = City;
+                //location.Street = Street;
+                //location.Number = Number;
+                //location.SecondNumber = SecondNumber;
+                //context.Locations.Add(location);
+                //context.SaveChanges();
+
+
+                ///////////
+                ///
+
+
+
                 Location location = new Location();
                 location.Name = Name;
                 location.Country = Country;
@@ -98,8 +118,23 @@ namespace Special_Offer_Hunter.Models
                 location.Street = Street;
                 location.Number = Number;
                 location.SecondNumber = SecondNumber;
+
+
+
+
+             
+
+                location.location = new NetTopologySuite.Geometries.Point(Longitude, Latitude) { SRID = 4326 };
+
+               
+
                 context.Locations.Add(location);
                 context.SaveChanges();
+
+
+
+
+
             }
 
          void SeedCode(string Code,string CodeType,string Country,string Producer,string ProductInfo)
@@ -292,12 +327,12 @@ namespace Special_Offer_Hunter.Models
                     SeedUser("Ania", "Przybylska", "Kobieta", "Bydgoszcz", "U10@gmail.com", new DateTime(2001, 8, 21));
                     SeedUser("Karolina", "Świerczyński", "Kobieta", "Świecie", "U11@gmail.com", new DateTime(1950, 8, 21));
 
-                    SeedLocalization("Polo Market", 53.40714, 18.43357, "86-100", "Poland", "Świecie", "Wojska Polskiego", 83, "Brak");
-                    SeedLocalization("Biedronka Kościuszki", 53.41338, 18.45180, "86-100", "Poland", "Świecie", "Sikorskiego", 2, "Brak");
-                    SeedLocalization("Biedronka Pks", 53.40775, 18.43985, "86-100", "Poland", "Świecie", "Wojska Polskiego", 90, "Brak");
-                    SeedLocalization("Platan", 53.40883, 18.45256, "86-100", "Poland", "Świecie", "Duży rynek", 4, "Brak");
-                    SeedLocalization("Tesco", 53.40546, 18.43726, "86-100", "Poland", "Świecie", "Cukrowników", 2, "Brak");
-                    SeedLocalization("Alex", 53.41218, 18.45126, "86-100", "Poland", "Świecie", "Kościuszki", 83, "Brak");
+                    SeedLocalization("Polo Market", 53.40d, 18.43d, "86-100", "Poland", "Świecie", "Wojska Polskiego", 83, "Brak");
+                    SeedLocalization("Biedronka Kościuszki", 53.41d, 18.45d, "86-100", "Poland", "Świecie", "Sikorskiego", 2, "Brak");
+                    SeedLocalization("Biedronka Pks", 53.40d, 18.43d, "86-100", "Poland", "Świecie", "Wojska Polskiego", 90, "Brak");
+                    SeedLocalization("Platan", 53.40d, 18.45d, "86-100", "Poland", "Świecie", "Duży rynek", 4, "Brak");
+                    SeedLocalization("Tesco", 53.40d, 18.43d, "86-100", "Poland", "Świecie", "Cukrowników", 2, "Brak");
+                    SeedLocalization("Alex", 53.41d, 18.45d, "86-100", "Poland", "Świecie", "Kościuszki", 83, "Brak");
                     SeedCategories();
 
 

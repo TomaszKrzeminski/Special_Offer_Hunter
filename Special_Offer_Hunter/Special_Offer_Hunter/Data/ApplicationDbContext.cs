@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Special_Offer_Hunter.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-
+using System.Configuration;
 
 namespace Special_Offer_Hunter.Data
 {
@@ -14,13 +14,16 @@ namespace Special_Offer_Hunter.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+           
 
-            
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseSqlServer("Server = (localdb)\\mssqllocaldb; Database = aspnet - Special_Offer_Hunter - EAAB85F3 - 59A1 - 41C1 - 8B82 - CE4BE46652E7; Trusted_Connection = True; MultipleActiveResultSets = true", x => x.UseNetTopologySuite());
            
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -138,14 +138,14 @@ namespace Special_Offer_Hunter.Models
         {
             try
             {
-
-                List<Shop> ccc = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
-                    .Where(offer.SearchShopByDistance).ToList(); 
+                
+                ////List<Shop> ccc = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                ////    .ShopIsInDistance(offer.Distance,offer.MyLocation).ToList();
 
 
 
                 List<Product>   listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x=>x.Location)
-                    .Where(offer.SearchShopByDistance)
+                    .Where(x=>x.Location.location.Distance(offer.))
                     .Where(offer.SearchShop)
                     .FirstOrDefault()
                     .Products.AsQueryable()
@@ -187,6 +187,7 @@ namespace Special_Offer_Hunter.Models
                 ApplicationUser user = context.Users.Find(UserId);
                 user.Longitude = Longitude;
                 user.Latitude = Latitude;
+                user.userlocation = new NetTopologySuite.Geometries.Point(Longitude, Latitude) { SRID = 4326 };
                 context.SaveChanges();
 
                 return true;
