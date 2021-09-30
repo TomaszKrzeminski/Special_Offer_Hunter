@@ -9,7 +9,7 @@ namespace Special_Offer_Hunter.Models
 
     public enum PriceDescription
     {
-        Lower,Higher,All
+        Niższa,Wyższa,Wszystkie
     }
 
 
@@ -29,7 +29,7 @@ namespace Special_Offer_Hunter.Models
         {
             Distance = 2;
             list = new List<Product>();
-            priceDescription = PriceDescription.All;
+            priceDescription = PriceDescription.Wszystkie;
             CategoryName = "";
             ShopName = "";
             ProductName = "";
@@ -47,6 +47,8 @@ namespace Special_Offer_Hunter.Models
         public PriceDescription priceDescription { get; set; }
 
         public List<Product> list { get; set; }
+        public Dictionary<Product,double> list2 { get; set; }
+
         public List<Shop> shopList { get; set; }
     }
 }

@@ -125,6 +125,34 @@ namespace Special_Offer_Hunter.Models
     public class Product
     {
 
+
+       public  Product(Product product)
+        {
+
+            this.ProductId = product.ProductId;
+            this.Name = product.Name;
+            this.Description = product.Description;
+            this.Weight = product.Weight;
+            this.Height = product.Height;
+            this.Picture = product.Picture;
+            this.Comments = product.Comments;
+            this.Ranks = product.Ranks;
+            this.ProductCategory = product.ProductCategory;
+            this.Product_Code = product.Product_Code;
+            this.Shopping_Cart_DayId = product.Shopping_Cart_DayId;
+            this.shopping_Cart_Day = product.shopping_Cart_Day;
+            this.Shopping_Cart_WeekId = product.Shopping_Cart_WeekId;
+            this.shopping_Cart_Week = product.shopping_Cart_Week;
+            this.ShopId = product.ShopId;
+            this.Shop = product.Shop;
+            this.Product_PriceId = product.Product_PriceId;
+            this.Product_Price = product.Product_Price;
+           
+
+        }
+
+
+
         public Product()
         {
             Comments = new List<Product_Comment>();

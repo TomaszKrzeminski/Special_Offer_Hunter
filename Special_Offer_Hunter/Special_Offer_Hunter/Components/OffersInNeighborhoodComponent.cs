@@ -25,29 +25,29 @@ namespace Special_Offer_Hunter.Components
             string UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             SpecialOfferViewModel model = new SpecialOfferViewModel();
             model.CategoryName = "Napoje";
-            model.ShopName = "Alex";
+            model.ShopName = "";
             model.PriceValue = 3;
-            model.priceDescription = PriceDescription.Higher;
+            model.priceDescription = PriceDescription.Wszystkie;
             model.MyLocation = repository.GetUserLocation(UserId);
-            model.Distance = 5;
+            model.Distance = 50;
 
-            SingleSort sort1 = new SortDistance();
-            SingleSort sort2 = new SortShopName();
-            SingleSort sort3 = new SortCategoryName();
-            SingleSort sort4 = new SortProductName();
-            SingleSort sort5 = new SortPriceValue();
+            SingleSearch sort1 = new SearchShopName();
+            SingleSearch sort2 = new SearchCategoryName();
+            SingleSearch sort3 = new SearchProductName();
+            SingleSearch sort4 = new SearchPriceValue();
+
 
 
             sort1.SetNextSortObject(sort2);
             sort2.SetNextSortObject(sort3);
             sort3.SetNextSortObject(sort4);
-            sort4.SetNextSortObject(sort5);
+
 
             sort1.SetSorting(model);
 
 
-            List<Product> list = repository.GetProductsWithSpecialOffer(model);
-            model.list = list;
+            Dictionary<Product,double> list = repository.GetProductsWithSpecialOffer(model);
+            model.list2 = list;
             
             return View("OffersInNeighborhoodComponent",model);
         }

@@ -327,12 +327,14 @@ namespace Special_Offer_Hunter.Models
                     SeedUser("Ania", "Przybylska", "Kobieta", "Bydgoszcz", "U10@gmail.com", new DateTime(2001, 8, 21));
                     SeedUser("Karolina", "Świerczyński", "Kobieta", "Świecie", "U11@gmail.com", new DateTime(1950, 8, 21));
 
-                    SeedLocalization("Polo Market", 53.40d, 18.43d, "86-100", "Poland", "Świecie", "Wojska Polskiego", 83, "Brak");
-                    SeedLocalization("Biedronka Kościuszki", 53.41d, 18.45d, "86-100", "Poland", "Świecie", "Sikorskiego", 2, "Brak");
-                    SeedLocalization("Biedronka Pks", 53.40d, 18.43d, "86-100", "Poland", "Świecie", "Wojska Polskiego", 90, "Brak");
-                    SeedLocalization("Platan", 53.40d, 18.45d, "86-100", "Poland", "Świecie", "Duży rynek", 4, "Brak");
-                    SeedLocalization("Tesco", 53.40d, 18.43d, "86-100", "Poland", "Świecie", "Cukrowników", 2, "Brak");
-                    SeedLocalization("Alex", 53.41d, 18.45d, "86-100", "Poland", "Świecie", "Kościuszki", 83, "Brak");
+                    SeedLocalization("Polo Market", 53.4071, 18.4333, "86-100", "Poland", "Świecie", "Wojska Polskiego", 83, "Brak");
+                    SeedLocalization("Biedronka Kościuszki", 53.41, 18.45, "86-100", "Poland", "Świecie", "Sikorskiego", 2, "Brak");
+                    SeedLocalization("Biedronka Pks", 53.40, 18.43, "86-100", "Poland", "Świecie", "Wojska Polskiego", 90, "Brak");
+                    SeedLocalization("Platan", 53.40, 18.45, "86-100", "Poland", "Świecie", "Duży rynek", 4, "Brak");
+                    SeedLocalization("Tesco", 53.4055, 18.4369, "86-100", "Poland", "Świecie", "Cukrowników", 2, "Brak");
+                    SeedLocalization("Alex", 53.4121, 18.4512, "86-100", "Poland", "Świecie", "Kościuszki", 83, "Brak");
+                    SeedLocalization("FocusBydgoszcz", 53.123, 18.01, "86-100", "Poland", "Bydgoszcz", "Centrum", 83, "Brak");
+                    SeedLocalization("AlfaGrudziądz", 53.484, 18.745, "86-100", "Poland", "Grudziądz", "Centrum", 83, "Brak");
                     SeedCategories();
 
 
@@ -447,8 +449,9 @@ namespace Special_Offer_Hunter.Models
                     //SeedAddProductToShop("Alex", "Lech-shandy-500ml-poland",3);
 
 
+                    SeedProductsForShop("FocusBydgoszcz", new List<double>() { 11, 9, 4, 15, 3 }, new List<bool>() { false, true, false, true, false });
 
-
+                    SeedProductsForShop("AlfaGrudziądz", new List<double>() { 11, 9, 4, 15, 3 }, new List<bool>() { false, true, false, true, false });
 
 
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Special_Offer_Hunter.Models;
 
@@ -12,39 +14,55 @@ namespace Special_Offer_Hunter.Controllers
     public class SpecialOfferController : Controller
     {
         private IRepository repository;
-        public SpecialOfferController(IRepository repo)
+        private Func<string> GetUser;
+        IHttpContextAccessor httpContextAccessor;
+        public SpecialOfferController(IRepository repo, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
         {
             repository = repo;
+
+            if (GetUser == null)
+            {
+                string UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                this.GetUser = () => UserId;
+
+            }
+            else
+            {
+                this.GetUser = GetUser;
+            }
         }
 
 
-        public PartialViewResult OffersInNeighborhood()
+        public PartialViewResult OffersInNeighborhood(SpecialOfferViewModel modelX)
         {
-            SpecialOfferViewModel model = new SpecialOfferViewModel();
-            model.CategoryName = "Napoje";
-            model.ShopName = "Alex";
-            model.PriceValue = 3;
-            model.priceDescription = PriceDescription.Higher;
-            //model.MyLocation = repository.GetUserLocation();
+            string UserId = GetUser();
+          
+           
+            modelX.MyLocation = repository.GetUserLocation(UserId);
+           
 
-            SingleSort sort1 = new SortDistance();
-            SingleSort sort2 = new SortShopName();
-            SingleSort sort3 = new SortCategoryName();
-            SingleSort sort4 = new SortProductName();
-            SingleSort sort5 = new SortPriceValue();
+            SingleSearch sort1 = new SearchShopName();
+            SingleSearch sort2 = new SearchCategoryName();
+            SingleSearch sort3 = new SearchProductName();
+            SingleSearch sort4 = new SearchPriceValue();
+
 
 
             sort1.SetNextSortObject(sort2);
             sort2.SetNextSortObject(sort3);
             sort3.SetNextSortObject(sort4);
-            sort4.SetNextSortObject(sort5);
-
-            sort1.SetSorting(model);
 
 
-            List<Product> list = repository.GetProductsWithSpecialOffer(model);
+            sort1.SetSorting(modelX);
 
-             return  PartialView(model);
+
+            Dictionary<Product, double> list = repository.GetProductsWithSpecialOffer(modelX);
+            modelX.list2 = list;
+
+            return PartialView( modelX);
+
+
+            
         }
     }
 }

@@ -7,15 +7,8 @@
     <div class="col col-lg-12">
         <form asp-action="OffersInNeighborhood" asp-controller="SpecialOffer">
             <div class="row">
-               
+                <div class="col col-lg-1"></div>
                 <div class="col-lg-2 ">
-                    <label class="font-weight-bold">Rodzaj cen</label>
-
-                    <select class="custom-select custom-select-sm" asp-for="priceDescription" asp-items="Html.GetEnumSelectList<PriceDescription>()">
-                        <option selected="selected" value="">Please select</option>
-                    </select>                    
-                </div>
-                <div class="col-lg-1 ">
                     <label class="font-weight-bold" asp-for="PriceValue">Cena</label>
                     <input class="form-control" asp-for="PriceValue" />
                 </div>
@@ -46,7 +39,7 @@
 
 
             </div>
-            
+
         </form>
     </div>
 
@@ -66,17 +59,22 @@
         </thead>
         <tbody>
 
-            @foreach (var p in Model.list2)
+            @if (Model.list2 != null && Model.list2.Count > 0)
             {
-            <tr>
-                <th scope="row">1</th>
-                <td>@p.Key.Name</td>
-                <td>@p.Key.Product_Price.Price</td>
-                <td>@p.Key.Shop.Name</td>
-                <td>@p.Value</td>
+                @foreach (var p in Model.list2)
+                {
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>@p.Key.Name</td>
+                        <td>@p.Key.Product_Price.Price</td>
+                        <td>@p.Key.Shop.Name</td>
+                        <td>@p.Value</td>
 
-            </tr>
+                    </tr>
+                }
             }
+
+
         </tbody>
     </table>
 

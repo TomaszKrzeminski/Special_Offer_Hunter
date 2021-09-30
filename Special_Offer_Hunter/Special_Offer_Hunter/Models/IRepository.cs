@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 using Special_Offer_Hunter.Data;
 using System;
 using System.Collections.Generic;
@@ -15,14 +17,14 @@ namespace Special_Offer_Hunter.Models
         Product GetProductByCode(string Code);
         Location GetUserLocation(string UserId);
 
-        List<Product> GetProductsWithSpecialOffer(SpecialOfferViewModel offer);
+        List<Product> GetProductsWithSpecialOffer2(SpecialOfferViewModel offer);
         bool AddPriceToProduct(int ProductId, double Price);
 
         bool AddProduct(Product product);
 
         bool SaveCoordinatesAppUser(double Latitude, double Longitude, string UserId);
 
-
+        public Dictionary<Product, double> GetProductsWithSpecialOffer(SpecialOfferViewModel offer);
 
 
 
@@ -134,24 +136,61 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-        public List<Product> GetProductsWithSpecialOffer(SpecialOfferViewModel offer)
+
+        public static Point CreatePoint(double latitude, double longitude)
+        {
+            // 4326 is most common coordinate system used by GPS/Maps
+            var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+
+            // see https://docs.microsoft.com/en-us/ef/core/modeling/spatial
+            // Longitude and Latitude
+            var newLocation = geometryFactory.CreatePoint(new Coordinate(longitude, latitude));
+
+            return newLocation;
+        }
+
+
+
+        public List<Product> GetProductsWithSpecialOffer2(SpecialOfferViewModel offer)
         {
             try
             {
+ double latitude = offer.MyLocation.Latitude;
+                double longitude = offer.MyLocation.Longitude;
+
+
                 
-                ////List<Shop> ccc = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
-                ////    .ShopIsInDistance(offer.Distance,offer.MyLocation).ToList();
+                Point mylocation = new NetTopologySuite.Geometries.Point(18.451, 53.411) { SRID = 4326 };
+
+                List<double> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                   .Select(x => (x.Location.location.Distance(mylocation) / 1000) ).ToList();
+
+               
 
 
-
-                List<Product>   listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x=>x.Location)
-                    .Where(x=>x.Location.location.Distance(offer.))
-                    .Where(offer.SearchShop)
-                    .FirstOrDefault()
-                    .Products.AsQueryable()
+                List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                    .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                    .Where(offer.SearchShop).SelectMany(x =>
+                   x.Products).AsQueryable()
                     .Where(offer.SearchProductByCategory)
                     .Where(offer.SearchProductByProductName)
-                    .Where(offer.SearchProductByPrice).ToList();
+                    .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();
+
+
+                Dictionary<Product, double> dictionary = new Dictionary<Product, double>();
+                Point mylocation2 = new NetTopologySuite.Geometries.Point(18.451, 53.411) { SRID = 4326 };
+
+                List<double> list=  listProd.Select(x => (x.Shop.Location.location.Distance(mylocation2) / 1000)).ToList();
+
+                foreach (var item in listProd)
+                {
+
+
+
+                    double Distance=(item.Shop.Location.location.Distance(mylocation)/1000);
+                    dictionary.Add(item, Distance);                   
+
+                }
 
 
                 return listProd;
@@ -160,6 +199,62 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return new List<Product>();
+            }
+        }
+
+       
+
+
+
+        public Dictionary<Product, double> GetProductsWithSpecialOffer(SpecialOfferViewModel offer)
+        {
+            try
+            {
+
+                double latitude = offer.MyLocation.Latitude;
+                double longitude = offer.MyLocation.Longitude;
+                Point mylocation = CreatePoint(53.411, 18.451);
+
+
+                Dictionary<Shop, double> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation)/1000))
+    .ToDictionary(x => x.Key, x => x.Value);
+
+
+                List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                    .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                    .Where(offer.SearchShop).SelectMany(x =>
+                   x.Products).AsQueryable()
+                    .Where(offer.SearchProductByCategory)
+                    .Where(offer.SearchProductByProductName)
+                    .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();
+
+
+                Dictionary<Product, double> dictionary = new Dictionary<Product, double>();            
+                              
+
+
+                foreach (var item in listProd)
+                {
+
+
+                    Dictionary<Shop, double> shop = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location).Where(x=>x.ShopId==item.Shop.ShopId)
+               .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation) / 1000))
+   .ToDictionary(x => x.Key, x => x.Value);
+
+                    var x = shop.First();
+                    dictionary.Add(item, x.Value);
+
+                }
+
+                
+
+                return dictionary;
+
+            }
+            catch (Exception ex)
+            {
+                return new Dictionary<Product, double>();
             }
         }
 
@@ -173,11 +268,14 @@ namespace Special_Offer_Hunter.Models
                 location.Longitude = user.Longitude;
                 return location;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return null;
             }
         }
+
+
+
 
         public bool SaveCoordinatesAppUser(double Latitude, double Longitude, string UserId)
         {

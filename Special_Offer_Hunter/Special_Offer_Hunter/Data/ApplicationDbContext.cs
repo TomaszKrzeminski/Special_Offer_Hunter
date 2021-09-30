@@ -43,6 +43,9 @@ namespace Special_Offer_Hunter.Data
             .WithOne(ad => ad.Product)
             .HasForeignKey<Product_Code>(ad => ad.ProductCodeId);
 
+    //        builder.Entity<ApplicationUser>()
+    //.Property(e => e.userlocation)
+    //.HasColumnType("geography (userlocation)");
 
             builder.Entity<ProductCategory>().HasKey(sc => new { sc.ProductId, sc.CategoryId });
 

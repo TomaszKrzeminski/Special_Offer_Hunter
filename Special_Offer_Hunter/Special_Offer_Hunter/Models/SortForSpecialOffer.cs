@@ -12,64 +12,21 @@ namespace Special_Offer_Hunter.Models
 
    
 
-    public class SortintOffers
+   
+
+
+    public interface SingleSearch
     {
-
-
-
-
-    }
-
-
-    public interface SingleSort
-    {
-        SingleSort Next { get; set; }
-        void SetNextSortObject(SingleSort sort);
+        SingleSearch Next { get; set; }
+        void SetNextSortObject(SingleSearch sort);
         void SetSorting(SpecialOfferViewModel model);
 
 
     }
 
-    public class SortDistance : SingleSort
-    {
-        Expression<Func<Shop, bool>>
-      SearchShopByDistance(Location location,double distance)
-        {
-            //CalculateDistance calculate = new CalcutateDistanceNet();
-            return s =>true;
-                //Location loc = s.Location;
-                //double distance1 = calculate.GetDistance(loc, location);              
-                
-            //return (Shop s) => true;
-            
+ 
 
-        }
-        public SingleSort Next { get; set; }
-
-        public void SetNextSortObject(SingleSort sort)
-        {
-            this.Next = sort;
-        }
-
-        public void SetSorting(SpecialOfferViewModel model)
-        {
-            
-            if(model.Distance>0)
-            {
-
-                model.SearchShopByDistance = SearchShopByDistance(model.MyLocation,model.Distance);
-            }
-
-            if (Next != null)
-            {
- Next.SetSorting(model);
-            }
-           
-        }
-    }
-
-
-    public class SortCategoryName : SingleSort
+    public class SearchCategoryName : SingleSearch
     {
         Expression<Func<Product, bool>>
        SearchProductByCategoryOne(string Category)
@@ -85,9 +42,9 @@ SearchProductByCategoryAll(string Category)
 
 
 
-        public SingleSort Next { get; set; }
+        public SingleSearch Next { get; set; }
 
-        public void SetNextSortObject(SingleSort sort)
+        public void SetNextSortObject(SingleSearch sort)
         {
             this.Next = sort;
         }
@@ -95,7 +52,7 @@ SearchProductByCategoryAll(string Category)
         public void SetSorting(SpecialOfferViewModel model)
         {
 
-            if (model.CategoryName =="")
+            if (model.CategoryName ==""||model.CategoryName==null)
             {
                 model.SearchProductByCategory = SearchProductByCategoryAll(model.CategoryName);
             }
@@ -113,7 +70,7 @@ SearchProductByCategoryAll(string Category)
     }
 
 
-    public class SortShopName : SingleSort
+    public class SearchShopName : SingleSearch
     {
 
         Expression<Func<Shop, bool>>
@@ -133,9 +90,9 @@ SearchProductByCategoryAll(string Category)
 
 
 
-        public SingleSort Next { get; set; }
+        public SingleSearch Next { get; set; }
 
-        public void SetNextSortObject(SingleSort sort)
+        public void SetNextSortObject(SingleSearch sort)
         {
             this.Next = sort;
         }
@@ -143,7 +100,7 @@ SearchProductByCategoryAll(string Category)
         public void SetSorting(SpecialOfferViewModel model)
         {
 
-            if (model.ShopName == "")
+            if (model.ShopName == ""||model.ShopName==null)
             {
                 model.SearchShop = SearchShopAll(model.ShopName);
             }
@@ -161,7 +118,7 @@ SearchProductByCategoryAll(string Category)
     }
 
 
-    public class SortProductName : SingleSort
+    public class SearchProductName : SingleSearch
     {
 
         Expression<Func<Product, bool>>
@@ -176,9 +133,9 @@ SearchProductByProductNameAll(string productName)
             return (Product c) => true;
         }
 
-        public SingleSort Next { get ; set; }
+        public SingleSearch Next { get ; set; }
 
-        public void SetNextSortObject(SingleSort sort)
+        public void SetNextSortObject(SingleSearch sort)
         {
             this.Next = sort;
         }
@@ -186,7 +143,7 @@ SearchProductByProductNameAll(string productName)
         public void SetSorting(SpecialOfferViewModel model)
         {
 
-            if (model.ProductName =="")
+            if (model.ProductName ==""||model.ProductName==null)
             {
                 model.SearchProductByProductName = SearchProductByProductNameAll(model.ProductName);
             }
@@ -203,7 +160,7 @@ SearchProductByProductNameAll(string productName)
         }
     }
 
-    public class SortPriceValue : SingleSort
+    public class SearchPriceValue : SingleSearch
     {
 
 
@@ -225,9 +182,9 @@ SearchProductByPriceAll(double productPrice)
             return (Product c) => true;
         }
 
-        public SingleSort Next { get; set; }
+        public SingleSearch Next { get; set; }
 
-        public void SetNextSortObject(SingleSort sort)
+        public void SetNextSortObject(SingleSearch sort)
         {
             this.Next = sort;
         }
@@ -235,11 +192,11 @@ SearchProductByPriceAll(double productPrice)
         public void SetSorting(SpecialOfferViewModel model)
         {
 
-            if (model.priceDescription==PriceDescription.All)
+            if (model.priceDescription==PriceDescription.Wszystkie)
             {
                 model.SearchProductByPrice = SearchProductByPriceAll(model.PriceValue);
             }
-            else if(model.priceDescription == PriceDescription.Lower)
+            else if(model.priceDescription == PriceDescription.Niższa)
             {
                 model.SearchProductByPrice = SearchProductByPriceLower(model.PriceValue);
             }
