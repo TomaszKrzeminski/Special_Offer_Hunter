@@ -32,21 +32,28 @@ namespace Special_Offer_Hunter.Controllers
             }
         }
 
-
+       
         public PartialViewResult OffersInNeighborhood(SpecialOfferViewModel modelX)
         {
-            string UserId = GetUser();
-          
+            string UserId = GetUser();         
            
             modelX.MyLocation = repository.GetUserLocation(UserId);
-           
+
+            SingleSort sorting1 = new SortNone();
+            SingleSort sorting2 = new SortByProductName();
+            SingleSort sorting3 = new SortByShopName();
+            SingleSort sorting4 = new SortByPriceValue();
+            SingleSort sorting5 = new SortByDistance();
+
+            sorting1.SetNextSortObject(sorting2);
+            sorting2.SetNextSortObject(sorting3);
+            sorting3.SetNextSortObject(sorting4);
+            sorting4.SetNextSortObject(sorting5);
 
             SingleSearch sort1 = new SearchShopName();
             SingleSearch sort2 = new SearchCategoryName();
             SingleSearch sort3 = new SearchProductName();
             SingleSearch sort4 = new SearchPriceValue();
-
-
 
             sort1.SetNextSortObject(sort2);
             sort2.SetNextSortObject(sort3);
@@ -54,14 +61,12 @@ namespace Special_Offer_Hunter.Controllers
 
 
             sort1.SetSorting(modelX);
-
+            sorting1.SetSorting(modelX);
 
             Dictionary<Product, double> list = repository.GetProductsWithSpecialOffer(modelX);
             modelX.list2 = list;
 
-            return PartialView( modelX);
-
-
+            return PartialView("OffersInNeighborhood", modelX);
             
         }
     }

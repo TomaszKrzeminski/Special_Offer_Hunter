@@ -60,10 +60,10 @@
 
 
             </div>
-            
+
         </form>
     </div>
-
+    
 
 
 
@@ -82,16 +82,68 @@
 
             @foreach (var p in Model.list2)
             {
-            <tr>
-                <th scope="row">1</th>
-                <td>@p.Key.Name</td>
-                <td>@p.Key.Product_Price.Price</td>
-                <td>@p.Key.Shop.Name</td>
-                <td>@p.Value</td>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@p.Key.Name</td>
+                    <td>@p.Key.Product_Price.Price</td>
+                    <td>@p.Key.Shop.Name</td>
+                    <td>@p.Value</td>
 
-            </tr>
+                </tr>
             }
         </tbody>
     </table>
 
 </div>
+
+
+@*@section Scripts
+{
+    <script>
+         $('#FiltrOffersInNeighborhood').on('click', function () {
+
+             alert("Click");
+
+
+
+    var priceDescription = $("#priceDescription").val();
+    var PriceValue = $("#PriceValue").val();
+    var ProductName = $("#ProductName").val();
+    var CategoryName = $("#CategoryName").val();
+    var ShopName = $("#ShopName").val();
+    var Distance = $("#Distance").val();
+
+    var t = $("input[name='__RequestVerificationToken']").val();
+    $.ajax({
+    url: '@Url.Action("OffersInNeighborhood", "SpecialOffer")',
+    type: "get",
+    data: {
+    priceDescription: priceDescription ,
+    PriceValue: PriceValue ,
+    ProductName: ProductName,
+    CategoryName: CategoryName,
+    ShopName: ShopName,
+    Distance: Distance
+    },
+    headers:
+    {
+    "RequestVerificationToken": t
+    },
+    success: function (result) {
+
+    $('#OffersInNeighborhoodElement').empty();
+    $('#OffersInNeighborhoodElement').html(result);
+    alert("start2");
+    }
+    });
+
+
+
+    });
+
+
+});
+    </script>
+   
+
+}*@

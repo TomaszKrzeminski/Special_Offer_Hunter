@@ -31,6 +31,15 @@ namespace Special_Offer_Hunter.Components
             model.MyLocation = repository.GetUserLocation(UserId);
             model.Distance = 50;
 
+            SingleSort sorting1 = new SortNone();
+            SingleSort sorting2 = new SortByProductName();
+            SingleSort sorting3 = new SortByShopName();
+            SingleSort sorting4 = new SortByPriceValue();
+            SingleSort sorting5 = new SortByDistance();
+
+
+
+
             SingleSearch sort1 = new SearchShopName();
             SingleSearch sort2 = new SearchCategoryName();
             SingleSearch sort3 = new SearchProductName();
@@ -44,6 +53,7 @@ namespace Special_Offer_Hunter.Components
 
 
             sort1.SetSorting(model);
+            sorting1.SetSorting(model);
 
 
             Dictionary<Product,double> list = repository.GetProductsWithSpecialOffer(model);

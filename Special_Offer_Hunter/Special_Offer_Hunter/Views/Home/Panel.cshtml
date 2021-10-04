@@ -10,12 +10,15 @@
 <div class="container">
     <div class="row block bg-dark">
         <div class="col-lg-12">
-
+            @DateTime.Now.TimeOfDay
         </div>
     </div>
     <div class="row block bg-light">
-        <div class="col-lg-12">
-            @await Component.InvokeAsync("OffersInNeighborhoodComponent") 
+        <div id="OffersInNeighborhoodElement" class="col-lg-12">
+            @*@Html.Partial("OffersInNeighborhood", new SpecialOfferViewModel())*@
+            @await Component.InvokeAsync("OffersInNeighborhoodComponent")
+
+
         </div>
     </div>
     <div class="row block bg-secondary">
@@ -73,15 +76,42 @@
     <script>
 
 
+
+
         $(document).ready(function () {
 
 
-//let latText = document.getElementById("Latitude");
-//    let longText = document.getElementById("Longitude");
 
 
-            //$('.selectpicker').selectpicker();
 
+
+
+
+
+
+
+
+
+function SearchSpecialOffer()
+    {
+        var form = $('#Coordinates');
+        var x = $("#Latitude").val();
+        var y = $("#Longitude").val();
+        //var token = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                url: '@Url.Action("ChangeCoordinates", "Home")',
+               type: "post",
+                data: {
+                    //__RequestVerificationToken: token,
+                    Latitude:x /* $("#Latitude").val()*/,
+                    Longitude:y /*$("#Longitude").val()*/
+                },
+                success: function (result) {
+
+
+                }
+            });
+    }
 
 
     function SetCoordinates()
@@ -143,15 +173,54 @@
     }
 
 
-    //SendCoordinates();
+    SendCoordinates();          
+            
+            $('#OffersInNeighborhoodElement').on('click','#FiltrOffersInNeighborhood', function () {
+
+               
+
+
+                var priceDescription = $("#priceDescription").val();
+                var PriceValue = $("#PriceValue").val();
+                var ProductName = $("#ProductName").val();
+                var CategoryName = $("#CategoryName").val();
+                var ShopName = $("#ShopName").val();
+                var Distance = $("#Distance").val();
+                var SortMethod = $("#sortMethod").val(); 
+                var sortType = $("#sortType").val();
+
+                var t = $("input[name='__RequestVerificationToken']").val();
+            $.ajax({
+                url: '@Url.Action("OffersInNeighborhood", "SpecialOffer")',
+               type: "get",
+                data: {
+                    priceDescription: priceDescription ,
+                    PriceValue: PriceValue ,
+                    ProductName: ProductName,
+                    CategoryName: CategoryName,
+                    ShopName: ShopName,
+                    Distance: Distance,
+                    sortMethod: SortMethod,
+                    sortType:sortType
+                },
+                headers:
+                {
+                    "RequestVerificationToken": t
+                },
+                success: function (result) {
+
+                    $('#OffersInNeighborhoodElement').empty();
+                    $('#OffersInNeighborhoodElement').html(result);
+                   
+                }
+            });
 
 
 
+            });
 
 
   });
-
-
 
 
 

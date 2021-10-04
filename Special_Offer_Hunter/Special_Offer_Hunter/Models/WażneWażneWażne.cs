@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Special_Offer_Hunter.Models
+{
+    public class WażneWażneWażne
+    {
+        //Odblokuj lokalizacjie w GetProductsWithSpecialOffer
+
+
+
+    }
+}

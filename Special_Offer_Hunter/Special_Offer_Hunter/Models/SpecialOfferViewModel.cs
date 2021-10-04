@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 namespace Special_Offer_Hunter.Models
 {
 
+    public enum SortType
+    {
+        Rosnąco,Malejąco
+    }
+
     public enum PriceDescription
     {
         Niższa,Wyższa,Wszystkie
     }
 
-
+    public enum SortMethod
+    {
+        Brak,Cena,Nazwa,Odległość,Sklep
+    }
 
     public class SpecialOfferViewModel
     {
@@ -23,8 +31,11 @@ namespace Special_Offer_Hunter.Models
         public Expression<Func<Product, bool>> SearchProductByCategory;
         public Expression<Func<Product, bool>> SearchProductByProductName;
         public Expression<Func<Product, bool>> SearchProductByPrice;
-       
-          
+
+        public Func<KeyValuePair<Product, double>, object> SortProduct;       
+        //public Expression<Func<double, double>> SortByDistance;
+
+
         public SpecialOfferViewModel()
         {
             Distance = 2;
@@ -34,6 +45,7 @@ namespace Special_Offer_Hunter.Models
             ShopName = "";
             ProductName = "";
             PriceValue = 0;
+            sortType = SortType.Rosnąco;
         }
 
         public ProductCategory category;
@@ -45,6 +57,12 @@ namespace Special_Offer_Hunter.Models
 
         public double PriceValue { get; set; }  
         public PriceDescription priceDescription { get; set; }
+
+        public SortMethod sortMethod { get; set; }
+
+        public SortType sortType { get; set; }
+
+        public bool Descending { get; set; }
 
         public List<Product> list { get; set; }
         public Dictionary<Product,double> list2 { get; set; }

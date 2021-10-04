@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Special_Offer_Hunter.Models;
 
 namespace Special_Offer_Hunter.Models
 {
@@ -202,10 +203,15 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+
+
+        public static Expression<Func<Product, string>> OrderDescending = d => d.Name;
+        public static Expression<Func<Product, double>> OrderDescending2Price = d => d.Product_Price.Price;
        
-
-
-
+        /// <summary>
+        /// Odblokuj lokalizacje przed udostępnieniem
+        /// </summary>       
+        /// <returns></returns>
         public Dictionary<Product, double> GetProductsWithSpecialOffer(SpecialOfferViewModel offer)
         {
             try
@@ -215,39 +221,36 @@ namespace Special_Offer_Hunter.Models
                 double longitude = offer.MyLocation.Longitude;
                 Point mylocation = CreatePoint(53.411, 18.451);
 
-
-                Dictionary<Shop, double> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
-                .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation)/1000))
-    .ToDictionary(x => x.Key, x => x.Value);
-
-
                 List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
-                    .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
-                    .Where(offer.SearchShop).SelectMany(x =>
-                   x.Products).AsQueryable()
-                    .Where(offer.SearchProductByCategory)
-                    .Where(offer.SearchProductByProductName)
-                    .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();
-
-
-                Dictionary<Product, double> dictionary = new Dictionary<Product, double>();            
-                              
-
-
+                   .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                   .Where(offer.SearchShop).SelectMany(x =>
+                  x.Products).AsQueryable()
+                   .Where(offer.SearchProductByCategory)
+                   .Where(offer.SearchProductByProductName)
+                   .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();             
+                
+                Dictionary<Product, double> dictionary = new Dictionary<Product, double>();              
+                                                            
                 foreach (var item in listProd)
                 {
-
-
                     Dictionary<Shop, double> shop = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location).Where(x=>x.ShopId==item.Shop.ShopId)
-               .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation) / 1000))
-   .ToDictionary(x => x.Key, x => x.Value);
+                   .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation) / 1000)).ToDictionary(x => x.Key, x => x.Value);  
 
                     var x = shop.First();
                     dictionary.Add(item, x.Value);
-
                 }
 
-                
+                if (offer.sortType==SortType.Malejąco)
+                {
+                  
+                        dictionary = dictionary.OrderByDescending(offer.SortProduct).ToDictionary(x => x.Key, x => x.Value);                   
+
+                }
+                else
+                {                    
+                        dictionary = dictionary.OrderBy(offer.SortProduct).ToDictionary(x => x.Key, x => x.Value);                   
+
+                }
 
                 return dictionary;
 

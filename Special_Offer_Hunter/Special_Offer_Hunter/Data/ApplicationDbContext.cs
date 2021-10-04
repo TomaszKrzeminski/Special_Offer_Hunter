@@ -6,9 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Special_Offer_Hunter.Models;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Configuration;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Special_Offer_Hunter.Data
 {
+
+
+   
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

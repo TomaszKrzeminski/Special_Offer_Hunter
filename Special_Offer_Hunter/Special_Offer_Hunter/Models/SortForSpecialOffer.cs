@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,13 +8,138 @@ using System.Threading.Tasks;
 namespace Special_Offer_Hunter.Models
 {
 
+    public interface SingleSort
+    {
+        SingleSort Next { get; set; }
+        void SetNextSortObject(SingleSort sort);
+        void SetSorting(SpecialOfferViewModel model);
+
+    }
+
+
+    
 
 
 
-   
+    public class SortByProductName : SingleSort
+    {   
+        public  SingleSort Next { get; set; }
 
-   
+        public void SetNextSortObject(SingleSort sort)
+        {
+            this.Next = sort;
+        }
 
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+            if (model.sortMethod==SortMethod.Nazwa)
+            {
+                model.SortProduct = (x) => x.Key.Name;
+                Next = null;
+            }           
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+        }
+    }
+
+    public class SortByShopName : SingleSort
+    {
+        public SingleSort Next { get; set; }
+
+        public void SetNextSortObject(SingleSort sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+            if (model.sortMethod == SortMethod.Sklep)
+            {
+                model.SortProduct = (x) => x.Key.Shop.Name;
+                Next = null;
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+        }
+    }
+
+    public class SortByPriceValue : SingleSort
+    {
+        public SingleSort Next { get; set; }
+
+        public void SetNextSortObject(SingleSort sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+            if (model.sortMethod == SortMethod.Cena)
+            {
+                model.SortProduct = (x) => x.Key.Product_Price.Price;
+                Next = null;
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+        }
+    }
+
+    public class SortNone : SingleSort
+    {
+        public SingleSort Next { get; set; }
+
+        public void SetNextSortObject(SingleSort sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+            if (model.sortMethod == SortMethod.Brak)
+            {
+                model.SortProduct = (x) => x.Key.ProductId;
+                Next = null;
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+        }
+    }
+
+    public class SortByDistance : SingleSort
+    {
+        public SingleSort Next { get; set; }
+
+        public void SetNextSortObject(SingleSort sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+            if (model.sortMethod == SortMethod.Odległość)
+            {
+                model.SortProduct = (x) => x.Value;               
+                Next = null;
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+        }
+    }
 
     public interface SingleSearch
     {
