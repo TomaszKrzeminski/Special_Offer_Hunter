@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "xq93Jj3b2qGytqfeL1+6mXyZr9T3IJBP4MY7VNzWMMIpYz+xU04XzTCdY9qIqLqOPbzfyuTNfFDDZ0nrOZcdww==",
+  "dgSpecHash": "pjKUZEaMCkV1X89Urcs7k0p1MJ1rQrFjz0Gq1T8M2QsazlsIF7gsrVt4qX7PvhCz4i+sc8xnnrkixYO/wf+0UA==",
   "success": true,
   "projectFilePath": "C:\\Users\\tomek\\Desktop\\Repository_Special_Offer\\Special_Offer_Hunter\\Special_Offer_Hunter\\Special_Offer_Hunter.csproj",
   "expectedPackageFiles": [
@@ -188,7 +188,8 @@
     "C:\\Users\\tomek\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\tomek\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\tomek\\.nuget\\packages\\zxing.net\\0.16.6\\zxing.net.0.16.6.nupkg.sha512"
   ],
   "logs": []
 }

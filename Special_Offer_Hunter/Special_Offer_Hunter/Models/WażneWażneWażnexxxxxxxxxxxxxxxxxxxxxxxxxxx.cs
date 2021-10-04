@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace Special_Offer_Hunter.Models
 {
-    public class WażneWażneWażne
+    public class WażneWażneWażnexxxxxxxxxxxxxxxxxxxxxxxxxxx
     {
         //Odblokuj lokalizacjie w GetProductsWithSpecialOffer
+        //dodaj tworzenie folderu Barcode
 
 
 

@@ -20,12 +20,18 @@
    
     <PackageReference Include="NetTopologySuite.Core" Version="1.15.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="ZXing.Net" Version="0.16.6" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\SpecialOffer\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Barcodes\1111.jpg" />
+    <None Include="wwwroot\Barcodes\barcode2.jpg" />
   </ItemGroup>
 
 </Project>
