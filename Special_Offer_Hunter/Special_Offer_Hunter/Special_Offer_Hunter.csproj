@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\Barcodes\1111.jpg" />
-    <None Include="wwwroot\Barcodes\barcode2.jpg" />
   </ItemGroup>
 
 </Project>

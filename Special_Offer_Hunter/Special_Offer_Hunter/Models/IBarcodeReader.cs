@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Drawing;
 using System.IO;
@@ -27,13 +28,29 @@ namespace Special_Offer_Hunter.Models
         public string BarCode { get; set; }
         public string BarCodeImagePath { get; set; }
 
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
         public string ReadBarCode(string FilePath)
         {
             try
             {
-                string id = FilePath;
-                string uploads = Path.Combine(_environment.WebRootPath, "Barcodes");
-                string text = Path.Combine(uploads, id);
+                string text = FilePath;
+                //string id = FilePath;
+                //string uploads = Path.Combine(_environment.WebRootPath, "Barcodes");
+                //string text = Path.Combine(uploads, id);
 
                 Bitmap image;
                 try

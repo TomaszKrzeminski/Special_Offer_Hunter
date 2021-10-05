@@ -18,12 +18,11 @@
             @*@Html.Partial("OffersInNeighborhood", new SpecialOfferViewModel())*@
             @await Component.InvokeAsync("OffersInNeighborhoodComponent")
 
-
         </div>
     </div>
     <div class="row block bg-secondary">
-        <div class="col-lg-12">
-
+        <div id="ScanBarCode" class="col-lg-12">
+            @await Component.InvokeAsync("ScanBarCodeComponent")
         </div>
     </div>
     <div class="row block bg-dark">
@@ -81,16 +80,51 @@
         $(document).ready(function () {
 
 
+        ///WebCamera take snapschoot
+
+            //Webcam.set({
+            //    width: 500,
+            //    height: 375,
+            //    image_format: 'jpg',
+            //    jpeg_quality: 100
+
+
+            //});
+
+            Webcam.set({
+                width: 320,
+                height: 240,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });  
+
+
+            Webcam.attach('#LiveCamera');
+
+
+            function CaptureSnapshot() {
+                Webcam.snap(function (data) {
+                    // display results in page
+                    document.getElementById('results').innerHTML = '<img src="' + data + '"/>';
+                    // Send image data to the controller to store locally or in database
+                    Webcam.upload(data,
+                        '/BarCode/CaptureImage',
+                        function (code, text) {
+                            alert('Snapshot/Image captured successfully...');
+                        });
+                });
+            }
+
+            $('#ScanBarCode').on('click','#CaptureSnapshot', function () {                
+              
+                CaptureSnapshot();
+
+            });
 
 
 
 
-
-
-
-
-
-
+///
 
 function SearchSpecialOffer()
     {
@@ -173,11 +207,11 @@ function SearchSpecialOffer()
     }
 
 
-    SendCoordinates();          
-            
+    SendCoordinates();
+
             $('#OffersInNeighborhoodElement').on('click','#FiltrOffersInNeighborhood', function () {
 
-               
+
 
 
                 var priceDescription = $("#priceDescription").val();
@@ -186,7 +220,7 @@ function SearchSpecialOffer()
                 var CategoryName = $("#CategoryName").val();
                 var ShopName = $("#ShopName").val();
                 var Distance = $("#Distance").val();
-                var SortMethod = $("#sortMethod").val(); 
+                var SortMethod = $("#sortMethod").val();
                 var sortType = $("#sortType").val();
 
                 var t = $("input[name='__RequestVerificationToken']").val();
@@ -211,7 +245,7 @@ function SearchSpecialOffer()
 
                     $('#OffersInNeighborhoodElement').empty();
                     $('#OffersInNeighborhoodElement').html(result);
-                   
+
                 }
             });
 
