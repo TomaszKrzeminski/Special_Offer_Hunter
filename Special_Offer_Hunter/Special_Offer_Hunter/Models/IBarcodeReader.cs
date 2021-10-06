@@ -46,11 +46,7 @@ namespace Special_Offer_Hunter.Models
         public string ReadBarCode(string FilePath)
         {
             try
-            {
-                string text = FilePath;
-                //string id = FilePath;
-                //string uploads = Path.Combine(_environment.WebRootPath, "Barcodes");
-                //string text = Path.Combine(uploads, id);
+            {  string text = FilePath;               
 
                 Bitmap image;
                 try
@@ -74,7 +70,7 @@ namespace Special_Offer_Hunter.Models
                     }
                     else
                     {
-                        return null;
+                        return "Nie odczytano spróbuj jeszcze raz";
                     }
 
                 }
@@ -82,7 +78,7 @@ namespace Special_Offer_Hunter.Models
 
             catch (Exception ex)
             {
-                return null;
+                return "Nie odczytano spróbuj jeszcze raz"; ;
             }
 
 

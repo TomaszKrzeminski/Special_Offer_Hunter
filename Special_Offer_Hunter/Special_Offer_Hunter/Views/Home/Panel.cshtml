@@ -22,7 +22,9 @@
     </div>
     <div class="row block bg-secondary">
         <div id="ScanBarCode" class="col-lg-12">
+
             @await Component.InvokeAsync("ScanBarCodeComponent")
+
         </div>
     </div>
     <div class="row block bg-dark">
@@ -110,7 +112,7 @@
                     Webcam.upload(data,
                         '/BarCode/CaptureImage',
                         function (code, text) {
-                            alert('Snapshot/Image captured successfully...');
+                            $('#BarcodeResult').val(text);
                         });
                 });
             }

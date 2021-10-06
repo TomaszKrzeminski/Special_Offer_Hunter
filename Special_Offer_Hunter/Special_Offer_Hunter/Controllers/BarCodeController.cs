@@ -25,6 +25,9 @@ namespace Special_Offer_Hunter.Controllers
         [HttpPost]
 		public IActionResult CaptureImage(string name)
 		{
+			Random rnd = new Random();
+			int FileName= rnd.Next(1, 1000000);
+			string barcode="";
 			try
 			{
 				var files = HttpContext.Request.Form.Files;
@@ -35,9 +38,10 @@ namespace Special_Offer_Hunter.Controllers
 						if (file.Length > 0)
 						{
 							
+							
 							var fileName = file.FileName;
 							//var fileNameToStore = string.Concat(Convert.ToString(Guid.NewGuid()), Path.GetExtension(fileName));
-							var fileNameToStore = string.Concat("BarcodeToCheck", Path.GetExtension(fileName));
+							var fileNameToStore = string.Concat("BarcodeToCheck"+FileName, Path.GetExtension(fileName));
 							//  Path to store the snapshot in local folder
 							var filepath = Path.Combine(_environment.WebRootPath, "Barcodes") + $@"\{fileNameToStore}";
 
@@ -54,10 +58,19 @@ namespace Special_Offer_Hunter.Controllers
                           
 
 							IBarcodeReaderInterface barcodeReader = new BarCodeReader1(_environment);
-							string barcode = barcodeReader.ReadBarCode(filepath);
+							 barcode = barcodeReader.ReadBarCode(filepath);
+
+							if (System.IO.File.Exists(filepath))
+							{
+								System.IO.File.Delete(filepath);
+								ViewBag.deleteSuccess = "true";
+							}
+
+
 						}
 					}
-					return Json(true);
+					//return Json(true);
+					return this.Content(barcode, "application/json");
 				}
 				else
 				{
@@ -71,13 +84,13 @@ namespace Special_Offer_Hunter.Controllers
 		}
 
 
-
-		public IActionResult TakeSnapShoot()
+public void Test()
         {
+			ProductDetailsFromBarCode x = new ProductDetailsFromBarCode();
+			Product product=x.GetProductDetails().Result;
 
-
-            return View();
-        }
+		}
+		
 
         public IActionResult ScanProductCode()
         {
