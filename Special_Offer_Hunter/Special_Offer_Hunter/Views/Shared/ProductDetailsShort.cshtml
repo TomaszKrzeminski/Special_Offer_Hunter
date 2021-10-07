@@ -1,0 +1,29 @@
+﻿@model ProductDetailsViewModel
+<div class="row" style="background-color:lightcyan;">
+    @if (Model.Code != null && Model.Code != "")
+    {
+        <div class="col col-lg-12">
+            <h4>BarCode :  @Model.Code</h4>
+        </div>
+
+        <div class="col col-lg-12">
+            @if (Model.Brand != null && Model.Brand != "")
+            {
+                <h4>Marka :   @Model.Brand</h4>
+            }
+        </div>
+
+        <div class="col col-lg-12">
+            <h5>Opis : @Model.Description</h5>
+        </div>
+
+
+
+
+    }
+    else
+    {
+        <h4>Nie udało się odczytać kodu spróbuj jeszcze raz</h4>
+    }
+
+</div>

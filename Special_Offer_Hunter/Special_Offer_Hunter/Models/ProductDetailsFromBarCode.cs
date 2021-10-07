@@ -12,10 +12,12 @@ namespace Special_Offer_Hunter.Models
       public  string BarCode { get; set; }
       public  string ProductName { get; set; }
 
-      public async Task<Product> GetProductDetails(string barcode= "5900571902299")
+      public async Task<ProductDetailsViewModel> GetProductDetails(string barcode)
         {
-            Product product = new Product();
-            product.Description="Nie udało się znaleźć żadnych informacji o produkcie";
+            ProductDetailsViewModel model = new ProductDetailsViewModel();
+            model.Description="Nie udało się znaleźć żadnych informacji o produkcie";
+            model.Code = "";
+            model.Brand = "";       
             
             try
             {
@@ -27,24 +29,36 @@ namespace Special_Offer_Hunter.Models
                 string responseBody = await response.Content.ReadAsStringAsync();
                 JObject o = JObject.Parse(responseBody);
 
+                string code = (string)o["code"];
+
                
-                //product.Name = (string)o["product"]["_keywords"];
-                product.Name = (string)o["product"][1];
-                product.Description =(string)o["product"]["brands"];
-                //weather.City = (string)o["name"];
-                //weather.Temp = (double)o["main"]["temp"];
-                //weather.Temp_Min = (double)o["main"]["temp_min"];
-                //weather.Temp_Max = (double)o["main"]["temp_max"];
-                //weather.Description = (string)o["weather"][0]["description"];
+ JArray array = (JArray)o["product"]["_keywords"];
+                string brands = (string)o["product"]["brands"];
+                
+
+               
+                model. Description = "";
+                model.Brand = brands;
+                model.Code = code;
 
 
+                if(array!=null)
+                {
+for (int i = 0; i < array.Count; i++)
+                {
+                    model.Description += " " + array[i];
+                    
+                }   
+                }
+
+                         
 
 
-                return product;
+                return model;
             }
             catch(Exception ex)
             {
-                return product;
+                return model;
             }
 
 

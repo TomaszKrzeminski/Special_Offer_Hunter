@@ -59,7 +59,7 @@ namespace Special_Offer_Hunter.Data
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Location> Locations { get; set; }
-
+        public DbSet<Company> Companies { get; set; }
         public DbSet<Product_Price> Product_Prices { get; set; }
         public DbSet<Category> Categories { get; set; }
 

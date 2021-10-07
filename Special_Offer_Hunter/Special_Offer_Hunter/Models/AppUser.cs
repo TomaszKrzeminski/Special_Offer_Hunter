@@ -120,13 +120,24 @@ namespace Special_Offer_Hunter.Models
         public virtual List<Product> Products { get; set; }
     }
 
+    public class Company
+    {
+        public Company()
+        {
+            Products = new List<Product>();
+        }
+        public int CompanyId { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
 
+        public virtual List<Product> Products { get; set; }
+    }
 
     public class Product
     {
 
 
-       public  Product(Product product)
+        public Product(Product product)
         {
 
             this.ProductId = product.ProductId;
@@ -147,11 +158,11 @@ namespace Special_Offer_Hunter.Models
             this.Shop = product.Shop;
             this.Product_PriceId = product.Product_PriceId;
             this.Product_Price = product.Product_Price;
-           
+
 
         }
 
-
+        
 
         public Product()
         {
@@ -164,7 +175,7 @@ namespace Special_Offer_Hunter.Models
         public string Name { get; set; }
        
 
-        public string Description { get; set; }
+        public string Description { get; set; }      
 
         public double Weight { get; set; }
         public double Height { get; set; }
@@ -180,6 +191,8 @@ namespace Special_Offer_Hunter.Models
         public int? Shopping_Cart_WeekId { get; set; }
         public  Shopping_Cart_Week shopping_Cart_Week;
 
+        public int? CompanyId { get; set; }
+        public virtual Company Company { get; set; }
         public int? ShopId { get; set; }
         public virtual Shop Shop { get; set; }
 

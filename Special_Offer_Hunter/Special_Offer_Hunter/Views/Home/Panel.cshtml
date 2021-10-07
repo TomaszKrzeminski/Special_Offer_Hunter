@@ -112,7 +112,10 @@
                     Webcam.upload(data,
                         '/BarCode/CaptureImage',
                         function (code, text) {
-                            $('#BarcodeResult').val(text);
+
+                            $('#BarcodeResult').empty();
+                            $('#BarcodeResult').html(text);
+                          
                         });
                 });
             }

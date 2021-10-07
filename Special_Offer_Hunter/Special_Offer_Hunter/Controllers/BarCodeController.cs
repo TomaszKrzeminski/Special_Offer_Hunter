@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Nancy.Json;
 using Special_Offer_Hunter.Models;
 
 namespace Special_Offer_Hunter.Controllers
@@ -69,9 +70,16 @@ namespace Special_Offer_Hunter.Controllers
 
 						}
 					}
-					//return Json(true);
-					return this.Content(barcode, "application/json");
-				}
+
+					ProductDetailsFromBarCode x = new ProductDetailsFromBarCode();
+					ProductDetailsViewModel model = x.GetProductDetails(barcode).Result;
+
+					
+
+					return PartialView("ProductDetailsShort", model);
+
+					//return this.Content(json, "application/json");
+                }
 				else
 				{
 					return Json(false);
@@ -84,20 +92,7 @@ namespace Special_Offer_Hunter.Controllers
 		}
 
 
-public void Test()
-        {
-			ProductDetailsFromBarCode x = new ProductDetailsFromBarCode();
-			Product product=x.GetProductDetails().Result;
 
-		}
-		
-
-        public IActionResult ScanProductCode()
-        {
-            IBarcodeReaderInterface barcodeReader = new BarCodeReader1(_environment);
-           string barcode= barcodeReader.ReadBarCode("1111.jpg");
-            return View();
-        }
         public IActionResult SearchByProductName()
         {
             return View();

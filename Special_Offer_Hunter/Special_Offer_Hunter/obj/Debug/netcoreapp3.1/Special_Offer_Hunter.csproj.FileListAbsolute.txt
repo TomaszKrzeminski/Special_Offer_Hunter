@@ -92,6 +92,7 @@ C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\
 C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.dll
 C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.pdb
 C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.genruntimeconfig.cache
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Server.IIS.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -166,7 +167,6 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Routing.Abstractions.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Routing.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Server.HttpSys.dll
-C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Server.IIS.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Server.IISIntegration.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Server.Kestrel.Core.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Server.Kestrel.dll
@@ -407,6 +407,7 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.Extensions.PlatformAbstractions.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
@@ -423,6 +424,7 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Nancy.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\NetTopologySuite.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\NetTopologySuite.IO.SqlServerBytes.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
@@ -529,6 +531,7 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Home\Panel.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\OffersInNeighborhood.cshtml.g.cs
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ProductDetailsShort.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -543,4 +546,3 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.pdb
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.genruntimeconfig.cache
-C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.csprojAssemblyReference.cache
