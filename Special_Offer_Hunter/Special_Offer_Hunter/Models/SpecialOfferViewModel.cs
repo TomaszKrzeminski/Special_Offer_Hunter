@@ -25,12 +25,15 @@ namespace Special_Offer_Hunter.Models
     public class SpecialOfferViewModel
     {
         
-
+       
         public Expression<Func<Shop, bool>> SearchShopByDistance;
         public Expression<Func<Shop, bool>> SearchShop;
+        public Expression<Func<Product, bool>> SearchProductByBarCode;
         public Expression<Func<Product, bool>> SearchProductByCategory;
         public Expression<Func<Product, bool>> SearchProductByProductName;
         public Expression<Func<Product, bool>> SearchProductByPrice;
+       
+
 
         public Func<KeyValuePair<Product, double>, object> SortProduct;       
         //public Expression<Func<double, double>> SortByDistance;
@@ -54,6 +57,7 @@ namespace Special_Offer_Hunter.Models
         public string CategoryName { get; set; }
         public string ShopName { get; set; }
         public string ProductName { get; set; }
+        public string BarCode { get; set; }
 
         public double PriceValue { get; set; }  
         public PriceDescription priceDescription { get; set; }

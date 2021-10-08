@@ -227,6 +227,7 @@ function SearchSpecialOffer()
                 var Distance = $("#Distance").val();
                 var SortMethod = $("#sortMethod").val();
                 var sortType = $("#sortType").val();
+                var BarCode = $('#BarCodeSearch').val();
 
                 var t = $("input[name='__RequestVerificationToken']").val();
             $.ajax({
@@ -240,7 +241,8 @@ function SearchSpecialOffer()
                     ShopName: ShopName,
                     Distance: Distance,
                     sortMethod: SortMethod,
-                    sortType:sortType
+                    sortType: sortType,
+                    BarCode: BarCode
                 },
                 headers:
                 {

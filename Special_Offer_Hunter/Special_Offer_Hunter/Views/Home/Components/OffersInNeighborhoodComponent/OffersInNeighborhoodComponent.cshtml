@@ -8,7 +8,10 @@
         <form id="OffersInNeighborhoodFiltr" asp-action="OffersInNeighborhood" asp-controller="SpecialOffer" method="get">
             <div class="row">
 
-
+                <div class="col col-lg-2">
+                    <label class="font-weight-bold" asp-for="ProductName">Kod produktu</label>
+                    <input id="BarCodeSearch" class="form-control" asp-for="BarCode" />                    
+                </div>
                 <div class="col col-lg-2">
                     <label class="font-weight-bold">Sortuj</label>
                     <select class="custom-select custom-select-sm" asp-for="sortMethod" asp-items="Html.GetEnumSelectList<SortMethod>()">

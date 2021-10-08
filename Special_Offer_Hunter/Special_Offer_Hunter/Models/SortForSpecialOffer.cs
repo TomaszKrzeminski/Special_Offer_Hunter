@@ -150,7 +150,55 @@ namespace Special_Offer_Hunter.Models
 
     }
 
- 
+
+    public class SearchCategoryBarCode : SingleSearch
+    {
+        Expression<Func<Product, bool>>
+       SearchProductByCategoryBarCodeOne(string BarCode)
+        {
+
+            return (Product c) => c.Product_Code.Code == BarCode;
+
+        }
+
+        Expression<Func<Product, bool>>
+       SearchProductByCategoryBarCodeAll(string BarCode)
+        {
+            return (Product c) => true;
+        }
+
+
+
+        public SingleSearch Next { get; set; }
+
+        public void SetNextSortObject(SingleSearch sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+
+            if (model.BarCode == "" || model.BarCode == null)
+            {
+                model.SearchProductByBarCode = SearchProductByCategoryBarCodeAll(model.BarCode);
+            }
+            else
+            {
+                model.SearchProductByBarCode = SearchProductByCategoryBarCodeOne(model.BarCode);
+               
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+
+        }
+    }
+
+
+
 
     public class SearchCategoryName : SingleSearch
     {

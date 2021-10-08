@@ -30,6 +30,7 @@ namespace Special_Offer_Hunter.Components
             model.priceDescription = PriceDescription.Wszystkie;
             model.MyLocation = repository.GetUserLocation(UserId);
             model.Distance = 50;
+            model.BarCode = "";
 
             SingleSort sorting1 = new SortNone();
             SingleSort sorting2 = new SortByProductName();
@@ -39,17 +40,18 @@ namespace Special_Offer_Hunter.Components
 
 
 
-
+          
             SingleSearch sort1 = new SearchShopName();
             SingleSearch sort2 = new SearchCategoryName();
-            SingleSearch sort3 = new SearchProductName();
-            SingleSearch sort4 = new SearchPriceValue();
-
+            SingleSearch sort3 = new SearchCategoryBarCode();
+            SingleSearch sort4 = new SearchProductName();
+            SingleSearch sort5 = new SearchPriceValue();
 
 
             sort1.SetNextSortObject(sort2);
             sort2.SetNextSortObject(sort3);
             sort3.SetNextSortObject(sort4);
+            sort4.SetNextSortObject(sort5);
 
 
             sort1.SetSorting(model);

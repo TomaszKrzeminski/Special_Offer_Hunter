@@ -39,6 +39,7 @@ namespace Special_Offer_Hunter.Controllers
            
             modelX.MyLocation = repository.GetUserLocation(UserId);
 
+           
             SingleSort sorting1 = new SortNone();
             SingleSort sorting2 = new SortByProductName();
             SingleSort sorting3 = new SortByShopName();
@@ -50,17 +51,20 @@ namespace Special_Offer_Hunter.Controllers
             sorting3.SetNextSortObject(sorting4);
             sorting4.SetNextSortObject(sorting5);
 
-            SingleSearch sort1 = new SearchShopName();
-            SingleSearch sort2 = new SearchCategoryName();
+           
+            SingleSearch sort0 = new SearchShopName();
+            SingleSearch sort1 = new SearchCategoryName();
+            SingleSearch sort2 = new SearchCategoryBarCode();
             SingleSearch sort3 = new SearchProductName();
             SingleSearch sort4 = new SearchPriceValue();
 
+            sort0.SetNextSortObject(sort1);
             sort1.SetNextSortObject(sort2);
             sort2.SetNextSortObject(sort3);
             sort3.SetNextSortObject(sort4);
 
 
-            sort1.SetSorting(modelX);
+            sort0.SetSorting(modelX);
             sorting1.SetSorting(modelX);
 
             Dictionary<Product, double> list = repository.GetProductsWithSpecialOffer(modelX);
