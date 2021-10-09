@@ -79,26 +79,15 @@
 
 
 
-        $(document).ready(function () {
-
-
-        ///WebCamera take snapschoot
-
-            //Webcam.set({
-            //    width: 500,
-            //    height: 375,
-            //    image_format: 'jpg',
-            //    jpeg_quality: 100
-
-
-            //});
+        $(document).ready(function ()
+        {
 
             Webcam.set({
                 width: 320,
                 height: 240,
                 image_format: 'jpeg',
                 jpeg_quality: 90
-            });  
+            });
 
 
             Webcam.attach('#LiveCamera');
@@ -115,13 +104,13 @@
 
                             $('#BarcodeResult').empty();
                             $('#BarcodeResult').html(text);
-                          
+
                         });
                 });
             }
 
-            $('#ScanBarCode').on('click','#CaptureSnapshot', function () {                
-              
+            $('#ScanBarCode').on('click','#CaptureSnapshot', function () {
+
                 CaptureSnapshot();
 
             });
@@ -212,12 +201,82 @@ function SearchSpecialOffer()
     }
 
 
-    SendCoordinates();
-
-            $('#OffersInNeighborhoodElement').on('click','#FiltrOffersInNeighborhood', function () {
+            SendCoordinates();
 
 
+            $("body").on('click', "#SearchProductByFoundBarCode", function (e) {
+               
+               
+            //$('#ScanBarCode').on('click','#SearchProductByFoundBarCode', function (e) {
 
+              
+
+                var BarCode1 = $("#BarcodeResult #BarCodeProductDS").val();
+                //var BarCode= $('#BarCodeSearch').val(BarCode1);
+                var BarCode = BarCode1;
+                var priceDescription = $("#priceDescription").val();
+                var PriceValue = $("#PriceValue").val();
+                var ProductName = $("#ProductName").val();
+                var CategoryName = $("#CategoryName").val();
+                var ShopName = $("#ShopName").val();
+                var Distance = $("#Distance").val();
+                var SortMethod = $("#sortMethod").val();
+                var sortType = $("#sortType").val();
+                var SpecialOffer = false;
+                if ($('#SpecialOffer').is(":checked")) {
+                    var SpecialOffer = true;
+                }
+
+
+                  //var t = $("input[name='__RequestVerificationToken']").val();
+            $.ajax({
+                url: '@Url.Action("OffersInNeighborhood", "SpecialOffer")',
+               type: "get",
+                data: {
+                    priceDescription: priceDescription ,
+                    PriceValue: PriceValue ,
+                    ProductName: ProductName,
+                    CategoryName: CategoryName,
+                    ShopName: ShopName,
+                    Distance: Distance,
+                    sortMethod: SortMethod,
+                    sortType: sortType,
+                    BarCode: BarCode,
+                    SpecialOffer:SpecialOffer
+                },
+                headers:
+                {
+                    //"RequestVerificationToken": t
+                },
+                success: function (result) {
+                    e.stopPropagation();
+                    $('#OffersInNeighborhoodElement').empty();
+                    $('#OffersInNeighborhoodElement').html(result);
+
+                }
+            });
+
+
+
+            });
+
+
+
+           
+
+
+
+
+
+
+
+
+
+
+            $('#OffersInNeighborhoodElement').on('click', '#FiltrOffersInNeighborhood', function (e) {
+
+
+                e.stopPropagation();
 
                 var priceDescription = $("#priceDescription").val();
                 var PriceValue = $("#PriceValue").val();
@@ -228,6 +287,14 @@ function SearchSpecialOffer()
                 var SortMethod = $("#sortMethod").val();
                 var sortType = $("#sortType").val();
                 var BarCode = $('#BarCodeSearch').val();
+                var SpecialOffer = false;
+                if ($('#SpecialOffer').is(":checked"))
+                {               
+                var SpecialOffer = true;
+                }
+               
+
+
 
                 var t = $("input[name='__RequestVerificationToken']").val();
             $.ajax({
@@ -242,7 +309,8 @@ function SearchSpecialOffer()
                     Distance: Distance,
                     sortMethod: SortMethod,
                     sortType: sortType,
-                    BarCode: BarCode
+                    BarCode: BarCode,
+                    SpecialOffer:SpecialOffer
                 },
                 headers:
                 {

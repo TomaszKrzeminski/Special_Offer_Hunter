@@ -9,8 +9,14 @@
             <div class="row">
 
                 <div class="col col-lg-2">
-                    <label class="font-weight-bold" asp-for="ProductName">Kod produktu</label>
+                    <label class="font-weight-bold" @*asp-for="ProductName"*@>Kod produktu</label>
                     <input id="BarCodeSearch" class="form-control" asp-for="BarCode" />
+                </div>
+                <div class="col col-lg-2">
+                    <input class="form-check-input" type="checkbox" value="" id="SpecialOffer" asp-for="SpecialOffer">
+                    <label class="form-check-label" >
+                        Promocja na Produkt
+                    </label>
                 </div>
                 <div class="col col-lg-2">
                     <label class="font-weight-bold">Sortuj</label>
@@ -66,7 +72,7 @@
 
         </form>
     </div>
-    
+
 
 
 
@@ -101,52 +107,52 @@
 
 
 @*@section Scripts
-{
-    <script>
-         $('#FiltrOffersInNeighborhood').on('click', function () {
-
-             alert("Click");
-
-
-
-    var priceDescription = $("#priceDescription").val();
-    var PriceValue = $("#PriceValue").val();
-    var ProductName = $("#ProductName").val();
-    var CategoryName = $("#CategoryName").val();
-    var ShopName = $("#ShopName").val();
-    var Distance = $("#Distance").val();
-
-    var t = $("input[name='__RequestVerificationToken']").val();
-    $.ajax({
-    url: '@Url.Action("OffersInNeighborhood", "SpecialOffer")',
-    type: "get",
-    data: {
-    priceDescription: priceDescription ,
-    PriceValue: PriceValue ,
-    ProductName: ProductName,
-    CategoryName: CategoryName,
-    ShopName: ShopName,
-    Distance: Distance
-    },
-    headers:
     {
-    "RequestVerificationToken": t
-    },
-    success: function (result) {
+        <script>
+             $('#FiltrOffersInNeighborhood').on('click', function () {
 
-    $('#OffersInNeighborhoodElement').empty();
-    $('#OffersInNeighborhoodElement').html(result);
-    alert("start2");
-    }
+                 alert("Click");
+
+
+
+        var priceDescription = $("#priceDescription").val();
+        var PriceValue = $("#PriceValue").val();
+        var ProductName = $("#ProductName").val();
+        var CategoryName = $("#CategoryName").val();
+        var ShopName = $("#ShopName").val();
+        var Distance = $("#Distance").val();
+
+        var t = $("input[name='__RequestVerificationToken']").val();
+        $.ajax({
+        url: '@Url.Action("OffersInNeighborhood", "SpecialOffer")',
+        type: "get",
+        data: {
+        priceDescription: priceDescription ,
+        PriceValue: PriceValue ,
+        ProductName: ProductName,
+        CategoryName: CategoryName,
+        ShopName: ShopName,
+        Distance: Distance
+        },
+        headers:
+        {
+        "RequestVerificationToken": t
+        },
+        success: function (result) {
+
+        $('#OffersInNeighborhoodElement').empty();
+        $('#OffersInNeighborhoodElement').html(result);
+        alert("start2");
+        }
+        });
+
+
+
+        });
+
+
     });
+        </script>
 
 
-
-    });
-
-
-});
-    </script>
-   
-
-}*@
+    }*@

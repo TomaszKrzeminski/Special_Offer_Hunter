@@ -225,8 +225,8 @@ namespace Special_Offer_Hunter.Models
 
                 List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
                    .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
-                   .Where(offer.SearchShop).SelectMany(x =>
-                  x.Products).AsQueryable().Where(offer.SearchProductByBarCode)
+                   .Where(offer.SearchShop).SelectMany(x =>x.Products).AsQueryable().Where(offer.SearchProductByBarCode)                  
+                   .Where(offer.SearchProductBySpecialOffer)
                    .Where(offer.SearchProductByCategory)
                    .Where(offer.SearchProductByProductName)
                    .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();             

@@ -44,15 +44,16 @@ namespace Special_Offer_Hunter.Components
             SingleSearch sort1 = new SearchShopName();
             SingleSearch sort2 = new SearchCategoryName();
             SingleSearch sort3 = new SearchCategoryBarCode();
-            SingleSearch sort4 = new SearchProductName();
-            SingleSearch sort5 = new SearchPriceValue();
+            SingleSearch sort4 = new SearchCategoryBySpecialOffer();
+            SingleSearch sort5 = new SearchProductName();
+            SingleSearch sort6 = new SearchPriceValue();
 
 
             sort1.SetNextSortObject(sort2);
             sort2.SetNextSortObject(sort3);
             sort3.SetNextSortObject(sort4);
             sort4.SetNextSortObject(sort5);
-
+            sort5.SetNextSortObject(sort6);
 
             sort1.SetSorting(model);
             sorting1.SetSorting(model);
