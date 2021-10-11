@@ -107,7 +107,7 @@ namespace Special_Offer_Hunter.Models
                 context.SaveChanges();
             }
 
-            void SeedCode(string Code, string CodeType, string Country, string Producer, string ProductInfo)
+            int SeedCode(string Code, string CodeType, string Country, string Producer, string ProductInfo)
             {
                 Product_Code productCode = new Product_Code();
                 productCode.Code = Code;
@@ -118,7 +118,7 @@ namespace Special_Offer_Hunter.Models
 
                 context.Product_Codes.Add(productCode);
                 context.SaveChanges();
-
+                return productCode.Product_CodeId;
 
             }
 
@@ -131,6 +131,17 @@ namespace Special_Offer_Hunter.Models
                 context.SaveChanges();
 
             }
+
+
+            void SeedAddCodeToProduct2(int ProductId, int BarCodeId)
+            {
+                Product_Code pc = context.Product_Codes.Where(x => x.Product_CodeId == BarCodeId).FirstOrDefault();
+                Product product = context.Products.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                pc.Products.Add(product);
+                context.SaveChanges();
+
+            }
+
 
             void SeedAdmin(string Name, string Surname, string Sex, string City, string Email, DateTime Dateofbirth)
             {
@@ -311,28 +322,33 @@ namespace Special_Offer_Hunter.Models
                     void SeedProductsForShop(string ShopName, List<double> Prices, List<bool> SpecialOffer)
                     {
                         Product p1 = SeedProducts("Winterfresh Original Guma Do Ucia Bez Cukru 35 G");
-                        SeedCode("4009900382250", "EAN13", "", "Winterfresh", "Winterfresh Original Guma Do Ucia Bez Cukru 35 G");
-                        SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4009900382250");
+                        int id = SeedCode("4009900382250", "EAN13", "", "Winterfresh", "Winterfresh Original Guma Do Ucia Bez Cukru 35 G");
+                        SeedAddCodeToProduct2(p1.ProductId, id);
+                        //SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4009900382250");
                         SeedAddProductToCategory(p1, "Przekąski");
 
                         Product p2 = SeedProducts("Blend-a-Med 3D White Fresh Cool Water Wybielajca");
-                        SeedCode("4015600620035", "EAN13", "", "Winterfresh", "Blend-a-Med 3D White Fresh Cool Water Wybielajca");
-                        SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4015600620035");
+                        int id1 = SeedCode("4015600620035", "EAN13", "", "Winterfresh", "Blend-a-Med 3D White Fresh Cool Water Wybielajca");
+                        SeedAddCodeToProduct2(p2.ProductId, id1);
+                        //SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4015600620035");
                         SeedAddProductToCategory(p2, "Kosmetyki");
 
                         Product p3 = SeedProducts("Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)");
-                        SeedCode("5906204007874", "EAN13", "", "Vitalsss plus", "Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)");
-                        SeedAddCodeToProduct("Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)", "5906204007874");
+                        int id2 = SeedCode("5906204007874", "EAN13", "", "Vitalsss plus", "Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)");
+                        SeedAddCodeToProduct2(p3.ProductId, id2);
+                        ////SeedAddCodeToProduct("Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)", "5906204007874");
                         SeedAddProductToCategory(p3, "Napoje");
 
                         Product p4 = SeedProducts("Kawa Inka 200G");
-                        SeedCode("5901154041497", "EAN13", "", "Inka", "Kawa Inka 200G");
-                        SeedAddCodeToProduct("Kawa Inka 200G", "5901154041497");
+                        int id3 = SeedCode("5901154041497", "EAN13", "", "Inka", "Kawa Inka 200G");
+                        //SeedAddCodeToProduct("Kawa Inka 200G", "5901154041497");
+                        SeedAddCodeToProduct2(p4.ProductId, id3);
                         SeedAddProductToCategory(p4, "Napoje");
 
                         Product p5 = SeedProducts("Lech-shandy-500ml-poland");
-                        SeedCode("5901359034560", "EAN13", "", "LECH", "Lech - shandy - 500ml - poland");
-                        SeedAddCodeToProduct("Lech-shandy-500ml-poland", "5901359034560");
+                        int id4 = SeedCode("5901359034560", "EAN13", "", "LECH", "Lech - shandy - 500ml - poland");
+                        SeedAddCodeToProduct2(p5.ProductId, id4);
+                        //SeedAddCodeToProduct("Lech-shandy-500ml-poland", "5901359034560");
                         SeedAddProductToCategory(p5, "Napoje");
 
 

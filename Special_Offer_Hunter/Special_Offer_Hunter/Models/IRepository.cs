@@ -17,7 +17,7 @@ namespace Special_Offer_Hunter.Models
         Product GetProductByName(string Name);
         Product GetProductByCode(string Code);
         Location GetUserLocation(string UserId);
-
+        public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type);
         List<Product> GetProductsWithSpecialOffer2(SpecialOfferViewModel offer);
         bool AddPriceToProduct(int ProductId, double Price);
 
@@ -95,6 +95,23 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type)
+        {
+            try
+            {
+                ShoppingCartViewModel model = new ShoppingCartViewModel();
+
+                List<Product> list = context.Users.Include(x => x.Shopping_Cart_Day).Include(x => x.Shopping_Cart_Week).Include(x => x.Shopping_Cart_Month).Include(x => x.Shopping_Cart_Year).Include(x => x.Shopping_Cart_LookFor).ThenInclude(x => x.Sh).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
         public Product GetProductById(int Id)
         {
             Product product = new Product();
@@ -136,8 +153,6 @@ namespace Special_Offer_Hunter.Models
                 return null;
             }
         }
-
-
         public static Point CreatePoint(double latitude, double longitude)
         {
             // 4326 is most common coordinate system used by GPS/Maps
@@ -149,24 +164,21 @@ namespace Special_Offer_Hunter.Models
 
             return newLocation;
         }
-
-
-
         public List<Product> GetProductsWithSpecialOffer2(SpecialOfferViewModel offer)
         {
             try
             {
- double latitude = offer.MyLocation.Latitude;
+                double latitude = offer.MyLocation.Latitude;
                 double longitude = offer.MyLocation.Longitude;
 
 
-                
+
                 Point mylocation = new NetTopologySuite.Geometries.Point(18.451, 53.411) { SRID = 4326 };
 
                 List<double> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
-                   .Select(x => (x.Location.location.Distance(mylocation) / 1000) ).ToList();
+                   .Select(x => (x.Location.location.Distance(mylocation) / 1000)).ToList();
 
-               
+
 
 
                 List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
@@ -181,15 +193,15 @@ namespace Special_Offer_Hunter.Models
                 Dictionary<Product, double> dictionary = new Dictionary<Product, double>();
                 Point mylocation2 = new NetTopologySuite.Geometries.Point(18.451, 53.411) { SRID = 4326 };
 
-                List<double> list=  listProd.Select(x => (x.Shop.Location.location.Distance(mylocation2) / 1000)).ToList();
+                List<double> list = listProd.Select(x => (x.Shop.Location.location.Distance(mylocation2) / 1000)).ToList();
 
                 foreach (var item in listProd)
                 {
 
 
 
-                    double Distance=(item.Shop.Location.location.Distance(mylocation)/1000);
-                    dictionary.Add(item, Distance);                   
+                    double Distance = (item.Shop.Location.location.Distance(mylocation) / 1000);
+                    dictionary.Add(item, Distance);
 
                 }
 
@@ -203,19 +215,17 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-
-
         public static Expression<Func<Product, string>> OrderDescending = d => d.Name;
         public static Expression<Func<Product, double>> OrderDescending2Price = d => d.Product_Price.Price;
-       
+
         /// <summary>
         /// Odblokuj lokalizacje przed udostępnieniem
         /// </summary>       
         /// <returns></returns>
         public Dictionary<Product, double> GetProductsWithSpecialOffer(SpecialOfferViewModel offer)
-        { 
+        {
 
-        //Dodaj special offer lub nie
+            //Dodaj special offer lub nie
             try
             {
 
@@ -223,34 +233,40 @@ namespace Special_Offer_Hunter.Models
                 double longitude = offer.MyLocation.Longitude;
                 Point mylocation = CreatePoint(53.411, 18.451);
 
+
+                List<Product> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                   .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                   .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode).ToList();
+
+
                 List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
                    .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
-                   .Where(offer.SearchShop).SelectMany(x =>x.Products).AsQueryable().Where(offer.SearchProductByBarCode)                  
+                   .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode)
                    .Where(offer.SearchProductBySpecialOffer)
                    .Where(offer.SearchProductByCategory)
                    .Where(offer.SearchProductByProductName)
-                   .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();             
-                
-                Dictionary<Product, double> dictionary = new Dictionary<Product, double>();              
-                                                            
+                   .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();
+
+                Dictionary<Product, double> dictionary = new Dictionary<Product, double>();
+
                 foreach (var item in listProd)
                 {
-                    Dictionary<Shop, double> shop = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location).Where(x=>x.ShopId==item.Shop.ShopId)
-                   .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation) / 1000)).ToDictionary(x => x.Key, x => x.Value);  
+                    Dictionary<Shop, double> shop = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location).Where(x => x.ShopId == item.Shop.ShopId)
+                   .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation) / 1000)).ToDictionary(x => x.Key, x => x.Value);
 
                     var x = shop.First();
                     dictionary.Add(item, x.Value);
                 }
 
-                if (offer.sortType==SortType.Malejąco)
+                if (offer.sortType == SortType.Malejąco)
                 {
-                  
-                        dictionary = dictionary.OrderByDescending(offer.SortProduct).ToDictionary(x => x.Key, x => x.Value);                   
+
+                    dictionary = dictionary.OrderByDescending(offer.SortProduct).ToDictionary(x => x.Key, x => x.Value);
 
                 }
                 else
-                {                    
-                        dictionary = dictionary.OrderBy(offer.SortProduct).ToDictionary(x => x.Key, x => x.Value);                   
+                {
+                    dictionary = dictionary.OrderBy(offer.SortProduct).ToDictionary(x => x.Key, x => x.Value);
 
                 }
 
@@ -279,9 +295,6 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-
-
-
         public bool SaveCoordinatesAppUser(double Latitude, double Longitude, string UserId)
         {
             try
@@ -295,7 +308,7 @@ namespace Special_Offer_Hunter.Models
 
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }

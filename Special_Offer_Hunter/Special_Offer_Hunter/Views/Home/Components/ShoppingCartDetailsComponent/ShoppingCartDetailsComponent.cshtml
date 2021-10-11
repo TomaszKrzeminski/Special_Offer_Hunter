@@ -1,0 +1,45 @@
+﻿@model ShoppingCartViewModel
+<div class="col col-lg-12">
+    <div class="row">
+        <div class="col col-lg-12">
+            <h2>Zawartość twojego kosza : @Model.type</h2>
+        </div>
+        <div class="col col-lg-12">
+            @if (Model.productList != null && Model.productList.Count > 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nazwa</th>
+                            <th scope="col">Cena</th>
+                            <th scope="col">Sklep</th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var p in Model.productList)
+                        {
+                            <tr>
+                                <th scope="row">#</th>
+                                <td>@p.Name</td>
+                                <td>@p.Product_Price.Price</td>
+                                <td>@p.Shop.Name</td>
+                                <td>
+                                    <form>
+                                        <input id="ShoppingCartProductId" type="hidden" value="@p.ProductId" />
+                                        <input id="ShoppingCartProductId" type="hidden" value="@p.ProductId" />
+                                    </form>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+</div>

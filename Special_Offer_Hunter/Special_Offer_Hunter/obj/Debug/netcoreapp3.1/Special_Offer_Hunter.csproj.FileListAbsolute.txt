@@ -92,7 +92,6 @@ C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\
 C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.dll
 C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.pdb
 C:\Users\tomek\Source\Repos\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.genruntimeconfig.cache
-C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.ComponentModel.TypeConverter.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -228,6 +227,7 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.ComponentModel.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.ComponentModel.EventBasedAsync.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.ComponentModel.Primitives.dll
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.ComponentModel.TypeConverter.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.Configuration.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.Console.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\refs\System.Core.dll
@@ -546,3 +546,6 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.pdb
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.genruntimeconfig.cache
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.csprojAssemblyReference.cache
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Home\Components\ShoppingCartComponent\ShoppingCartComponent.cshtml.g.cs
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Home\Components\ShoppingCartDetailsComponent\ShoppingCartDetailsComponent.cshtml.g.cs

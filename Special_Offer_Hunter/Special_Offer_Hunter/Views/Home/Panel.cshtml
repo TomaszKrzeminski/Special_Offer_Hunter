@@ -8,14 +8,19 @@
     }
 </style>
 <div class="container">
-    <div class="row block bg-dark">
+    <div class="row block bg-secondary">
         <div class="col-lg-12">
-            @DateTime.Now.TimeOfDay
+            @await Component.InvokeAsync("ShoppingCartComponent")
+        </div>
+    </div>
+    <div class="row block bg-light">
+        <div class="col-lg-12">
+            @await Component.InvokeAsync("ShoppingCartDetailsComponent")
         </div>
     </div>
     <div class="row block bg-light">
         <div id="OffersInNeighborhoodElement" class="col-lg-12">
-            @*@Html.Partial("OffersInNeighborhood", new SpecialOfferViewModel())*@
+
             @await Component.InvokeAsync("OffersInNeighborhoodComponent")
 
         </div>
@@ -29,7 +34,7 @@
     </div>
     <div class="row block bg-dark">
         <div class="col-lg-12">
-
+            @DateTime.Now.TimeOfDay
         </div>
     </div>
     <div class="row block bg-light">
@@ -37,11 +42,7 @@
 
         </div>
     </div>
-    <div class="row block bg-secondary">
-        <div class="col-lg-12">
 
-        </div>
-    </div>
     <div class="row block bg-dark">
         <div class="col-lg-12">
 
@@ -205,11 +206,11 @@ function SearchSpecialOffer()
 
 
             $("body").on('click', "#SearchProductByFoundBarCode", function (e) {
-               
-               
+
+
             //$('#ScanBarCode').on('click','#SearchProductByFoundBarCode', function (e) {
 
-              
+
 
                 var BarCode1 = $("#BarcodeResult #BarCodeProductDS").val();
                 //var BarCode= $('#BarCodeSearch').val(BarCode1);
@@ -262,7 +263,7 @@ function SearchSpecialOffer()
 
 
 
-           
+
 
 
 
@@ -289,10 +290,10 @@ function SearchSpecialOffer()
                 var BarCode = $('#BarCodeSearch').val();
                 var SpecialOffer = false;
                 if ($('#SpecialOffer').is(":checked"))
-                {               
+                {
                 var SpecialOffer = true;
                 }
-               
+
 
 
 

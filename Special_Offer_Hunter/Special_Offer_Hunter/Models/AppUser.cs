@@ -27,8 +27,11 @@ namespace Special_Offer_Hunter.Models
         public ApplicationUser()
         {
             Shopping_Cart_Day = new List<Shopping_Cart_Day>();
-            Shopping_Cart_Week = new List<Shopping_Cart_Week>();   
-            userlocation= new NetTopologySuite.Geometries.Point(0, 0) { SRID = 4326 };
+            Shopping_Cart_Week = new List<Shopping_Cart_Week>();
+            Shopping_Cart_Month = new List<Shopping_Cart_Month>();
+            Shopping_Cart_Year = new List<Shopping_Cart_Year>();
+            Shopping_Cart_LookFor = new List<Shopping_Cart_LookFor>();
+            userlocation = new NetTopologySuite.Geometries.Point(0, 0) { SRID = 4326 };
             Longitude = 0;
             Latitude = 0;
 
@@ -36,13 +39,16 @@ namespace Special_Offer_Hunter.Models
 
         public virtual List<Shopping_Cart_Day> Shopping_Cart_Day { get; set; }
         public virtual List<Shopping_Cart_Week> Shopping_Cart_Week { get; set; }
+        public virtual List<Shopping_Cart_Month> Shopping_Cart_Month { get; set; }
+        public virtual List<Shopping_Cart_Year> Shopping_Cart_Year { get; set; }
+        public virtual List<Shopping_Cart_LookFor> Shopping_Cart_LookFor { get; set; }
 
 
     }
 
 
-    public class Category          
-         {
+    public class Category
+    {
 
 
         public Category()
@@ -54,7 +60,7 @@ namespace Special_Offer_Hunter.Models
         public string Name { get; set; }
 
         public virtual List<ProductCategory> ProductCategory { get; set; }
-         }
+    }
 
 
 
@@ -86,7 +92,7 @@ namespace Special_Offer_Hunter.Models
         public virtual List<Shop_Rank> Ranks { get; set; }
         public virtual List<Product> Products { get; set; }
         public virtual Location Location { get; set; }
-       
+
 
     }
 
@@ -102,10 +108,10 @@ namespace Special_Offer_Hunter.Models
             Products = new List<Product>();
         }
 
-        public Product_Price(double Price,bool SpecialOffer=false,string SpecialOffer_Description="")
+        public Product_Price(double Price, bool SpecialOffer = false, string SpecialOffer_Description = "")
         {
             this.Price = Price;
-            this.SpecialOffer = SpecialOffer;            
+            this.SpecialOffer = SpecialOffer;
             this.SpecialOffer_Description = SpecialOffer_Description;
             Products = new List<Product>();
         }
@@ -162,20 +168,21 @@ namespace Special_Offer_Hunter.Models
 
         }
 
-        
+
 
         public Product()
         {
             Comments = new List<Product_Comment>();
             Ranks = new List<Product_Rank>();
             ProductCategory = new List<ProductCategory>();
+            //Product_Code = new Product_Code();
         }
 
         public int ProductId { get; set; }
         public string Name { get; set; }
-       
 
-        public string Description { get; set; }      
+
+        public string Description { get; set; }
 
         public double Weight { get; set; }
         public double Height { get; set; }
@@ -183,20 +190,25 @@ namespace Special_Offer_Hunter.Models
         public virtual List<Product_Comment> Comments { get; set; }
         public virtual List<Product_Rank> Ranks { get; set; }
         public virtual List<ProductCategory> ProductCategory { get; set; }
+
+        //public virtual Product_Code Product_Code { get; set; }
+
+        public int? Product_CodeId { get; set; }
         public virtual Product_Code Product_Code { get; set; }
 
-        public int? Shopping_Cart_DayId { get; set; }
-        public  Shopping_Cart_Day shopping_Cart_Day;
 
-        public int? Shopping_Cart_WeekId { get; set; }
-        public  Shopping_Cart_Week shopping_Cart_Week;
+        public int? Shopping_Cart_DayId { get; set; }//
+        public Shopping_Cart_Day shopping_Cart_Day;
 
-        public int? CompanyId { get; set; }
+        public int? Shopping_Cart_WeekId { get; set; }//
+        public Shopping_Cart_Week shopping_Cart_Week;
+
+        public int? CompanyId { get; set; }//
         public virtual Company Company { get; set; }
-        public int? ShopId { get; set; }
+        public int? ShopId { get; set; }//
         public virtual Shop Shop { get; set; }
 
-        public int? Product_PriceId { get; set; }
+        public int? Product_PriceId { get; set; }//
         public virtual Product_Price Product_Price { get; set; }
 
     }
@@ -208,7 +220,7 @@ namespace Special_Offer_Hunter.Models
 
         public Location()
         {
-            Country = "Polska";           
+            Country = "Polska";
         }
 
         public int LocationId { get; set; }
@@ -224,7 +236,7 @@ namespace Special_Offer_Hunter.Models
         public virtual NetTopologySuite.Geometries.Point location { get; set; }
         public string SecondNumber { get; set; }
         public virtual Shop Shop { get; set; }
-        public int? ShopLocationId { get; set; } 
+        public int? ShopLocationId { get; set; }
     }
 
     public class Shopping_Cart_Day
@@ -262,8 +274,63 @@ namespace Special_Offer_Hunter.Models
         public virtual List<Product> Products { get; set; }
     }
 
+    public class Shopping_Cart_Year
+    {
+
+        public Shopping_Cart_Year()
+        {
+            Products = new List<Product>();
+        }
+
+        public int Shopping_Cart_YearId { get; set; }
+        public string Name { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public virtual List<Product> Products { get; set; }
+    }
+
+    public class Shopping_Cart_LookFor
+    {
+
+        public Shopping_Cart_LookFor()
+        {
+            Products = new List<Product>();
+        }
+
+        public int Shopping_Cart_LookForId { get; set; }
+        public string Name { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public virtual List<Product> Products { get; set; }
+    }
+
+    public class Shopping_Cart_Month
+    {
+
+        public Shopping_Cart_Month()
+        {
+            Products = new List<Product>();
+        }
+
+        public int Shopping_Cart_MonthId { get; set; }
+        public string Name { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public virtual List<Product> Products { get; set; }
+    }
+
+
     public class Product_Code
     {
+
+        public Product_Code()
+        {
+            //Product = new Product();
+            Products = new List<Product>();
+        }
         public int Product_CodeId { get; set; }
         public string Code { get; set; }
         public string CodeType { get; set; }
@@ -271,9 +338,10 @@ namespace Special_Offer_Hunter.Models
         public string Producer { get; set; }
 
         public string ProductInfo { get; set; }
+        public virtual List<Product> Products { get; set; }
 
-        public int? ProductCodeId{get;set;}
-        public virtual Product Product { get; set; }
+        //public int? ProductCodeId { get; set; }//
+        //public virtual Product Product { get; set; }
     }
 
     public class Product_Rank
@@ -319,6 +387,6 @@ namespace Special_Offer_Hunter.Models
 
 
 
-   
+
 }
 
