@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="row block bg-light">
-        <div class="col-lg-12">
+        <div id="ShoppingCartDetails" class="col-lg-12">
             @await Component.InvokeAsync("ShoppingCartDetailsComponent")
         </div>
     </div>
@@ -82,7 +82,7 @@
 
         $(document).ready(function ()
         {
-
+            /////// webcam code
             Webcam.set({
                 width: 320,
                 height: 240,
@@ -115,11 +115,95 @@
                 CaptureSnapshot();
 
             });
+            //////
+
+            //// add to shoping cart
+            $('#OffersInNeighborhoodElement').on('click', '#AddProductToShoppingCart', function (e)
+            {
+
+
+                var FormElem = $(this).closest('form');
 
 
 
 
-///
+                var cartType = FormElem.find(".CartTypeForShoppingCart").val();
+                var productId = FormElem.find(".ProdcutIdForShoppingCart").val(); $(".ProdcutIdForShoppingCart").val();
+
+                var t = $("input[name='__RequestVerificationToken']").val();
+                $.ajax({
+                    url: '@Url.Action("AddProductToShoppingCart", "Cart")',
+                    type: "get",
+                    data: {
+                        Type: cartType,
+                        ProductId: productId,
+
+                    },
+                    headers:
+                    {
+                        "RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#ShoppingCartDetails').empty();
+                        $('#ShoppingCartDetails').html(result);
+
+                    }
+                });
+
+
+
+            });
+
+
+
+
+            /////
+
+            ////Remove Product from cart
+            RemoveProductFromCartSubmit
+
+            $('#ShoppingCartDetails').on('click', '#RemoveProductFromCartSubmit', function (e)
+            {
+
+
+                var FormElem = $(this).closest('form');
+
+
+
+
+                var cartType = FormElem.find(".TypeRemove").val();
+                var productId = FormElem.find(".ProductIdRemove").val();
+
+                var t = $("input[name='__RequestVerificationToken']").val();
+                $.ajax({
+                    url: '@Url.Action("RemoveProductFromCart", "Cart")',
+                    type: "get",
+                    data: {
+                        Type: cartType,
+                        ProductId: productId,
+
+                    },
+                    headers:
+                    {
+                        "RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#ShoppingCartDetails').empty();
+                        $('#ShoppingCartDetails').html(result);
+
+                    }
+                });
+
+
+
+            });
+
+            /////
+
+
+
 
 function SearchSpecialOffer()
     {
@@ -261,20 +345,8 @@ function SearchSpecialOffer()
 
             });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $('#OffersInNeighborhoodElement').on('click', '#FiltrOffersInNeighborhood', function (e) {
+            $('#OffersInNeighborhoodElement').on('click', '#FiltrOffersInNeighborhood', function (e)
+            {
 
 
                 e.stopPropagation();

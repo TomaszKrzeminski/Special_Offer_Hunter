@@ -13,16 +13,28 @@ namespace Special_Offer_Hunter.Components
     {
         private IRepository repository;
         IHttpContextAccessor httpContextAccessor;
+        private Func<string> GetUser;
 
-        public ShoppingCartDetailsComponent(IRepository repo, IHttpContextAccessor httpContextAccessor)
+        public ShoppingCartDetailsComponent(IRepository repo, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
         {
             repository = repo;
             this.httpContextAccessor = httpContextAccessor;
+            if (GetUser == null)
+            {
+                string UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                this.GetUser = () => UserId;
+
+            }
+            else
+            {
+                this.GetUser = GetUser;
+            }
         }
 
         public IViewComponentResult Invoke()
         {
-            ShoppingCartViewModel model = new ShoppingCartViewModel();
+            string UserId = GetUser();
+            ShoppingCartViewModel model = repository.GetShoppingCart(UserId, ShoppingCartType.Dzień);
 
             return View("ShoppingCartDetailsComponent", model);
         }

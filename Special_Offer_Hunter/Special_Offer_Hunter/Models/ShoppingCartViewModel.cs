@@ -11,26 +11,30 @@ namespace Special_Offer_Hunter.Models
         Dzień, Tydzień, Miesiąc, Rok, Poszukiwane
     }
 
+
+    public class AddProcutToShoppingCart
+    {
+        public ShoppingCartType Type { get; set; }
+        //public string Type { get; set; }
+        public int ProductId { get; set; }
+
+    }
+
     public class ShoppingCartViewModel
     {
         public ShoppingCartViewModel()
         {
-            //cartDay = new Shopping_Cart_Day();
-            //cartWeek = new Shopping_Cart_Week();
-            //cartYear = new Shopping_Cart_Year();
-            //cartMonth = new Shopping_Cart_Month();
-            //cartLookFor = new Shopping_Cart_LookFor();
+
             productList = new List<Product>();
             type = ShoppingCartType.Dzień;
+            Action = true;
         }
-        //public Shopping_Cart_Day cartDay { get; set; }
-        //public Shopping_Cart_Week cartWeek { get; set; }
-        //public Shopping_Cart_Month cartMonth { get; set; }
-        //public Shopping_Cart_Year cartYear { get; set; }
-        //public Shopping_Cart_LookFor cartLookFor { get; set; }
+
         public string UserId { get; set; }
         public ShoppingCartType type { get; set; }
         public List<Product> productList { get; set; }
+
+        public bool Action { get; set; }
 
 
 

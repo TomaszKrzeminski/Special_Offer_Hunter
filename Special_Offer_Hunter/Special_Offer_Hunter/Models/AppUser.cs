@@ -26,22 +26,26 @@ namespace Special_Offer_Hunter.Models
 
         public ApplicationUser()
         {
-            Shopping_Cart_Day = new List<Shopping_Cart_Day>();
-            Shopping_Cart_Week = new List<Shopping_Cart_Week>();
-            Shopping_Cart_Month = new List<Shopping_Cart_Month>();
-            Shopping_Cart_Year = new List<Shopping_Cart_Year>();
-            Shopping_Cart_LookFor = new List<Shopping_Cart_LookFor>();
+
             userlocation = new NetTopologySuite.Geometries.Point(0, 0) { SRID = 4326 };
             Longitude = 0;
             Latitude = 0;
+            //Shopping_Cart_Day = new Shopping_Cart_Day();
+            //Shopping_Cart_Week = new Shopping_Cart_Week();
+            //Shopping_Cart_Month = new Shopping_Cart_Month();
+            //Shopping_Cart_Year = new Shopping_Cart_Year();
+            //Shopping_Cart_LookFor = new Shopping_Cart_LookFor();
 
         }
 
-        public virtual List<Shopping_Cart_Day> Shopping_Cart_Day { get; set; }
-        public virtual List<Shopping_Cart_Week> Shopping_Cart_Week { get; set; }
-        public virtual List<Shopping_Cart_Month> Shopping_Cart_Month { get; set; }
-        public virtual List<Shopping_Cart_Year> Shopping_Cart_Year { get; set; }
-        public virtual List<Shopping_Cart_LookFor> Shopping_Cart_LookFor { get; set; }
+        public virtual Shopping_Cart_Day Shopping_Cart_Day { get; set; }
+        public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
+        public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
+        public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
+        public virtual Shopping_Cart_LookFor Shopping_Cart_LookFor { get; set; }
+
+
+
 
 
     }
@@ -83,6 +87,7 @@ namespace Special_Offer_Hunter.Models
             Comments = new List<Shop_Comment>();
             Ranks = new List<Shop_Rank>();
             Products = new List<Product>();
+            //Location = new Location();
 
         }
         public int ShopId { get; set; }
@@ -221,6 +226,7 @@ namespace Special_Offer_Hunter.Models
         public Location()
         {
             Country = "Polska";
+            //Shop = new Shop();
         }
 
         public int LocationId { get; set; }
@@ -246,6 +252,7 @@ namespace Special_Offer_Hunter.Models
         public Shopping_Cart_Day()
         {
             Products = new List<Product>();
+
         }
 
         public int Shopping_Cart_DayId { get; set; }
@@ -255,6 +262,10 @@ namespace Special_Offer_Hunter.Models
         public virtual ApplicationUser User { get; set; }
 
         public virtual List<Product> Products { get; set; }
+
+        public string? DayUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
     }
 
 
@@ -272,8 +283,28 @@ namespace Special_Offer_Hunter.Models
         public string ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual List<Product> Products { get; set; }
-    }
 
+        public string? WeekUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+    }
+    public class Shopping_Cart_Month
+    {
+
+        public Shopping_Cart_Month()
+        {
+            Products = new List<Product>();
+        }
+
+        public int Shopping_Cart_MonthId { get; set; }
+        public string Name { get; set; }
+
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public virtual List<Product> Products { get; set; }
+
+        public string? MonthUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+    }
     public class Shopping_Cart_Year
     {
 
@@ -288,6 +319,9 @@ namespace Special_Offer_Hunter.Models
         public string ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual List<Product> Products { get; set; }
+
+        public string? YearUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
     public class Shopping_Cart_LookFor
@@ -304,23 +338,12 @@ namespace Special_Offer_Hunter.Models
         public string ApplicationUserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual List<Product> Products { get; set; }
+
+        public string? LookForUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
-    public class Shopping_Cart_Month
-    {
 
-        public Shopping_Cart_Month()
-        {
-            Products = new List<Product>();
-        }
-
-        public int Shopping_Cart_MonthId { get; set; }
-        public string Name { get; set; }
-
-        public string ApplicationUserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
-        public virtual List<Product> Products { get; set; }
-    }
 
 
     public class Product_Code

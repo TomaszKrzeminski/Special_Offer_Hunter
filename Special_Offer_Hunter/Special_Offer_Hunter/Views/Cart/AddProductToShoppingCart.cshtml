@@ -15,7 +15,7 @@
                             <th scope="col">Nazwa</th>
                             <th scope="col">Cena</th>
                             <th scope="col">Sklep</th>
-                            <th></th>
+                            <th>Usuń z kosza</th>
 
                         </tr>
                     </thead>
@@ -23,21 +23,20 @@
 
                         @foreach (var p in Model.productList)
                         {
-                            <tr>
-                                <th scope="row">#</th>
-                                <td>@p.Name</td>
-                                <td>@p.Product_Price.Price</td>
-                                <td>@p.Shop.Name</td>
-                                <td>
-                                    <form asp-action="RemoveProductFromCart" asp-controller="Cart">
+                        <tr>
+                            <th scope="row">#</th>
+                            <td>@p.Name</td>
+                            <td>@p.Product_Price.Price</td>
+                            <td>@p.Shop.Name</td>                           
+                            <td>
+                                <form asp-action="RemoveProductFromCart" asp-controller="Cart">
 
-                                        <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.ProductId" />
-                                        <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
-                                        <input id="RemoveProductFromCartSubmit"  class="btn btn-danger" value="Usuń z kosza" />
-                                    </form>
-                                </td>
-
-                            </tr>
+                                    <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.ProductId" />
+                                    <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
+                                    <input id="RemoveProductFromCartSubmit" class="btn btn-danger" value="Usuń z kosza" />
+                                </form>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

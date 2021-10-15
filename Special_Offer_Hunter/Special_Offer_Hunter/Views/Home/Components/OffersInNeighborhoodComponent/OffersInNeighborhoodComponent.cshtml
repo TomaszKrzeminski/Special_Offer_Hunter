@@ -85,6 +85,7 @@
                 <th scope="col">Cena</th>
                 <th scope="col">Sklep</th>
                 <th scope="col">Odległość</th>
+                <th>Dodaj do koszyka</th>
             </tr>
         </thead>
         <tbody>
@@ -97,7 +98,14 @@
                     <td>@p.Key.Product_Price.Price</td>
                     <td>@p.Key.Shop.Name</td>
                     <td>@p.Value</td>
-
+                    <td>
+                        <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">
+                            <select class="custom-select CartTypeForShoppingCart"   asp-items="Html.GetEnumSelectList<ShoppingCartType>()">                               
+                            </select>
+                            <input class="ProdcutIdForShoppingCart" type="hidden" value="@p.Key.ProductId" />
+                            <input class="btn btn-sm btn-warning" id="AddProductToShoppingCart" value="Dodaj"/>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
