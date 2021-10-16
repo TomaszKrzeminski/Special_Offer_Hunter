@@ -51,10 +51,14 @@ namespace Special_Offer_Hunter.Controllers
         {
             string UserId = GetUser();
 
-            bool check = repository.AddProductToUserShoppingCart(UserId, model.Type, model.ProductId);
+
+            if (model.ProductId > 0)
+            {
+                bool check = repository.AddProductToUserShoppingCart(UserId, model.Type, model.ProductId);
+            }
 
             ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.Type);
-            viewModel.Action = check;
+
             return PartialView("AddProductToShoppingCart", viewModel);
         }
     }

@@ -478,28 +478,36 @@ namespace Special_Offer_Hunter.Models
             try
             {
                 ApplicationUser user = context.Users.Include(x => x.Shopping_Cart_Day).Include(x => x.Shopping_Cart_Week).Include(x => x.Shopping_Cart_Month).Include(x => x.Shopping_Cart_Year).Include(x => x.Shopping_Cart_LookFor).Where(x => x.Id == UserId).FirstOrDefault();
-
+                Product product = context.Products.Find(ProductId);
                 switch (type)
                 {
                     case ShoppingCartType.Dzień:
                         Shopping_Cart_Day cart = context.Shopping_Carts_Day.Find(user.Shopping_Cart_Day.Shopping_Cart_DayId);
-                        Product product = context.Products.Find(ProductId);
                         cart.Products.Remove(product);
                         context.SaveChanges();
 
                         break;
                     case ShoppingCartType.Tydzień:
-
+                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Find(user.Shopping_Cart_Week.Shopping_Cart_WeekId);
+                        cart1.Products.Remove(product);
+                        context.SaveChanges();
 
                         break;
                     case ShoppingCartType.Miesiąc:
+                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Find(user.Shopping_Cart_Month.Shopping_Cart_MonthId);
 
+                        cart2.Products.Remove(product);
+                        context.SaveChanges();
                         break;
                     case ShoppingCartType.Rok:
-
+                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Find(user.Shopping_Cart_Year.Shopping_Cart_YearId);
+                        cart3.Products.Remove(product);
+                        context.SaveChanges();
                         break;
                     case ShoppingCartType.Poszukiwane:
-
+                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Find(user.Shopping_Cart_LookFor.Shopping_Cart_LookForId);
+                        cart4.Products.Remove(product);
+                        context.SaveChanges();
                         break;
 
                 }
