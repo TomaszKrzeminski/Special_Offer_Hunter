@@ -8,7 +8,7 @@
     }
 </style>
 <div class="container">
-    <div class="row block bg-secondary">
+    <div class="row block bg-light">
         <div id="ShoppingCartPanel" class="col-lg-12">
             @await Component.InvokeAsync("ShoppingCartComponent")
         </div>
@@ -80,6 +80,8 @@
 
 
 
+
+
         $(document).ready(function ()
         {
             /////// webcam code
@@ -117,12 +119,54 @@
             });
             //////
 
+            //Change shopping cart icon
+
+            function ChangeIcon(typeName)
+            {
+
+
+
+                ("#ShoppingCartPanel ShoppingCartTypeSelect").each(function () {
+
+                    $(this).removeClass('imageSelected');
+
+                });
+
+                ("#ShoppingCartPanel .ShoppingCartTypeSelect").each(function () {
+
+                    if ($(this).closest('div').find('h5').text() == typeName)
+                    {
+                        $(this).addClass('imageSelected');
+                    }
+
+                });
+
+
+
+            }
+
+            ///
+
+
+
             //Change shopping cart view
             $('#ShoppingCartPanel').on('click', '.ShoppingCartTypeSelect', function (e)
             {
-               
+
                 var cartType = $(this).closest('div').find('h5').text();
-                alert(cartType);
+
+
+
+
+                $("#ShoppingCartPanel .ShoppingCartTypeSelect").each(function () {
+
+                    $(this).removeClass('imageSelected');
+
+                });
+
+                $(this).addClass('imageSelected');
+
+
 
                 var t = $("input[name='__RequestVerificationToken']").val();
                 $.ajax({
@@ -149,6 +193,67 @@
 
             ///
 
+            ///  MoveProductToAnotherCart
+            $('#ShoppingCartDetails').on('click', '#MoveProductToAnotherCartSubmit', function (e)
+            {
+
+
+                var FormElem = $(this).closest('form');
+
+               
+                var cartTypeText = FormElem.find(".TypeTo option:selected").text();
+
+                var cartType = FormElem.find(".TypeFrom").val();
+                var productId = FormElem.find(".ProductIdMove").val();
+                var moveType = FormElem.find(".TypeTo").val();
+                $(".ProdcutIdForShoppingCart").val();
+
+
+
+                $("#ShoppingCartPanel .ShoppingCartTypeSelect").each(function () {
+
+                    $(this).removeClass('imageSelected');
+
+                });
+
+                $("#ShoppingCartPanel .ShoppingCartTypeSelect").each(function () {
+
+                    if ($(this).closest('div').find('h5').text() == cartTypeText) {
+                        $(this).addClass('imageSelected');
+                    }
+
+                });              
+
+
+                var t = $("input[name='__RequestVerificationToken']").val();
+                $.ajax({
+                    url: '@Url.Action("MoveProductToAnotherCart", "Cart")',
+                    type: "get",
+                    data: {
+                        Type: cartType,
+                        ProductId: productId,
+                        MoveType:moveType
+                    },
+                    headers:
+                    {
+                        "RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#ShoppingCartDetails').empty();
+                        $('#ShoppingCartDetails').html(result);
+
+                    }
+                });
+
+
+
+            });
+
+
+
+
+            ////
 
 
             //// add to shoping cart
@@ -160,9 +265,31 @@
 
 
 
-
+                var cartTypeText = FormElem.find(".CartTypeForShoppingCart option:selected").text();
                 var cartType = FormElem.find(".CartTypeForShoppingCart").val();
-                var productId = FormElem.find(".ProdcutIdForShoppingCart").val(); $(".ProdcutIdForShoppingCart").val();
+                var productId = FormElem.find(".ProdcutIdForShoppingCart").val();
+                $(".ProdcutIdForShoppingCart").val();
+
+
+
+                $("#ShoppingCartPanel .ShoppingCartTypeSelect").each(function () {
+
+                    $(this).removeClass('imageSelected');
+
+                });
+
+                $("#ShoppingCartPanel .ShoppingCartTypeSelect").each(function () {
+
+                    if ($(this).closest('div').find('h5').text() == cartTypeText) {
+                        $(this).addClass('imageSelected');
+                    }
+
+                });
+
+
+
+
+
 
                 var t = $("input[name='__RequestVerificationToken']").val();
                 $.ajax({

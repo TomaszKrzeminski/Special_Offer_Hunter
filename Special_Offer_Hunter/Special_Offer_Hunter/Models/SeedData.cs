@@ -76,7 +76,7 @@ namespace Special_Offer_Hunter.Models
             }
             void SeedCategories()
             {
-                List<string> list = new List<string>() { "Warzywa", "Owoce", "Mrożonki", "Pieczywo", "Mięso i Wędliny", "Konserwy", "Przyprawy", "Sosy", "Napoje", "Nabiał", "Słodycze", "Chemia domowa", "Kosmetyki", "Dla zwierząt", "Przekąski" };
+                List<string> list = new List<string>() { "", "Warzywa", "Owoce", "Mrożonki", "Pieczywo", "Mięso i Wędliny", "Konserwy", "Przyprawy", "Sosy", "Napoje", "Nabiał", "Słodycze", "Chemia domowa", "Kosmetyki", "Dla zwierząt", "Przekąski" };
 
                 foreach (var item in list)
                 {

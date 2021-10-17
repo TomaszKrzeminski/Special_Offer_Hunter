@@ -18,14 +18,14 @@ namespace Special_Offer_Hunter.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private IRepository repository;
-        private Func<string> GetUser;       
+        private Func<string> GetUser;
         IHttpContextAccessor httpContextAccessor;
 
-        public HomeController(ILogger<HomeController> logger,IRepository repo, UserManager<ApplicationUser> userMgr, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
+        public HomeController(ILogger<HomeController> logger, IRepository repo, UserManager<ApplicationUser> userMgr, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
         {
             _logger = logger;
             repository = repo;
-           this.httpContextAccessor = httpContextAccessor;
+            this.httpContextAccessor = httpContextAccessor;
             if (GetUser == null)
             {
                 string UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -39,8 +39,8 @@ namespace Special_Offer_Hunter.Controllers
         }
 
         public IActionResult Panel()
-        {        
-            
+        {
+
             return View();
         }
 
@@ -58,23 +58,12 @@ namespace Special_Offer_Hunter.Controllers
         }
 
         [HttpPost]
-        public void ChangeCoordinates(string Longitude,string Latitude)
+        public void ChangeCoordinates(string Longitude, string Latitude)
         {
             string userId = GetUser();
             //string userId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            repository.SaveCoordinatesAppUser(getValue(Latitude),getValue(Longitude),userId);
+            repository.SaveCoordinatesAppUser(getValue(Latitude), getValue(Longitude), userId);
         }
 
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
     }
 }

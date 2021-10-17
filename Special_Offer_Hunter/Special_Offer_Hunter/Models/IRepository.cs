@@ -17,7 +17,7 @@ namespace Special_Offer_Hunter.Models
         Product GetProductByName(string Name);
         Product GetProductByCode(string Code);
         Location GetUserLocation(string UserId);
-
+        List<string> GetCategories();
         bool AddProductToUserShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         bool RemoveProductFromShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type);
@@ -520,6 +520,20 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        public List<string> GetCategories()
+        {
+            List<string> list = new List<string>();
+            try
+            {
+                list = context.Categories.Select(x => x.Name).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return list;
             }
         }
     }

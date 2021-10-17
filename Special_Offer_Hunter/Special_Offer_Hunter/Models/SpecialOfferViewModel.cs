@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -52,6 +53,7 @@ namespace Special_Offer_Hunter.Models
             sortType = SortType.Rosnąco;
             SpecialOffer = false;
         }
+        public SelectList CategoryList { get; set; }
 
         public ProductCategory category;
         public Location MyLocation { get; set; }

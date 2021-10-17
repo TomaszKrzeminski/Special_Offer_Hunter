@@ -49,7 +49,8 @@
 
                 <div class="col-lg-2 ">
                     <label class="font-weight-bold" asp-for="CategoryName">Kategoria</label>
-                    <input id="CategoryName" class="form-control" asp-for="CategoryName" />
+                    @*<input id="CategoryName" class="form-control" asp-for="CategoryName" />*@
+                    <select id="CategoryName" asp-for="CategoryName" class="custom-select custom-select-sm" asp-items="@Model.CategoryList"></select>
                 </div>
 
                 <div class="col-lg-2 ">
@@ -90,23 +91,41 @@
         </thead>
         <tbody>
 
-            @foreach (var p in Model.list2)
+            @*@foreach (var p in Model.list2)
+                {
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>@p.Key.Name</td>
+                        <td>@p.Key.Product_Price.Price</td>
+                        <td>@p.Key.Shop.Name</td>
+                        <td>@p.Value</td>
+                        <td>
+                            <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">
+                                <select class="custom-select CartTypeForShoppingCart" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
+                                </select>
+                                <input class="ProdcutIdForShoppingCart" type="hidden" value="@p.Key.ProductId" />
+                                <input class="btn btn-sm btn-warning" id="AddProductToShoppingCart" value="Dodaj" />
+                            </form>
+                        </td>
+
+                    </tr>
+                }*@
+            @foreach (var p in Model.list2.Select((value, i) => new { i, value }))
             {
                 <tr>
-                    <th scope="row">1</th>
-                    <td>@p.Key.Name</td>
-                    <td>@p.Key.Product_Price.Price</td>
-                    <td>@p.Key.Shop.Name</td>
-                    <td>@p.Value</td>
+                    <th scope="row">@(p.i+1)</th>
+                    <td>@p.value.Key.Name</td>
+                    <td>@p.value.Key.Product_Price.Price</td>
+                    <td>@p.value.Key.Shop.Name</td>
+                    <td>@p.value.Value</td>
                     <td>
                         <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">
                             <select class="custom-select CartTypeForShoppingCart" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
                             </select>
-                            <input class="ProdcutIdForShoppingCart" type="hidden" value="@p.Key.ProductId" />
+                            <input class="ProdcutIdForShoppingCart" type="hidden" value="@p.value.Key.ProductId" />
                             <input class="btn btn-sm btn-warning" id="AddProductToShoppingCart" value="Dodaj" />
                         </form>
                     </td>
-
                 </tr>
             }
         </tbody>

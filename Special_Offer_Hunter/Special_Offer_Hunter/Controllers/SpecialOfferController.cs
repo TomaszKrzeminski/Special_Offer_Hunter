@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Special_Offer_Hunter.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Special_Offer_Hunter.Controllers
 {
@@ -36,6 +37,8 @@ namespace Special_Offer_Hunter.Controllers
         public PartialViewResult OffersInNeighborhood(SpecialOfferViewModel modelX)
         {
             string UserId = GetUser();
+            List<string> list2 = repository.GetCategories();
+            modelX.CategoryList = new SelectList(list2.ToList());
 
             modelX.MyLocation = repository.GetUserLocation(UserId);
 

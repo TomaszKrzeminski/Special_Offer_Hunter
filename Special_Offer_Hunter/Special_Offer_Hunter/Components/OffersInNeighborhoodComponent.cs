@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Special_Offer_Hunter.Components
 {
-    public class OffersInNeighborhoodComponent:ViewComponent
+    public class OffersInNeighborhoodComponent : ViewComponent
     {
         private IRepository repository;
         IHttpContextAccessor httpContextAccessor;
@@ -32,6 +33,10 @@ namespace Special_Offer_Hunter.Components
             model.Distance = 50;
             model.BarCode = "";
 
+            List<string> list2 = repository.GetCategories();
+            model.CategoryList = new SelectList(list2.ToList());
+
+
             SingleSort sorting1 = new SortNone();
             SingleSort sorting2 = new SortByProductName();
             SingleSort sorting3 = new SortByShopName();
@@ -40,7 +45,7 @@ namespace Special_Offer_Hunter.Components
 
 
 
-          
+
             SingleSearch sort1 = new SearchShopName();
             SingleSearch sort2 = new SearchCategoryName();
             SingleSearch sort3 = new SearchCategoryBarCode();
@@ -59,10 +64,10 @@ namespace Special_Offer_Hunter.Components
             sorting1.SetSorting(model);
 
 
-            Dictionary<Product,double> list = repository.GetProductsWithSpecialOffer(model);
+            Dictionary<Product, double> list = repository.GetProductsWithSpecialOffer(model);
             model.list2 = list;
-            
-            return View("OffersInNeighborhoodComponent",model);
+
+            return View("OffersInNeighborhoodComponent", model);
         }
 
 
