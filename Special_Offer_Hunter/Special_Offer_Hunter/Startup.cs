@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Special_Offer_Hunter.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Special_Offer_Hunter
 {
@@ -34,8 +35,20 @@ namespace Special_Offer_Hunter
                 options.UseLazyLoadingProxies().UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")),
          ServiceLifetime.Transient);
+
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.Unspecified;
+            });
+
+            services.AddAntiforgery(opts => {
+                opts.Cookie.SameSite = SameSiteMode.Unspecified;
+            });
+
+
             services.AddScoped<UserManager<ApplicationUser>>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
@@ -48,7 +61,7 @@ namespace Special_Offer_Hunter
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context,IRepository repository)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context, IRepository repository)
         {
             if (env.IsDevelopment())
             {
@@ -79,7 +92,7 @@ namespace Special_Offer_Hunter
 
 
 
-            SeedData data = new SeedData(context,repository);
+            SeedData data = new SeedData(context, repository);
             data.EnsurePopulated();
 
 

@@ -24,6 +24,8 @@ namespace Special_Offer_Hunter.Models
         List<Product> GetProductsWithSpecialOffer2(SpecialOfferViewModel offer);
         bool AddPriceToProduct(int ProductId, double Price);
 
+        List<ProductLocation> GetProductLocationByCartType(ShoppingCartType type, string UserId);
+
         bool AddProduct(Product product);
 
         bool SaveCoordinatesAppUser(double Latitude, double Longitude, string UserId);
@@ -314,9 +316,19 @@ namespace Special_Offer_Hunter.Models
             try
             {
                 Location location = new Location();
-                ApplicationUser user = context.Users.Find(UserId);
-                location.Latitude = user.Latitude;
-                location.Longitude = user.Longitude;
+
+
+                //ApplicationUser user = context.Users.Find(UserId);
+                //location.Latitude = user.Latitude;
+                //location.Longitude = user.Longitude;
+
+
+                //// wersja testowa
+                location.Latitude = 53.411008;
+                location.Longitude = 18.451573;
+                ///
+
+
                 return location;
             }
             catch (Exception ex)
@@ -529,6 +541,69 @@ namespace Special_Offer_Hunter.Models
             try
             {
                 list = context.Categories.Select(x => x.Name).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return list;
+            }
+        }
+
+        public List<ProductLocation> GetProductLocationByCartType(ShoppingCartType type, string UserId)
+        {
+            ApplicationUser user = context.Users.Find(UserId);
+            List<ProductLocation> list = new List<ProductLocation>();
+            List<Product> productList = new List<Product>();
+            try
+            {
+
+                switch (type)
+                {
+                    case ShoppingCartType.Dzień:
+                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.Products).ThenInclude(x => x.Shop).ThenInclude(x => x.Location).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
+                        productList = cart.Products.ToList();
+                        break;
+                    case ShoppingCartType.Tydzień:
+                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.Products).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
+                        productList = cart1.Products.ToList();
+                        break;
+                    case ShoppingCartType.Miesiąc:
+                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.Products).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
+                        productList = cart2.Products.ToList();
+                        break;
+                    case ShoppingCartType.Rok:
+                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.Products).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
+                        productList = cart3.Products.ToList();
+                        break;
+                    case ShoppingCartType.Poszukiwane:
+                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.Products).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
+                        productList = cart4.Products.ToList();
+                        break;
+
+                }
+
+                if (productList != null && productList.Count > 0)
+                {
+
+                    foreach (var p in productList)
+                    {
+
+                        ProductLocation location = new ProductLocation();
+                        location.location = p.Shop.Location;
+                        location.product = p;
+                        location.shop = p.Shop;
+
+                        list.Add(location);
+                    }
+
+
+                }
+
+
+
+
+
+
                 return list;
             }
             catch (Exception ex)

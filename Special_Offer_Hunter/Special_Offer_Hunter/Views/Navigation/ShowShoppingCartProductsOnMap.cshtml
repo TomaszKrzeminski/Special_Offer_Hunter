@@ -1,0 +1,74 @@
+﻿@model ProductLocationViewModel
+
+@{
+    Layout = null;
+
+
+
+
+}
+
+<html class='use-all-space'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
+    <meta charset='UTF-8'>
+    <title>Maps SDK for Web - Vector map</title>
+    <meta name='viewport'
+          content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/maps/maps.css'>
+
+</head>
+<body>
+    <div style="width:500px; height:500px;" id='map' class='map'></div>
+  
+
+    <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.64.0/maps/maps-web.min.js'></script>
+    <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.64.0/services/services-web.min.js'></script>
+
+    <script>
+        var HQ = { lat: 53.41102649310047, lng: 18.43686231527983 }
+        var map = tt.map({
+            key: 'YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O',
+            container: 'map',
+            center:HQ,
+            zoom:10
+
+        });
+        map.addControl(new tt.FullscreenControl());
+        map.addControl(new tt.NavigationControl());
+
+
+        //map.once('load', function () {
+        //    tt.services.calculateRoute(
+        //        {
+        //            key: 'YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O',
+        //            traffic: false,
+        //            locations: "53.41102649310047:18.45159994044702,53.4056334391886:18.436983972942556"
+        //        }).go();
+
+        //});
+
+        //var HQ = { lat: 9.0548, lng: 7.4856 }
+        //var map = tt.map({
+        //    key: 'YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O',
+        //     container: 'map',
+        //    center: HQ,
+        //    zoom: 15
+        //});
+       
+        var companyAssets = [
+            { lat: 53.41102649310047, lng: 18.45159994044702 },
+            { lat:  53.405802665117776, lng: 18.43686231527983 },
+            { lat: 53.4071954558253, lng: 18.42734439274037 }
+           
+        ];
+        companyAssets.forEach(function (child) {
+            new tt.Marker().setLngLat(child).addTo(map);
+        });
+
+
+
+
+    </script>
+</body>
+</html>
