@@ -33,9 +33,10 @@
         </div>
     </div>
     <div class="row block bg-dark">
-        <div class="col-lg-12">
-            @DateTime.Now.TimeOfDay
+        <div class="row ">
+            @await Component.InvokeAsync("NavigationShowShopsOnMapComponent")
         </div>
+
     </div>
     <div class="row block bg-light">
         <div class="col-lg-12">
@@ -168,7 +169,7 @@
 
 
 
-                var t = $("input[name='__RequestVerificationToken']").val();
+                //var t = $("input[name='__RequestVerificationToken']").val();
                 $.ajax({
                     url: '@Url.Action("AddProductToShoppingCart", "Cart")',
                     type: "get",
@@ -179,7 +180,7 @@
                     },
                     headers:
                     {
-                        "RequestVerificationToken": t
+                        //"RequestVerificationToken": t
                     },
                     success: function (result) {
 
@@ -200,7 +201,7 @@
 
                 var FormElem = $(this).closest('form');
 
-               
+
                 var cartTypeText = FormElem.find(".TypeTo option:selected").text();
 
                 var cartType = FormElem.find(".TypeFrom").val();
@@ -222,7 +223,7 @@
                         $(this).addClass('imageSelected');
                     }
 
-                });              
+                });
 
 
                 var t = $("input[name='__RequestVerificationToken']").val();

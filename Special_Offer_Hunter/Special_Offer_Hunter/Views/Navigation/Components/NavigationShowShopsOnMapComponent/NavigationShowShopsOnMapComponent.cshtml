@@ -1,0 +1,85 @@
+﻿@model ProductLocationViewModel
+
+
+
+<html class='use-all-space'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
+    <meta charset='UTF-8'>
+    <title>Maps SDK for Web - Vector map</title>
+    <meta name='viewport'
+          content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <style>
+
+        #map {
+            height: 500px;
+            width: 1200px;
+        }
+    </style>
+
+
+</head>
+<body>
+
+    <div id='map' class='map'></div>
+
+    <div style="width:500px; height:500px;" id='map' class='map'></div>
+    <input id="myTomTomKey" type="hidden" value="@ViewData["MyTomTomKey"]" />
+    <input id="myPositionLat" type="hidden" value="@ViewData["MyPositionLat"]" />
+    <input id="myPositionLon" type="hidden" value="@ViewData["MyPositionLon"]" />
+
+    <input id="Shops2" type="hidden" value="@Model.JsonShops" />
+    <script>
+
+        let myTomTomKey = document.getElementById('myTomTomKey').value;
+
+        let myPLat = document.getElementById('myPositionLat').value;
+        let myPLong = document.getElementById('myPositionLon').value;
+
+        var HQ = { lat: myPLat, lng: myPLong }
+
+        let map;
+
+        map = tt.map({
+
+            key: myTomTomKey,
+
+            container: 'map',
+            center: HQ,
+            zoom: 10
+
+
+
+        });
+
+
+
+        var Shops2 = document.getElementById('Shops2').value;
+        const obj = JSON.parse(Shops2);
+
+
+        for (var i = 0; i < obj.length; i++) {
+
+            let place = obj[i];
+
+            var d = { lat: place.center[0], lng: place.center[1] }
+
+            var marker = new tt.Marker().setLngLat(d).addTo(map);
+
+            var popupOffsets = {
+                top: [0, 0],
+                bottom: [0, -70],
+                'bottom-right': [0, -70],
+                'bottom-left': [0, -70],
+                left: [25, -35],
+                right: [-25, -35]
+            }
+
+            var popup = new tt.Popup({ offset: popupOffsets }).setHTML("<br/><b>" + place.name + "</b>");
+            marker.setPopup(popup).togglePopup();
+        }
+
+
+    </script>
+</body>
+</html>
