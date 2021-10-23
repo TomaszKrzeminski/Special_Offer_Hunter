@@ -105,9 +105,9 @@ namespace Special_Offer_Hunter.Controllers
 
             List<Places> listPlaces = MakeLocationString2(model.list);
             model.listPlaces = listPlaces;
-            //var json = System.Text.Json.JsonSerializer.Serialize(listPlaces);
+            var json = System.Text.Json.JsonSerializer.Serialize(listPlaces);
 
-            //model.JsonShops = json;
+            model.JsonShops = json;
 
             string Locations = MakeLocationString(model.list);
             ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
@@ -115,13 +115,13 @@ namespace Special_Offer_Hunter.Controllers
 
             //string Locations = "53.41103498175408,18.45158868969927:53.406483951579744,18.44005073339871:53.40562466207876,18.436765808096027:53.40727282604525,18.433821043930354";
 
-            var httpClient1 = new HttpClient();
-            //var url1 = "https://api.tomtom.com/routing/1/calculateRoute/52.50931%2C13.42936%3A52.50274%2C13.43872/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
-            var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + Locations + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
-            HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
-            string responseBody1 = await response1.Content.ReadAsStringAsync();
+            //var httpClient1 = new HttpClient();
+            ////var url1 = "https://api.tomtom.com/routing/1/calculateRoute/52.50931%2C13.42936%3A52.50274%2C13.43872/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
+            //var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + Locations + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
+            //HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
+            //string responseBody1 = await response1.Content.ReadAsStringAsync();
 
-            var root = JsonConvert.DeserializeObject<Root>(responseBody1);
+            //var root = JsonConvert.DeserializeObject<Root>(responseBody1);
 
 
 

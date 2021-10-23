@@ -40,7 +40,32 @@ namespace Special_Offer_Hunter.Controllers
             }
         }
 
-        public async Task<IActionResult> ShowShoppingCartProductsOnMap(ShoppingCartType shoppingCartType = ShoppingCartType.Dzień)
+
+
+        List<Places> MakeLocationString(List<ProductLocation> list)
+        {
+            List<Places> list2 = new List<Places>();
+
+            if (list.Count > 0)
+            {
+                for (int i = 0; i < list.Count(); i++)
+                {
+                    Places p = new Places();
+                    p.id = i + 1;
+                    p.name = list[i].shop.Name;
+                    p.center = new List<string>() { list[i].location.Latitude.ToString().Replace(',', '.'), list[i].location.Longitude.ToString().Replace(',', '.') };
+                    list2.Add(p);
+                }
+
+
+            }
+
+            return list2;
+
+        }
+
+
+        public async Task<IActionResult> ShowShoppingCartProductsOnMap(ShoppingCartType shoppingCartType = ShoppingCartType.Rok)
         {
             string UserId = GetUser();
             ProductLocationViewModel model = new ProductLocationViewModel();
@@ -49,13 +74,19 @@ namespace Special_Offer_Hunter.Controllers
             model.UserLocation = repository.GetUserLocation(UserId);
 
 
-            var httpClient1 = new HttpClient();
-            var url1 = "https://api.tomtom.com/routing/1/calculateRoute/53.4098804154932%2C18.4514923905208105655635714446%2C%2018.437029559206%3A53.41290973979078%2C18.45185/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
-            HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
-            string responseBody1 = await response1.Content.ReadAsStringAsync();
-            JObject reverseGeocodingObj = JObject.Parse(responseBody1);
+            Location location = repository.GetUserLocation(UserId);
+            ViewData["MyPositionLat"] = location.Latitude.ToString().Replace(',', '.');
+            ViewData["MyPositionLon"] = location.Longitude.ToString().Replace(',', '.'); ;
 
-            //string postCode = (string)reverseGeocodingObj["address"]["postcode"];
+
+
+            List<Places> listPlaces = MakeLocationString(model.list);
+            model.listPlaces = listPlaces;
+            var json = System.Text.Json.JsonSerializer.Serialize(listPlaces);
+
+            model.JsonShops = json;
+
+            ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
 
 
 
