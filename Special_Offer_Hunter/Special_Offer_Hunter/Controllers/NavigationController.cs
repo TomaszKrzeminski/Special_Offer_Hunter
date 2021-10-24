@@ -65,7 +65,7 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
-        public async Task<IActionResult> ShowShoppingCartProductsOnMap(ShoppingCartType shoppingCartType = ShoppingCartType.Rok)
+        public async Task<PartialViewResult> ShowShoppingCartProductsOnMap(ShoppingCartType shoppingCartType = ShoppingCartType.Rok)
         {
             string UserId = GetUser();
             ProductLocationViewModel model = new ProductLocationViewModel();
@@ -91,7 +91,7 @@ namespace Special_Offer_Hunter.Controllers
 
 
 
-            return View(model);
+            return PartialView(model);
         }
     }
 }

@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="row block bg-dark">
-        <div class="row ">
+        <div id="NavigationOnMap" class="row ">
             @await Component.InvokeAsync("NavigationShowShopsOnMapComponent")
         </div>
 
@@ -120,6 +120,47 @@
             });
             //////
 
+            ///Change NavigationView
+
+
+            function ChangeNavigationView(navType)
+            {
+
+                  $.ajax({
+                    url: '@Url.Action("ShowShoppingCartProductsOnMap", "Navigation")',
+                    type: "get",
+                    data: {
+                        shoppingCartType: navType,
+                        
+
+                    },
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#NavigationOnMap').empty();
+                        $('#NavigationOnMap').html(result);
+
+                    }
+                });
+
+
+
+
+            }
+
+
+            ////
+
+
+
+
+
+
+
+
             //Change shopping cart icon
 
             function ChangeIcon(typeName)
@@ -168,7 +209,7 @@
                 $(this).addClass('imageSelected');
 
 
-
+                ChangeNavigationView(cartType);
                 //var t = $("input[name='__RequestVerificationToken']").val();
                 $.ajax({
                     url: '@Url.Action("AddProductToShoppingCart", "Cart")',
@@ -189,6 +230,10 @@
 
                     }
                 });
+
+               
+
+
             });
 
 
@@ -225,7 +270,7 @@
 
                 });
 
-
+                ChangeNavigationView(cartType);
                 var t = $("input[name='__RequestVerificationToken']").val();
                 $.ajax({
                     url: '@Url.Action("MoveProductToAnotherCart", "Cart")',
@@ -247,7 +292,7 @@
                     }
                 });
 
-
+               
 
             });
 
