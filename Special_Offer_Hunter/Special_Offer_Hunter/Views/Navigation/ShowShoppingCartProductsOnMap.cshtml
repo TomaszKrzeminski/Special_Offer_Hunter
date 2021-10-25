@@ -71,7 +71,38 @@
         var popup = new tt.Popup({ offset: popupOffsets }).setHTML("<br/><b>" + place.name + "</b>");
         marker.setPopup(popup).togglePopup();
     }
+    /////////// routing
 
+
+    function MakeLocationElements(obj) {
+
+        var text = "";
+
+
+
+
+        for (var i = 0; i < obj.length; i++) {
+            var l1 = obj[i].center[0];
+            var l2 = obj[i].center[1];
+            text += l1 + "," + l2 + ":";
+        }
+
+        text = text.substring(0, text.length - 1);
+        return text;
+    }
+
+
+    var locationsChanges = MakeLocationElements(obj);
+
+
+
+
+
+
+
+
+
+///////
 
 </script>
 

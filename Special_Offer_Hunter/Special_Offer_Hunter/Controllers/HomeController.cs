@@ -87,7 +87,25 @@ namespace Special_Offer_Hunter.Controllers
             return text;
 
         }
+        public string MakeLocationStringX(Location locationX, List<ProductLocation> list)
+        {
+            string Locations = locationX.Latitude.ToString().Replace(',', '.') + "," + locationX.Longitude.ToString().Replace(',', '.') + ":";
 
+            foreach (var l in list)
+            {
+
+                string lat = l.location.Latitude.ToString().Replace(',', '.');
+                string lon = l.location.Longitude.ToString().Replace(',', '.');
+
+                Locations += lat + "," + lon + ":";
+
+            }
+
+            Locations = Locations.Remove(Locations.Length - 1, 1);
+
+
+            return Locations;
+        }
 
         public async Task<IActionResult> Test(ShoppingCartType shoppingCartType = ShoppingCartType.Dzień)
         {
@@ -103,25 +121,30 @@ namespace Special_Offer_Hunter.Controllers
             ViewData["MyPositionLon"] = location.Longitude.ToString().Replace(',', '.'); ;
 
 
+
             List<Places> listPlaces = MakeLocationString2(model.list);
             model.listPlaces = listPlaces;
             var json = System.Text.Json.JsonSerializer.Serialize(listPlaces);
 
             model.JsonShops = json;
 
-            string Locations = MakeLocationString(model.list);
             ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
 
+            /////
 
-            //string Locations = "53.41103498175408,18.45158868969927:53.406483951579744,18.44005073339871:53.40562466207876,18.436765808096027:53.40727282604525,18.433821043930354";
 
-            //var httpClient1 = new HttpClient();
-            ////var url1 = "https://api.tomtom.com/routing/1/calculateRoute/52.50931%2C13.42936%3A52.50274%2C13.43872/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
-            //var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + Locations + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
-            //HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
-            //string responseBody1 = await response1.Content.ReadAsStringAsync();
 
-            //var root = JsonConvert.DeserializeObject<Root>(responseBody1);
+
+            var httpClient1 = new HttpClient();
+
+            string LocationsX = MakeLocationStringX(model.UserLocation, model.list);
+
+            var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + LocationsX + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O&routeType=fastest";
+            HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
+            string responseBody1 = await response1.Content.ReadAsStringAsync();
+
+            var root = JsonConvert.DeserializeObject<Root>(responseBody1);
+
 
 
 

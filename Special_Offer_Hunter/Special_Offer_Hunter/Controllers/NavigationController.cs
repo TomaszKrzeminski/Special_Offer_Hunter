@@ -10,8 +10,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NetTopologySuite.Index.Bintree;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Special_Offer_Hunter.Models;
+using Special_Offer_Hunter.Models2;
 
 namespace Special_Offer_Hunter.Controllers
 {
@@ -65,6 +68,28 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
+        public string MakeLocationStringX(Location locationX, List<ProductLocation> list)
+        {
+            string Locations = locationX.Latitude.ToString().Replace(',', '.') + "," + locationX.Longitude.ToString().Replace(',', '.') + ":";
+
+            foreach (var l in list)
+            {
+
+                string lat = l.location.Latitude.ToString().Replace(',', '.');
+                string lon = l.location.Longitude.ToString().Replace(',', '.');
+
+                Locations += lat + "," + lon + ":";
+
+            }
+
+            Locations = Locations.Remove(Locations.Length - 1, 1);
+
+
+            return Locations;
+        }
+
+
+
         public async Task<PartialViewResult> ShowShoppingCartProductsOnMap(ShoppingCartType shoppingCartType = ShoppingCartType.Rok)
         {
             string UserId = GetUser();
@@ -87,6 +112,23 @@ namespace Special_Offer_Hunter.Controllers
             model.JsonShops = json;
 
             ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
+
+            /////
+
+
+
+
+            var httpClient1 = new HttpClient();
+
+            string LocationsX = MakeLocationStringX(model.UserLocation, model.list);
+
+            var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + LocationsX + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O&routeType=fastest";
+            HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
+            string responseBody1 = await response1.Content.ReadAsStringAsync();
+
+            var root = JsonConvert.DeserializeObject<Root>(responseBody1);
+
+            ////
 
 
 
