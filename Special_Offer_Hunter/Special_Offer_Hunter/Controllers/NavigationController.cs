@@ -105,11 +105,23 @@ namespace Special_Offer_Hunter.Controllers
 
 
 
-            List<Places> listPlaces = MakeLocationString(model.list);
+
+            List<Places> listPlaces = new List<Places>();
+            Places p1 = new Places();
+            p1.id = 0;
+            p1.name = "Moja Pozycja";
+            p1.center = new List<string>() { location.Latitude.ToString().Replace(',', '.'), location.Longitude.ToString().Replace(',', '.') };
+            listPlaces.Add(p1);
+            listPlaces.AddRange(MakeLocationString(model.list));
             model.listPlaces = listPlaces;
             var json = System.Text.Json.JsonSerializer.Serialize(listPlaces);
 
             model.JsonShops = json;
+
+
+
+
+
 
             ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
 

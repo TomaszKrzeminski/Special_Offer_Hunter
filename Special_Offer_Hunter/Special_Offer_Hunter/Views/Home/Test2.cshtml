@@ -68,7 +68,7 @@
             style: 'tomtom://vector/1/basic-main',
             dragPan: !isMobileOrTablet(),
             center: HQ,
-            zoom: 15
+            zoom: 10
         });
         map.addControl(new tt.FullscreenControl());
         map.addControl(new tt.NavigationControl());
@@ -137,8 +137,7 @@
 
 
 
-        map.once('load', function ()
-        {
+        map.once('load', function () {
             tt.services.calculateRoute({
                 key: myTomTomKey,
                 traffic: false,
@@ -169,38 +168,6 @@
                     map.fitBounds(bounds, { duration: 0, padding: 50 });
                 });
         });
-
-
-
-
-
-        for (var i = 0; i < obj.length; i++) {
-
-            var place = obj[i];
-
-            var d = { lat: place.center[0], lng: place.center[1] }
-
-            var marker = new tt.Marker().setLngLat(d).addTo(map);
-
-            var popupOffsets = {
-                top: [0, 0],
-                bottom: [0, -70],
-                'bottom-right': [0, -70],
-                'bottom-left': [0, -70],
-                left: [25, -35],
-                right: [-25, -35]
-            }
-
-            var popup = new tt.Popup({ offset: popupOffsets }).setHTML("<br/><b>" + place.name + "</b>");
-            marker.setPopup(popup).togglePopup();
-        }
-
-
-
-
-
-
-
     </script>
 </body>
 </html>

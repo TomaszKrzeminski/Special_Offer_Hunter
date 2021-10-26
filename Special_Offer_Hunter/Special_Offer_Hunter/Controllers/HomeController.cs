@@ -152,7 +152,50 @@ namespace Special_Offer_Hunter.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Test2(ShoppingCartType shoppingCartType = ShoppingCartType.Rok)
+        {
+            string UserId = GetUser();
+            ProductLocationViewModel model = new ProductLocationViewModel();
+            model.list = repository.GetProductLocationByCartType(shoppingCartType, UserId);
+            model.shoppingcartType = shoppingCartType;
+            model.UserLocation = repository.GetUserLocation(UserId);
 
+
+            Location location = repository.GetUserLocation(UserId);
+            ViewData["MyPositionLat"] = location.Latitude.ToString().Replace(',', '.');
+            ViewData["MyPositionLon"] = location.Longitude.ToString().Replace(',', '.'); ;
+
+
+
+            List<Places> listPlaces = MakeLocationString2(model.list);
+            model.listPlaces = listPlaces;
+            var json = System.Text.Json.JsonSerializer.Serialize(listPlaces);
+
+            model.JsonShops = json;
+
+            ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
+
+            /////
+
+
+
+
+            var httpClient1 = new HttpClient();
+
+            string LocationsX = MakeLocationStringX(model.UserLocation, model.list);
+
+            var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + LocationsX + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O&routeType=fastest";
+            HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
+            string responseBody1 = await response1.Content.ReadAsStringAsync();
+
+            var root = JsonConvert.DeserializeObject<Root>(responseBody1);
+
+
+
+
+
+            return View(model);
+        }
 
 
         public IActionResult Panel()

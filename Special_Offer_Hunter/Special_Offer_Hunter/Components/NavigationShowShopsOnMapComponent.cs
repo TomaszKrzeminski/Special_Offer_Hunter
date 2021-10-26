@@ -59,7 +59,7 @@ namespace Special_Offer_Hunter.Components
             ShoppingCartType shoppingCartType = ShoppingCartType.Dzień;
             string UserId = GetUser();
             ProductLocationViewModel model = new ProductLocationViewModel();
-            model.list = repository.GetProductLocationByCartType(shoppingCartType, UserId);
+
             model.shoppingcartType = shoppingCartType;
             model.UserLocation = repository.GetUserLocation(UserId);
 
@@ -70,7 +70,16 @@ namespace Special_Offer_Hunter.Components
 
 
 
-            List<Places> listPlaces = MakeLocationString(model.list);
+            model.list.AddRange(repository.GetProductLocationByCartType(shoppingCartType, UserId));
+
+
+            List<Places> listPlaces = new List<Places>();
+            Places p1 = new Places();
+            p1.id = 0;
+            p1.name = "Moja Pozycja";
+            p1.center = new List<string>() { location.Latitude.ToString().Replace(',', '.'), location.Longitude.ToString().Replace(',', '.') };
+            listPlaces.Add(p1);
+            listPlaces.AddRange(MakeLocationString(model.list));
             model.listPlaces = listPlaces;
             var json = System.Text.Json.JsonSerializer.Serialize(listPlaces);
 

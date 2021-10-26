@@ -1,0 +1,80 @@
+﻿@model ProductLocationViewModel
+
+
+<style>
+
+    #map {
+        height: 378px;
+        width: 1110px;
+    }
+</style>
+
+<div class="col col-lg-12">
+    <div id='map' class='map'></div>
+</div>
+
+
+
+
+
+<input id="myTomTomKey" type="hidden" value="@ViewData["MyTomTomKey"]" />
+<input id="myPositionLat" type="hidden" value="@ViewData["MyPositionLat"]" />
+<input id="myPositionLon" type="hidden" value="@ViewData["MyPositionLon"]" />
+
+<input id="Shops2" type="hidden" value="@Model.JsonShops" />
+<script>
+
+    var myTomTomKey = document.getElementById('myTomTomKey').value;
+
+    var myPLat = document.getElementById('myPositionLat').value;
+    var myPLong = document.getElementById('myPositionLon').value;
+
+    var HQ = { lat: myPLat, lng: myPLong }
+
+    var map;
+
+    map = tt.map({
+
+        key: myTomTomKey,
+
+        container: 'map',
+        center: HQ,
+        zoom: 10
+
+
+
+    });
+
+
+
+    var Shops2 = document.getElementById('Shops2').value;
+    var obj = JSON.parse(Shops2);
+
+
+   
+
+
+    for (var i = 0; i < obj.length; i++) {
+
+        var place = obj[i];
+
+        var d = { lat: place.center[0], lng: place.center[1] }
+
+        var marker = new tt.Marker().setLngLat(d).addTo(map);
+
+        var popupOffsets = {
+            top: [0, 0],
+            bottom: [0, -70],
+            'bottom-right': [0, -70],
+            'bottom-left': [0, -70],
+            left: [25, -35],
+            right: [-25, -35]
+        }
+
+        var popup = new tt.Popup({ offset: popupOffsets }).setHTML("<br/><b>" + place.name + "</b>");
+        marker.setPopup(popup).togglePopup();
+    }
+
+
+</script>
+
