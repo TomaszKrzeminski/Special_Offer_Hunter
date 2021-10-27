@@ -138,11 +138,11 @@ namespace Special_Offer_Hunter.Controllers
             HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
             string responseBody1 = await response1.Content.ReadAsStringAsync();
 
-            var root = JsonConvert.DeserializeObject<Root>(responseBody1);
+            Root root = JsonConvert.DeserializeObject<Root>(responseBody1);
 
-            ////
-
-
+            model.Distance = model.SetDistance(root);
+            model.Time = model.SetTimeMinutes(root);
+            model.ArrivalTime = model.SetTimeArrival(root);          ////
 
 
             return PartialView(model);

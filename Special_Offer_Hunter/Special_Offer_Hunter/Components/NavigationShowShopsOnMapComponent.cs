@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Special_Offer_Hunter.Models;
+using Special_Offer_Hunter.Models2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -54,7 +57,26 @@ namespace Special_Offer_Hunter.Components
 
         }
 
-        public IViewComponentResult Invoke()
+        public string MakeLocationStringX(Location locationX, List<ProductLocation> list)
+        {
+            string Locations = locationX.Latitude.ToString().Replace(',', '.') + "," + locationX.Longitude.ToString().Replace(',', '.') + ":";
+
+            foreach (var l in list)
+            {
+
+                string lat = l.location.Latitude.ToString().Replace(',', '.');
+                string lon = l.location.Longitude.ToString().Replace(',', '.');
+
+                Locations += lat + "," + lon + ":";
+
+            }
+
+            Locations = Locations.Remove(Locations.Length - 1, 1);
+
+
+            return Locations;
+        }
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             ShoppingCartType shoppingCartType = ShoppingCartType.Dzień;
             string UserId = GetUser();
@@ -87,6 +109,19 @@ namespace Special_Offer_Hunter.Components
 
             ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
 
+            var httpClient1 = new HttpClient();
+
+            string LocationsX = MakeLocationStringX(model.UserLocation, model.list);
+
+            var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + LocationsX + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O&routeType=fastest";
+            HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
+            string responseBody1 = await response1.Content.ReadAsStringAsync();
+
+            Root root = JsonConvert.DeserializeObject<Root>(responseBody1);
+
+            model.Distance = model.SetDistance(root);
+            model.Time = model.SetTimeMinutes(root);
+            model.ArrivalTime = model.SetTimeArrival(root);          ////
 
 
 
