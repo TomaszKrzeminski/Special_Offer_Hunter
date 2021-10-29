@@ -100,6 +100,50 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        //public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type)
+        //{
+
+        //    ShoppingCartViewModel model = new ShoppingCartViewModel();
+        //    model.type = type;
+        //    model.UserId = UserId;
+        //    try
+        //    {
+        //        ApplicationUser user = context.Users.Include(x => x.Shopping_Cart_Day).Include(x => x.Shopping_Cart_Week).Include(x => x.Shopping_Cart_Month).Include(x => x.Shopping_Cart_Year).Include(x => x.Shopping_Cart_LookFor).Where(x => x.Id == UserId).FirstOrDefault();
+
+        //        switch (type)
+        //        {
+        //            case ShoppingCartType.Dzień:
+        //                Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.Products).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
+        //                model.productList = cart.Products.ToList();
+        //                break;
+        //            case ShoppingCartType.Tydzień:
+        //                Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.Products).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
+        //                model.productList = cart1.Products.ToList();
+        //                break;
+        //            case ShoppingCartType.Miesiąc:
+        //                Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.Products).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
+        //                model.productList = cart2.Products.ToList();
+        //                break;
+        //            case ShoppingCartType.Rok:
+        //                Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.Products).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
+        //                model.productList = cart3.Products.ToList();
+        //                break;
+        //            case ShoppingCartType.Poszukiwane:
+        //                Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.Products).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
+        //                model.productList = cart4.Products.ToList();
+        //                break;
+
+        //        }
+
+        //        return model;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return model;
+        //    }
+        //}
+
+
         public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type)
         {
 
@@ -113,24 +157,25 @@ namespace Special_Offer_Hunter.Models
                 switch (type)
                 {
                     case ShoppingCartType.Dzień:
-                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.Products).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
-                        model.productList = cart.Products.ToList();
+                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.ProductShopping_Cart_Days).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
+                        model.productList = cart.ProductShopping_Cart_Days.Select(x => x.Product).ToList();
+
                         break;
                     case ShoppingCartType.Tydzień:
-                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.Products).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
-                        model.productList = cart1.Products.ToList();
+                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.ProductShopping_Cart_Weeks).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
+                        model.productList = cart1.ProductShopping_Cart_Weeks.Select(x => x.Product).ToList();
                         break;
                     case ShoppingCartType.Miesiąc:
-                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.Products).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
-                        model.productList = cart2.Products.ToList();
+                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.ProductShopping_Cart_Months).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
+                        model.productList = cart2.ProductShopping_Cart_Months.Select(x => x.Product).ToList();
                         break;
                     case ShoppingCartType.Rok:
-                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.Products).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
-                        model.productList = cart3.Products.ToList();
+                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.ProductShopping_Cart_Years).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
+                        model.productList = cart3.ProductShopping_Cart_Years.Select(x => x.Product).ToList();
                         break;
                     case ShoppingCartType.Poszukiwane:
-                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.Products).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
-                        model.productList = cart4.Products.ToList();
+                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.ProductShopping_Cart_LookFor).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
+                        model.productList = cart4.ProductShopping_Cart_LookFor.Select(x => x.Product).ToList();
                         break;
 
                 }
@@ -142,6 +187,8 @@ namespace Special_Offer_Hunter.Models
                 return model;
             }
         }
+
+
 
 
         public Product GetProductById(int Id)
