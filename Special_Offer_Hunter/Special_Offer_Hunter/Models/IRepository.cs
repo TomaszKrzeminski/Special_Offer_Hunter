@@ -403,6 +403,135 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        //public bool AddProductToUserShoppingCart(string UserId, ShoppingCartType type, int ProductId)
+        //{
+        //    try
+        //    {
+        //        Product product = context.Products.Find(ProductId);
+        //        int CartId = 0;
+
+        //        ApplicationUser user = context.Users.Include(x => x.Shopping_Cart_Day).Include(x => x.Shopping_Cart_Week).Include(x => x.Shopping_Cart_Month).Include(x => x.Shopping_Cart_Year).Include(x => x.Shopping_Cart_LookFor).Where(x => x.Id == UserId).FirstOrDefault();
+
+        //        switch (type)
+        //        {
+        //            case ShoppingCartType.Dzień:
+
+
+        //                if (user.Shopping_Cart_Day == null)
+        //                {
+        //                    Shopping_Cart_Day cartDay = new Shopping_Cart_Day();
+        //                    context.Shopping_Carts_Day.Add(cartDay);
+        //                    context.SaveChanges();
+        //                    CartId = cartDay.Shopping_Cart_DayId;
+        //                    ApplicationUser userX = context.Users.Find(UserId);
+        //                    Shopping_Cart_Day day = context.Shopping_Carts_Day.Find(CartId);
+        //                    userX.Shopping_Cart_Day = day;
+        //                    context.SaveChanges();
+        //                }
+
+        //                Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.Products).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
+
+        //                if (!cart.Products.Any(x => x.ProductId == ProductId))
+        //                {
+        //                    cart.Products.Add(product);
+        //                    context.SaveChanges();
+        //                }
+
+
+        //                break;
+        //            case ShoppingCartType.Tydzień:
+
+        //                if (user.Shopping_Cart_Week == null)
+        //                {
+        //                    Shopping_Cart_Week cartWeek = new Shopping_Cart_Week();
+        //                    context.Shopping_Carts_Week.Add(cartWeek);
+        //                    context.SaveChanges();
+        //                    CartId = cartWeek.Shopping_Cart_WeekId;
+        //                    ApplicationUser userX = context.Users.Find(UserId);
+        //                    Shopping_Cart_Week week = context.Shopping_Carts_Week.Find(CartId);
+        //                    userX.Shopping_Cart_Week = week;
+        //                    context.SaveChanges();
+        //                }
+        //                Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.Products).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
+        //                if (!cart1.Products.Any(x => x.ProductId == ProductId))
+        //                {
+        //                    cart1.Products.Add(product);
+        //                    context.SaveChanges();
+        //                }
+        //                break;
+        //            case ShoppingCartType.Miesiąc:
+        //                if (user.Shopping_Cart_Month == null)
+        //                {
+        //                    Shopping_Cart_Month cartM = new Shopping_Cart_Month();
+        //                    context.Shopping_Cart_Month.Add(cartM);
+        //                    context.SaveChanges();
+        //                    CartId = cartM.Shopping_Cart_MonthId;
+        //                    ApplicationUser userX = context.Users.Find(UserId);
+        //                    Shopping_Cart_Month day = context.Shopping_Cart_Month.Find(CartId);
+        //                    userX.Shopping_Cart_Month = day;
+        //                    context.SaveChanges();
+        //                }
+        //                Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.Products).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
+        //                if (!cart2.Products.Any(x => x.ProductId == ProductId))
+        //                {
+        //                    cart2.Products.Add(product);
+        //                    context.SaveChanges();
+        //                }
+        //                break;
+        //            case ShoppingCartType.Rok:
+        //                if (user.Shopping_Cart_Year == null)
+        //                {
+        //                    Shopping_Cart_Year cartY = new Shopping_Cart_Year();
+        //                    context.Shopping_Cart_Year.Add(cartY);
+        //                    context.SaveChanges();
+        //                    CartId = cartY.Shopping_Cart_YearId;
+        //                    ApplicationUser userX = context.Users.Find(UserId);
+        //                    Shopping_Cart_Year day = context.Shopping_Cart_Year.Find(CartId);
+        //                    userX.Shopping_Cart_Year = day;
+        //                    context.SaveChanges();
+        //                }
+        //                Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.Products).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
+        //                if (!cart3.Products.Any(x => x.ProductId == ProductId))
+        //                {
+        //                    cart3.Products.Add(product);
+        //                    context.SaveChanges();
+        //                }
+        //                break;
+        //            case ShoppingCartType.Poszukiwane:
+        //                if (user.Shopping_Cart_LookFor == null)
+        //                {
+        //                    Shopping_Cart_LookFor cartL = new Shopping_Cart_LookFor();
+        //                    context.Shopping_Cart_LookFor.Add(cartL);
+        //                    context.SaveChanges();
+        //                    CartId = cartL.Shopping_Cart_LookForId;
+        //                    ApplicationUser userX = context.Users.Find(UserId);
+        //                    Shopping_Cart_LookFor day = context.Shopping_Cart_LookFor.Find(CartId);
+        //                    userX.Shopping_Cart_LookFor = day;
+        //                    context.SaveChanges();
+        //                }
+        //                Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.Products).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
+        //                if (!cart4.Products.Any(x => x.ProductId == ProductId))
+        //                {
+        //                    cart4.Products.Add(product);
+        //                    context.SaveChanges();
+        //                }
+        //                break;
+
+        //        }
+
+
+
+
+
+
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
+
         public bool AddProductToUserShoppingCart(string UserId, ShoppingCartType type, int ProductId)
         {
             try
@@ -410,7 +539,7 @@ namespace Special_Offer_Hunter.Models
                 Product product = context.Products.Find(ProductId);
                 int CartId = 0;
 
-                ApplicationUser user = context.Users.Include(x => x.Shopping_Cart_Day).Include(x => x.Shopping_Cart_Week).Include(x => x.Shopping_Cart_Month).Include(x => x.Shopping_Cart_Year).Include(x => x.Shopping_Cart_LookFor).Where(x => x.Id == UserId).FirstOrDefault();
+                ApplicationUser user = context.Users.Include(x => x.Shopping_Cart_Day).ThenInclude(x => x.ProductShopping_Cart_Days).Include(x => x.Shopping_Cart_Week).ThenInclude(x => x.ProductShopping_Cart_Weeks).Include(x => x.Shopping_Cart_Month).ThenInclude(x => x.ProductShopping_Cart_Months).Include(x => x.Shopping_Cart_Year).ThenInclude(x => x.ProductShopping_Cart_Years).Include(x => x.Shopping_Cart_LookFor).ThenInclude(x => x.ProductShopping_Cart_LookFor).Where(x => x.Id == UserId).FirstOrDefault();
 
                 switch (type)
                 {
@@ -429,11 +558,18 @@ namespace Special_Offer_Hunter.Models
                             context.SaveChanges();
                         }
 
-                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.Products).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
+                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.ProductShopping_Cart_Days).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
 
-                        if (!cart.Products.Any(x => x.ProductId == ProductId))
+                        if (!cart.ProductShopping_Cart_Days.Any(x => x.ProductId == ProductId))
                         {
-                            cart.Products.Add(product);
+
+                            ProductShopping_Cart_Day pcd = new ProductShopping_Cart_Day();
+                            Product prod = context.Products.Find(ProductId);
+
+                            pcd.Product = prod;
+                            pcd.Shopping_Cart_Day = cart;
+
+                            context.ProductShopping_Carts_Days.Add(pcd);
                             context.SaveChanges();
                         }
 
@@ -452,10 +588,16 @@ namespace Special_Offer_Hunter.Models
                             userX.Shopping_Cart_Week = week;
                             context.SaveChanges();
                         }
-                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.Products).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
-                        if (!cart1.Products.Any(x => x.ProductId == ProductId))
+                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.ProductShopping_Cart_Weeks).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
+                        if (!cart1.ProductShopping_Cart_Weeks.Any(x => x.ProductId == ProductId))
                         {
-                            cart1.Products.Add(product);
+                            ProductShopping_Cart_Week pcd = new ProductShopping_Cart_Week();
+                            Product prod = context.Products.Find(ProductId);
+
+                            pcd.Product = prod;
+                            pcd.Shopping_Cart_Week = cart1;
+
+                            context.ProductShopping_Carts_Weeks.Add(pcd);
                             context.SaveChanges();
                         }
                         break;
@@ -471,10 +613,16 @@ namespace Special_Offer_Hunter.Models
                             userX.Shopping_Cart_Month = day;
                             context.SaveChanges();
                         }
-                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.Products).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
-                        if (!cart2.Products.Any(x => x.ProductId == ProductId))
+                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.ProductShopping_Cart_Months).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
+                        if (!cart2.ProductShopping_Cart_Months.Any(x => x.ProductId == ProductId))
                         {
-                            cart2.Products.Add(product);
+                            ProductShopping_Cart_Month pcd = new ProductShopping_Cart_Month();
+                            Product prod = context.Products.Find(ProductId);
+
+                            pcd.Product = prod;
+                            pcd.Shopping_Cart_Month = cart2;
+
+                            context.ProductShopping_Cart_Months.Add(pcd);
                             context.SaveChanges();
                         }
                         break;
@@ -490,10 +638,16 @@ namespace Special_Offer_Hunter.Models
                             userX.Shopping_Cart_Year = day;
                             context.SaveChanges();
                         }
-                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.Products).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
-                        if (!cart3.Products.Any(x => x.ProductId == ProductId))
+                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.ProductShopping_Cart_Years).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
+                        if (!cart3.ProductShopping_Cart_Years.Any(x => x.ProductId == ProductId))
                         {
-                            cart3.Products.Add(product);
+                            ProductShopping_Cart_Year pcd = new ProductShopping_Cart_Year();
+                            Product prod = context.Products.Find(ProductId);
+
+                            pcd.Product = prod;
+                            pcd.Shopping_Cart_Year = cart3;
+
+                            context.ProductShopping_Cart_Years.Add(pcd);
                             context.SaveChanges();
                         }
                         break;
@@ -509,10 +663,16 @@ namespace Special_Offer_Hunter.Models
                             userX.Shopping_Cart_LookFor = day;
                             context.SaveChanges();
                         }
-                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.Products).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
-                        if (!cart4.Products.Any(x => x.ProductId == ProductId))
+                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.ProductShopping_Cart_LookFor).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
+                        if (!cart4.ProductShopping_Cart_LookFor.Any(x => x.ProductId == ProductId))
                         {
-                            cart4.Products.Add(product);
+                            ProductShopping_Cart_LookFor pcd = new ProductShopping_Cart_LookFor();
+                            Product prod = context.Products.Find(ProductId);
+
+                            pcd.Product = prod;
+                            pcd.Shopping_Cart_LookFor = cart4;
+
+                            context.ProductShopping_Cart_LookFor.Add(pcd);
                             context.SaveChanges();
                         }
                         break;
@@ -532,6 +692,62 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+
+
+
+
+
+        //public bool RemoveProductFromShoppingCart(string UserId, ShoppingCartType type, int ProductId)
+        //{
+        //    try
+        //    {
+        //        ApplicationUser user = context.Users.Include(x => x.Shopping_Cart_Day).Include(x => x.Shopping_Cart_Week).Include(x => x.Shopping_Cart_Month).Include(x => x.Shopping_Cart_Year).Include(x => x.Shopping_Cart_LookFor).Where(x => x.Id == UserId).FirstOrDefault();
+        //        Product product = context.Products.Find(ProductId);
+        //        switch (type)
+        //        {
+        //            case ShoppingCartType.Dzień:
+        //                Shopping_Cart_Day cart = context.Shopping_Carts_Day.Find(user.Shopping_Cart_Day.Shopping_Cart_DayId);
+        //                cart.Products.Remove(product);
+        //                context.SaveChanges();
+
+        //                break;
+        //            case ShoppingCartType.Tydzień:
+        //                Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Find(user.Shopping_Cart_Week.Shopping_Cart_WeekId);
+        //                cart1.Products.Remove(product);
+        //                context.SaveChanges();
+
+        //                break;
+        //            case ShoppingCartType.Miesiąc:
+        //                Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Find(user.Shopping_Cart_Month.Shopping_Cart_MonthId);
+
+        //                cart2.Products.Remove(product);
+        //                context.SaveChanges();
+        //                break;
+        //            case ShoppingCartType.Rok:
+        //                Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Find(user.Shopping_Cart_Year.Shopping_Cart_YearId);
+        //                cart3.Products.Remove(product);
+        //                context.SaveChanges();
+        //                break;
+        //            case ShoppingCartType.Poszukiwane:
+        //                Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Find(user.Shopping_Cart_LookFor.Shopping_Cart_LookForId);
+        //                cart4.Products.Remove(product);
+        //                context.SaveChanges();
+        //                break;
+
+        //        }
+
+
+
+
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
+
+
         public bool RemoveProductFromShoppingCart(string UserId, ShoppingCartType type, int ProductId)
         {
             try
@@ -541,31 +757,40 @@ namespace Special_Offer_Hunter.Models
                 switch (type)
                 {
                     case ShoppingCartType.Dzień:
-                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Find(user.Shopping_Cart_Day.Shopping_Cart_DayId);
-                        cart.Products.Remove(product);
+                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.ProductShopping_Cart_Days).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).First();
+
+                        ProductShopping_Cart_Day r = cart.ProductShopping_Cart_Days.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                        cart.ProductShopping_Cart_Days.Remove(r);
                         context.SaveChanges();
 
                         break;
                     case ShoppingCartType.Tydzień:
-                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Find(user.Shopping_Cart_Week.Shopping_Cart_WeekId);
-                        cart1.Products.Remove(product);
+                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.ProductShopping_Cart_Weeks).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).First();
+
+                        ProductShopping_Cart_Week r1 = cart1.ProductShopping_Cart_Weeks.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                        cart1.ProductShopping_Cart_Weeks.Remove(r1);
                         context.SaveChanges();
 
                         break;
                     case ShoppingCartType.Miesiąc:
-                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Find(user.Shopping_Cart_Month.Shopping_Cart_MonthId);
+                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.ProductShopping_Cart_Months).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).First();
 
-                        cart2.Products.Remove(product);
+                        ProductShopping_Cart_Month r2 = cart2.ProductShopping_Cart_Months.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                        cart2.ProductShopping_Cart_Months.Remove(r2);
                         context.SaveChanges();
                         break;
                     case ShoppingCartType.Rok:
-                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Find(user.Shopping_Cart_Year.Shopping_Cart_YearId);
-                        cart3.Products.Remove(product);
+                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.ProductShopping_Cart_Years).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).First();
+
+                        ProductShopping_Cart_Year r3 = cart3.ProductShopping_Cart_Years.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                        cart3.ProductShopping_Cart_Years.Remove(r3);
                         context.SaveChanges();
                         break;
                     case ShoppingCartType.Poszukiwane:
-                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Find(user.Shopping_Cart_LookFor.Shopping_Cart_LookForId);
-                        cart4.Products.Remove(product);
+                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.ProductShopping_Cart_LookFor).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).First();
+
+                        ProductShopping_Cart_LookFor r4 = cart4.ProductShopping_Cart_LookFor.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                        cart4.ProductShopping_Cart_LookFor.Remove(r4);
                         context.SaveChanges();
                         break;
 
@@ -581,6 +806,11 @@ namespace Special_Offer_Hunter.Models
                 return false;
             }
         }
+
+
+
+
+
 
         public List<string> GetCategories()
         {
@@ -607,24 +837,24 @@ namespace Special_Offer_Hunter.Models
                 switch (type)
                 {
                     case ShoppingCartType.Dzień:
-                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.Products).ThenInclude(x => x.Shop).ThenInclude(x => x.Location).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
-                        productList = cart.Products.ToList();
+                        Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.ProductShopping_Cart_Days).ThenInclude(x => x.Product).ThenInclude(x => x.Shop).ThenInclude(x => x.Location).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Day.Shopping_Cart_DayId).FirstOrDefault();
+                        productList = cart.ProductShopping_Cart_Days.Select(x => x.Product).ToList();
                         break;
                     case ShoppingCartType.Tydzień:
-                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.Products).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
-                        productList = cart1.Products.ToList();
+                        Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.ProductShopping_Cart_Weeks).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Week.Shopping_Cart_WeekId).FirstOrDefault();
+                        productList = cart1.ProductShopping_Cart_Weeks.Select(x => x.Product).ToList();
                         break;
                     case ShoppingCartType.Miesiąc:
-                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.Products).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
-                        productList = cart2.Products.ToList();
+                        Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.ProductShopping_Cart_Months).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Month.Shopping_Cart_MonthId).FirstOrDefault();
+                        productList = cart2.ProductShopping_Cart_Months.Select(x => x.Product).ToList();
                         break;
                     case ShoppingCartType.Rok:
-                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.Products).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
-                        productList = cart3.Products.ToList();
+                        Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.ProductShopping_Cart_Years).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Year.Shopping_Cart_YearId).FirstOrDefault();
+                        productList = cart3.ProductShopping_Cart_Years.Select(x => x.Product).ToList();
                         break;
                     case ShoppingCartType.Poszukiwane:
-                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.Products).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
-                        productList = cart4.Products.ToList();
+                        Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.ProductShopping_Cart_LookFor).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Shopping_Cart_LookForId).FirstOrDefault();
+                        productList = cart4.ProductShopping_Cart_LookFor.Select(x => x.Product).ToList();
                         break;
 
                 }

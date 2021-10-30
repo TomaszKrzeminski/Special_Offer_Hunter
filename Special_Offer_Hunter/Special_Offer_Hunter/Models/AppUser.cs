@@ -206,11 +206,11 @@ namespace Special_Offer_Hunter.Models
         public int? Product_PriceId { get; set; }//
         public virtual Product_Price Product_Price { get; set; }
 
-        public IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
-        public IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
-        public IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
-        public IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
-        public IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
+        public virtual IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
+        public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
+        public virtual IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
+        public virtual IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
+        public virtual IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
 
 
     }
@@ -219,46 +219,46 @@ namespace Special_Offer_Hunter.Models
     public class ProductShopping_Cart_Day
     {
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public int Shopping_Cart_DayId { get; set; }
-        public Shopping_Cart_Day Shopping_Cart_Day { get; set; }
+        public virtual Shopping_Cart_Day Shopping_Cart_Day { get; set; }
 
     }
     public class ProductShopping_Cart_Week
     {
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public int Shopping_Cart_WeekId { get; set; }
-        public Shopping_Cart_Week Shopping_Cart_Week { get; set; }
+        public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
 
     }
     public class ProductShopping_Cart_Month
     {
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public int Shopping_Cart_MonthId { get; set; }
-        public Shopping_Cart_Month Shopping_Cart_Month { get; set; }
+        public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
 
     }
     public class ProductShopping_Cart_Year
     {
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public int Shopping_Cart_YearId { get; set; }
-        public Shopping_Cart_Year Shopping_Cart_Year { get; set; }
+        public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
     }
 
     public class ProductShopping_Cart_LookFor
     {
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         public int Shopping_Cart_LookForId { get; set; }
-        public Shopping_Cart_LookFor Shopping_Cart_LookFor { get; set; }
+        public virtual Shopping_Cart_LookFor Shopping_Cart_LookFor { get; set; }
 
     }
 
@@ -312,7 +312,7 @@ namespace Special_Offer_Hunter.Models
 
 
 
-        public IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
+        public virtual IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
 
 
 
@@ -337,7 +337,7 @@ namespace Special_Offer_Hunter.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
+        public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
 
 
     }
@@ -361,7 +361,7 @@ namespace Special_Offer_Hunter.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
+        public virtual IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
 
 
     }
@@ -384,7 +384,7 @@ namespace Special_Offer_Hunter.Models
         public string? YearUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
+        public virtual IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
 
 
     }
@@ -408,7 +408,7 @@ namespace Special_Offer_Hunter.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
+        public virtual IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
 
     }
     public class Product_Code
