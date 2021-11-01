@@ -6,6 +6,10 @@
       "provider": "unpkg",
       "library": "@tomtom-international/web-sdk-maps@6.15.0",
       "destination": "wwwroot/lib/tomtom-international/web-sdk-maps/"
+    },
+    {
+      "library": "Chart.js@3.6.0",
+      "destination": "wwwroot/lib/Chart.js/"
     }
   ]
 }

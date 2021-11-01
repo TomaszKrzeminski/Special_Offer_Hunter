@@ -31,7 +31,7 @@ namespace Special_Offer_Hunter.Models
             string x = "";
             try
             {
-                if (root != null)
+                if (root.routes != null)
                 {
                     x = (root.routes[0].summary.lengthInMeters / 1000).ToString();
                 }
@@ -51,7 +51,7 @@ namespace Special_Offer_Hunter.Models
 
             try
             {
-                if (root != null)
+                if (root.routes != null)
                 {
                     x = (root.routes[0].summary.travelTimeInSeconds / 60).ToString();
                 }
@@ -72,7 +72,7 @@ namespace Special_Offer_Hunter.Models
             string x = "";
             try
             {
-                if (root != null)
+                if (root.routes != null)
                 {
                     x = (root.routes[0].summary.arrivalTime).ToString();
                 }
