@@ -117,6 +117,7 @@ namespace Special_Offer_Hunter.Data
 
 
         }
+        public DbSet<ProductsBought> ProductsBought { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Location> Locations { get; set; }

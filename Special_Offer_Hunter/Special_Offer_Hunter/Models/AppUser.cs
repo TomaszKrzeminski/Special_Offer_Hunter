@@ -6,6 +6,23 @@ using System.Threading.Tasks;
 
 namespace Special_Offer_Hunter.Models
 {
+
+    public class ProductsBought
+    {
+        public int ProductsBoughtId { get; set; }
+        public ShoppingCartType cartType { get; set; }
+        public int ProductId { get; set; }
+        public double Price { get; set; }
+        public DateTime Time { get; set; }
+        public double Number { get; set; }
+
+
+        public string ApplicationUserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
+
+    }
+
+
     public class ApplicationUser : IdentityUser
     {
 
@@ -37,10 +54,10 @@ namespace Special_Offer_Hunter.Models
             Shopping_Cart_Months = new List<Shopping_Cart_Month>();
             Shopping_Cart_Years = new List<Shopping_Cart_Year>();
             Shopping_Cart_LookFor = new List<Shopping_Cart_LookFor>();
-
+            ProductsBought = new List<ProductsBought>();
         }
 
-
+        public virtual IList<ProductsBought> ProductsBought { get; set; }
         public virtual IList<Shopping_Cart_Day> Shopping_Cart_Days { get; set; }
         public virtual IList<Shopping_Cart_Week> Shopping_Cart_Weeks { get; set; }
         public virtual IList<Shopping_Cart_Month> Shopping_Cart_Months { get; set; }
