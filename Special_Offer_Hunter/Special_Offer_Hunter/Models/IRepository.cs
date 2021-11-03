@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Special_Offer_Hunter.Models;
+using System.Globalization;
 
 namespace Special_Offer_Hunter.Models
 {
@@ -146,12 +147,81 @@ namespace Special_Offer_Hunter.Models
         //}
 
 
+        public bool CheckDay(DateTime compare)
+        {
+
+            return DateTime.Today == compare;
+
+        }
+
+
+        public bool CheckMonth(DateTime a)
+        {
+            DateTime b = DateTime.Now;
+
+            if (a.Year == b.Year && a.Month == b.Month)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public bool CheckWeek(DateTime a)
+        {
+            DateTime b = DateTime.Now;
+
+            if (a.AddDays(7 - (int)a.DayOfWeek).Date.Equals(b.AddDays(
+             7 - (int)b.DayOfWeek).Date))
+            {
+
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+        }
+
+
+        public bool CheckYear(DateTime a)
+        {
+
+            DateTime b = DateTime.Now;
+
+            if (a.Year == b.Year)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+
+        }
+
+
+
+
+
         public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type)
         {
 
             ShoppingCartViewModel model = new ShoppingCartViewModel();
             model.type = type;
             model.UserId = UserId;
+            List<Product> list = new List<Product>();
+            List<ShoppingDetails> listDetails = new List<ShoppingDetails>();
             try
             {
                 ApplicationUser user = context.Users.Include(x => x.Shopping_Cart_Days).Include(x => x.Shopping_Cart_Weeks).Include(x => x.Shopping_Cart_Months).Include(x => x.Shopping_Cart_Years).Include(x => x.Shopping_Cart_LookFor).Where(x => x.Id == UserId).FirstOrDefault();
@@ -160,24 +230,128 @@ namespace Special_Offer_Hunter.Models
                 {
                     case ShoppingCartType.Dzień:
                         Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.ProductShopping_Cart_Days).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Days.Last().Shopping_Cart_DayId).FirstOrDefault();
-                        model.productList = cart.ProductShopping_Cart_Days.Select(x => x.Product).ToList();
+                        list = cart.ProductShopping_Cart_Days.Select(x => x.Product).ToList();
+
+
+
+                        foreach (var item in list)
+                        {
+
+                            List<ProductsBought> listBought = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == item.ProductId).ToList();
+
+                            int number = 0;
+
+                            foreach (var item2 in listBought)
+                            {
+                                bool check = CheckDay(item2.Time);
+                                number = number + 1;
+                            }
+
+                            listDetails.Add(new ShoppingDetails() { product = item, ProductNumber = number });
+
+
+                        }
+
 
                         break;
                     case ShoppingCartType.Tydzień:
                         Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.ProductShopping_Cart_Weeks).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Weeks.Last().Shopping_Cart_WeekId).FirstOrDefault();
-                        model.productList = cart1.ProductShopping_Cart_Weeks.Select(x => x.Product).ToList();
+                        list = cart1.ProductShopping_Cart_Weeks.Select(x => x.Product).ToList();
+
+                        foreach (var item in list)
+                        {
+
+                            List<ProductsBought> listBought = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == item.ProductId).ToList();
+
+                            int number = 0;
+
+                            foreach (var item2 in listBought)
+                            {
+                                bool check = CheckWeek(item2.Time);
+                                if (check)
+                                {
+                                    number = number + 1;
+                                }
+
+                            }
+
+                            listDetails.Add(new ShoppingDetails() { product = item, ProductNumber = number });
+
+
+                        }
                         break;
                     case ShoppingCartType.Miesiąc:
                         Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.ProductShopping_Cart_Months).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Months.Last().Shopping_Cart_MonthId).FirstOrDefault();
-                        model.productList = cart2.ProductShopping_Cart_Months.Select(x => x.Product).ToList();
+                        list = cart2.ProductShopping_Cart_Months.Select(x => x.Product).ToList();
+                        foreach (var item in list)
+                        {
+
+                            List<ProductsBought> listBought = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == item.ProductId).ToList();
+
+                            int number = 0;
+
+                            foreach (var item2 in listBought)
+                            {
+                                bool check = CheckMonth(item2.Time);
+                                if (check)
+                                {
+                                    number = number + 1;
+                                }
+
+                            }
+
+                            listDetails.Add(new ShoppingDetails() { product = item, ProductNumber = number });
+
+
+                        }
                         break;
                     case ShoppingCartType.Rok:
                         Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.ProductShopping_Cart_Years).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Years.Last().Shopping_Cart_YearId).FirstOrDefault();
-                        model.productList = cart3.ProductShopping_Cart_Years.Select(x => x.Product).ToList();
+                        list = cart3.ProductShopping_Cart_Years.Select(x => x.Product).ToList();
+                        foreach (var item in list)
+                        {
+
+                            List<ProductsBought> listBought = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == item.ProductId).ToList();
+
+                            int number = 0;
+
+                            foreach (var item2 in listBought)
+                            {
+                                bool check = CheckYear(item2.Time);
+
+                                if (check)
+                                {
+                                    number = number + 1;
+                                }
+
+
+                            }
+
+                            listDetails.Add(new ShoppingDetails() { product = item, ProductNumber = number });
+
+
+                        }
                         break;
                     case ShoppingCartType.Poszukiwane:
                         Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.ProductShopping_Cart_LookFor).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Last().Shopping_Cart_LookForId).FirstOrDefault();
-                        model.productList = cart4.ProductShopping_Cart_LookFor.Select(x => x.Product).ToList();
+                        list = cart4.ProductShopping_Cart_LookFor.Select(x => x.Product).ToList();
+                        foreach (var item in list)
+                        {
+
+                            List<ProductsBought> listBought = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == item.ProductId).ToList();
+
+                            int number = 0;
+
+                            foreach (var item2 in listBought)
+                            {
+
+                                number = number + 1;
+                            }
+
+                            listDetails.Add(new ShoppingDetails() { product = item, ProductNumber = number });
+
+
+                        }
                         break;
 
                 }

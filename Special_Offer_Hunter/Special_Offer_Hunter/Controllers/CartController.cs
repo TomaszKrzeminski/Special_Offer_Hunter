@@ -42,7 +42,7 @@ namespace Special_Offer_Hunter.Controllers
         {
             string UserId = GetUser();
 
-            bool check = repository.RemoveProductFromShoppingCart(UserId, model.Type, model.ProductId);
+            //bool check = repository.RemoveProductFromShoppingCart(UserId, model.Type, model.ProductId);
             bool check1 = repository.AddProductToUserShoppingCart(UserId, model.MoveType, model.ProductId);
             ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.MoveType);
             return PartialView("AddProductToShoppingCart", viewModel);

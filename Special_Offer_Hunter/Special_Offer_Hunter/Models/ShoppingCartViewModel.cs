@@ -20,23 +20,54 @@ namespace Special_Offer_Hunter.Models
 
     }
 
+    //public class ShoppingCartViewModel
+    //{
+    //    public ShoppingCartViewModel()
+    //    {
+
+    //        productList = new List<Product>();
+    //        type = ShoppingCartType.Dzień;
+    //        Action = true;
+    //    }
+
+    //    public string UserId { get; set; }
+    //    public ShoppingCartType type { get; set; }
+    //    public List<Product> productList { get; set; }
+
+    //    public bool Action { get; set; }
+
+
+
+    //}
+
+    public class ShoppingDetails
+    {
+        public Product product { get; set; }
+        public double ProductNumber { get; set; }
+    }
+
+
+
     public class ShoppingCartViewModel
     {
         public ShoppingCartViewModel()
         {
 
-            productList = new List<Product>();
+            productList = new List<ShoppingDetails>();
             type = ShoppingCartType.Dzień;
             Action = true;
         }
 
         public string UserId { get; set; }
         public ShoppingCartType type { get; set; }
-        public List<Product> productList { get; set; }
+        public List<ShoppingDetails> productList { get; set; }
 
         public bool Action { get; set; }
 
 
 
     }
+
+
+
 }

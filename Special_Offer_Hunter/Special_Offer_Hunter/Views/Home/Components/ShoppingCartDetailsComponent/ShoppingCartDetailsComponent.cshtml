@@ -10,14 +10,14 @@
 
                 <table class="table">
                     <thead>
-                        <tr >
-                            <th >Numer</th>
-                            <th  >Ilość Kupiona</th>
-                            <th >Nazwa</th>
-                            <th >Cena</th>
-                            <th >Sklep</th>
-                            <th >Usuń z koszyka</th>
-                            <th >Przenieś do innego koszyka</th>
+                        <tr>
+                            <th>Numer</th>
+                            <th>Ilość Kupiona</th>
+                            <th>Nazwa</th>
+                            <th>Cena</th>
+                            <th>Sklep</th>
+                            <th>Usuń z koszyka</th>
+                            <th>Przenieś do innego koszyka</th>
 
                         </tr>
                     </thead>
@@ -25,46 +25,46 @@
 
                         @foreach (var p in Model.productList.Select((value, i) => new { i, value }))
                         {
-                        <tr>
-                            <td >@(p.i+1)</td>
-                            <td  >
-                               
+                            <tr>
+                                <td>@(p.i+1)</td>
+                                <td>
+
                                     <form asp-action="ProductBought" asp-controller="Statistics">
                                         <div class="form-check">
-                                            <input class="ProductId" name="ProductIdBuy" type="hidden" value="@p.value.ProductId" />
-                                            <input class="ProductPrice" name="ProductPriceBuy" type="hidden" value="@p.value.Product_Price" />
+                                            <input class="ProductId" name="ProductIdBuy" type="hidden" value="@p.value.product.ProductId" />
+                                            <input class="ProductPrice" name="ProductPriceBuy" type="hidden" value="@p.value.product.Product_Price" />
                                             <input style="max-width:30px;" name="Number" value="" id="flexCheckDefault">
 
                                         </div>
 
-                                    </form>                            
-                               
+                                    </form>
 
 
-                            </td>
-                            <td >@p.value.Name</td>
-                            <td >@p.value.Product_Price.Price</td>
-                            <td >@p.value.Shop.Name</td>
-                            <td >
-                                <form asp-action="RemoveProductFromCart" asp-controller="Cart">
 
-                                    <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.ProductId" />
-                                    <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
-                                    <input style="max-width:60px;" id="RemoveProductFromCartSubmit" class="btn btn-sm btn-danger"  value="Usuń" />
-                                </form>
-                            </td>
-                            <td >
-                                <form asp-action="MoveProductToAnotherCart" asp-controller="Cart">
+                                </td>
+                                <td>@p.value.product.Name</td>
+                                <td>@p.value.product.Product_Price.Price</td>
+                                <td>@p.value.product.Shop.Name</td>
+                                <td>
+                                    <form asp-action="RemoveProductFromCart" asp-controller="Cart">
 
-                                    <input class="ProductIdMove" name="ProductId" type="hidden" value="@p.value.ProductId" />
-                                    <input class="TypeFrom" name="Type" type="hidden" value="@Model.type" />
-                                    <select style="max-width:130px;" class="custom-select TypeTo" name="MoveType" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
-                                    </select>
-                                    <input style="max-width:90px;" id="MoveProductToAnotherCartSubmit" class="btn btn-primary btn-sm" value="Przenieś" />
-                                </form>
-                            </td>
+                                        <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
+                                        <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
+                                        <input style="max-width:60px;" id="RemoveProductFromCartSubmit" class="btn btn-sm btn-danger" value="Usuń" />
+                                    </form>
+                                </td>
+                                <td>
+                                    <form asp-action="MoveProductToAnotherCart" asp-controller="Cart">
 
-                        </tr>
+                                        <input class="ProductIdMove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
+                                        <input class="TypeFrom" name="Type" type="hidden" value="@Model.type" />
+                                        <select style="max-width:130px;" class="custom-select TypeTo" name="MoveType" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
+                                        </select>
+                                        <input style="max-width:90px;" id="MoveProductToAnotherCartSubmit" class="btn btn-primary btn-sm" value="Przenieś" />
+                                    </form>
+                                </td>
+
+                            </tr>
                         }
                     </tbody>
                 </table>

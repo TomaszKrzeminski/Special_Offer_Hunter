@@ -24,13 +24,13 @@
                         {
                             <tr>
                                 <th scope="row">@(p.i+1)</th>
-                                <td>@p.value.Name</td>
-                                <td>@p.value.Product_Price.Price</td>
-                                <td>@p.value.Shop.Name</td>
+                                <td>@p.value.product.Name</td>
+                                <td>@p.value.product.Product_Price.Price</td>
+                                <td>@p.value.product.Shop.Name</td>
                                 <td>
                                     <form asp-action="RemoveProductFromCart" asp-controller="Cart">
 
-                                        <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.ProductId" />
+                                        <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
                                         <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
                                         <input id="RemoveProductFromCartSubmit" class="btn btn-danger" value="Usuń" />
                                     </form>
@@ -38,7 +38,7 @@
                                 <td>
                                     <form asp-action="MoveProductToAnotherCart" asp-controller="Cart">
 
-                                        <input class="ProductIdMove" name="ProductId" type="hidden" value="@p.value.ProductId" />
+                                        <input class="ProductIdMove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
                                         <input class="TypeFrom" name="Type" type="hidden" value="@Model.type" />
                                         <select class="custom-select TypeTo" name="MoveType" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
                                         </select>
@@ -50,23 +50,23 @@
                         }
 
                         @*@foreach (var p in Model.productList.Select((value, i) => new { i, value }))
-                        {
-                            <tr>
-                                <th scope="row">@(p.i+1)</th>
-                                <td>@p.value.Name</td>
-                                <td>@p.value.Product_Price.Price</td>
-                                <td>@p.value.Shop.Name</td>
-                                <td>
-                                    <form asp-action="RemoveProductFromCart" asp-controller="Cart">
+                            {
+                                <tr>
+                                    <th scope="row">@(p.i+1)</th>
+                                    <td>@p.value.Name</td>
+                                    <td>@p.value.Product_Price.Price</td>
+                                    <td>@p.value.Shop.Name</td>
+                                    <td>
+                                        <form asp-action="RemoveProductFromCart" asp-controller="Cart">
 
-                                        <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.ProductId" />
-                                        <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
-                                        <input id="RemoveProductFromCartSubmit" class="btn btn-danger" value="Usuń z kosza" />
-                                    </form>
-                                </td>
+                                            <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.ProductId" />
+                                            <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
+                                            <input id="RemoveProductFromCartSubmit" class="btn btn-danger" value="Usuń z kosza" />
+                                        </form>
+                                    </td>
 
-                            </tr>
-                        }*@
+                                </tr>
+                            }*@
                     </tbody>
                 </table>
 
