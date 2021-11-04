@@ -302,7 +302,6 @@ namespace Special_Offer_Hunter.Models
         public virtual Shop Shop { get; set; }
         public int? ShopLocationId { get; set; }
     }
-
     public class CartStatistics
     {
 
@@ -371,8 +370,6 @@ namespace Special_Offer_Hunter.Models
         public virtual Shopping_Cart_LookFor Shopping_Cart_LookFor { get; set; }
 
     }
-
-
     public class Shopping_Cart_Day
     {
         public Shopping_Cart_Day()

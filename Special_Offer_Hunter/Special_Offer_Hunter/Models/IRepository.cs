@@ -19,6 +19,8 @@ namespace Special_Offer_Hunter.Models
         Product GetProductByCode(string Code);
         Location GetUserLocation(string UserId);
         List<string> GetCategories();
+
+        bool ChangeNumberOfProducts(int ProductId, string UserId, ShoppingCartType type);
         bool AddProductToUserShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         bool RemoveProductFromShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type);
@@ -355,6 +357,8 @@ namespace Special_Offer_Hunter.Models
                         break;
 
                 }
+
+                model.productList = listDetails;
 
                 return model;
             }
@@ -1126,6 +1130,51 @@ namespace Special_Offer_Hunter.Models
                 }
 
 
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool ChangeNumberOfProducts(double number, int ProductId, string UserId, ShoppingCartType type)
+        {
+            try
+            {
+
+
+                ProductsBought prodB = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == ProductId && x.Time == DateTime.Now).FirstOrDefault();
+                Product product = context.Products.Include(x => x.Product_Price).Where(x => x.ProductId == ProductId).FirstOrDefault();
+                ApplicationUser user = context.Users.Find(UserId);
+
+
+                bool check = CheckDay(prodB.Time);
+
+                if (!check)
+                {
+                    return false;
+                }
+
+
+                if (prodB == null)
+                {
+                    ProductsBought prodB1 = new ProductsBought();
+                    prodB1.ProductId = ProductId;
+                    prodB1.Number = 1;
+                    prodB1.Price = product.Product_Price.Price;
+                    prodB1.Time = DateTime.Now;
+                    prodB1.cartType = type;
+
+                    user.ProductsBought.Add(prodB1);
+
+                }
+
+
+                prodB.Number = number;
+                context.SaveChanges();
 
 
                 return true;
