@@ -31,19 +31,19 @@ namespace Special_Offer_Hunter.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult ChangeNumberOfProducts(AddProcutToShoppingCart model)
+        public PartialViewResult ChangeNumberOfProducts(ChangeProductNumber model)
         {
             string UserId = GetUser();
 
 
-            if (model.ProductId > 0)
-            {
-                bool check = repository.AddProductToUserShoppingCart(UserId, model.Type, model.ProductId);
-            }
+            //if (model.ProductId > 0)
+            //{
+            //    bool check = repository.AddProductToUserShoppingCart(UserId, model.Type, model.ProductId);
+            //}
 
-            ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.Type);
+            //ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.Type);
 
-            return PartialView("AddProductToShoppingCart", viewModel);
+            return PartialView("AddProductToShoppingCart");
         }
 
 

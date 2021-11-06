@@ -20,7 +20,7 @@ namespace Special_Offer_Hunter.Models
         Location GetUserLocation(string UserId);
         List<string> GetCategories();
 
-        bool ChangeNumberOfProducts(int ProductId, string UserId, ShoppingCartType type);
+        bool ChangeNumberOfProducts(double number, int ProductId, string UserId, ShoppingCartType type);
         bool AddProductToUserShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         bool RemoveProductFromShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type);
@@ -1184,6 +1184,8 @@ namespace Special_Offer_Hunter.Models
                 return false;
             }
         }
+
+
     }
 
 }

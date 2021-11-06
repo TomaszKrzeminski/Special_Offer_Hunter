@@ -85,6 +85,54 @@
 
         $(document).ready(function ()
         {
+
+            /////// change number of products in cart
+
+            $('#ShoppingCartDetails').on('change', '.ChangeProductNumber', function (e)
+            {
+
+                //var type = $(this).closest('.cartTypeBuy').val();
+                //var ProductId = $(this).closest('ProductId').val();
+
+                var type = $(this).closest('div').find('.cartTypeBuy').val();
+                var ProductId = $(this).closest('div').find('.ProductIdBuy').val();
+                var ProductPrice = $(this).closest('div').find('.ProductPriceBuy').val();
+
+                var number = $(this).val();
+
+
+
+                $.ajax({
+                    url: '@Url.Action("ChangeNumberOfProducts", "Statistics")',
+                    type: "get",
+                    data: {
+                        number: number,
+                        ProductId: ProductId,
+                        type: type,
+                        ProductPrice: ProductPrice
+
+                    },
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#ShoppingCartDetails').empty();
+                        $('#ShoppingCartDetails').html(result);
+
+                    }
+                });
+
+
+
+
+            });
+
+
+
+
+            //////
             /////// webcam code
             Webcam.set({
                 width: 320,
