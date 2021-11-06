@@ -28,18 +28,26 @@
                             <tr>
                                 <td>@(p.i+1)</td>
                                 <td>
-                                    
 
-                                    <form asp-action="ProductBought" asp-controller="Statistics">
-                                        <div class="form-check">
-                                            <input class="cartTypeBuy" name="type" type="hidden" value="@Model.type" />
-                                            <input class="ProductIdBuy" name="ProductIdBuy" type="hidden" value="@p.value.product.ProductId" />
-                                            <input class="ProductPriceBuy" name="ProductPriceBuy" type="hidden" value="@p.value.product.Product_Price.Price" />
-                                            <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" class="ChangeProductNumber">
+                                    @if (Model.type == ShoppingCartType.Dzień)
+                                    {
+                                        <form asp-action="ProductBought" asp-controller="Statistics">
+                                            <div class="form-check">
+                                                <input class="cartTypeBuy" name="type" type="hidden" value="@Model.type" />
+                                                <input class="ProductIdBuy" name="ProductIdBuy" type="hidden" value="@p.value.product.ProductId" />
+                                                <input class="ProductPriceBuy" name="ProductPriceBuy" type="hidden" value="@p.value.product.Product_Price.Price" />
+                                                <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" class="ChangeProductNumber">
 
-                                        </div>
+                                            </div>
 
-                                    </form>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber"  readonly>
+                                    }
+
+
 
 
 
