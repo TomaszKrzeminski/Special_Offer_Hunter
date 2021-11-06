@@ -36,14 +36,14 @@ namespace Special_Offer_Hunter.Controllers
             string UserId = GetUser();
 
 
-            //if (model.ProductId > 0)
-            //{
-            //    bool check = repository.AddProductToUserShoppingCart(UserId, model.Type, model.ProductId);
-            //}
+            if (model.ProductId > 0)
+            {
+                bool check = repository.ChangeNumberOfProducts(model.number, model.ProductId, UserId, model.type);
+            }
 
-            //ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.Type);
+            ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.type);
 
-            return PartialView("AddProductToShoppingCart");
+            return PartialView("AddProductToShoppingCart", viewModel);
         }
 
 
