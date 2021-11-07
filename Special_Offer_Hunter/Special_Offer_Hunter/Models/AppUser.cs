@@ -50,18 +50,18 @@ namespace Special_Offer_Hunter.Models
 
 
             Shopping_Cart_Days = new List<Shopping_Cart_Day>();
-            Shopping_Cart_Weeks = new List<Shopping_Cart_Week>();
-            Shopping_Cart_Months = new List<Shopping_Cart_Month>();
-            Shopping_Cart_Years = new List<Shopping_Cart_Year>();
+            //Shopping_Cart_Weeks = new List<Shopping_Cart_Week>();
+            //Shopping_Cart_Months = new List<Shopping_Cart_Month>();
+            //Shopping_Cart_Years = new List<Shopping_Cart_Year>();
             Shopping_Cart_LookFor = new List<Shopping_Cart_LookFor>();
             ProductsBought = new List<ProductsBought>();
         }
 
         public virtual IList<ProductsBought> ProductsBought { get; set; }
         public virtual IList<Shopping_Cart_Day> Shopping_Cart_Days { get; set; }
-        public virtual IList<Shopping_Cart_Week> Shopping_Cart_Weeks { get; set; }
-        public virtual IList<Shopping_Cart_Month> Shopping_Cart_Months { get; set; }
-        public virtual IList<Shopping_Cart_Year> Shopping_Cart_Years { get; set; }
+        //public virtual IList<Shopping_Cart_Week> Shopping_Cart_Weeks { get; set; }
+        //public virtual IList<Shopping_Cart_Month> Shopping_Cart_Months { get; set; }
+        //public virtual IList<Shopping_Cart_Year> Shopping_Cart_Years { get; set; }
         public virtual IList<Shopping_Cart_LookFor> Shopping_Cart_LookFor { get; set; }
 
 
@@ -186,9 +186,9 @@ namespace Special_Offer_Hunter.Models
             Ranks = new List<Product_Rank>();
             ProductCategory = new List<ProductCategory>();
             ProductShopping_Cart_Days = new List<ProductShopping_Cart_Day>();
-            ProductShopping_Cart_Weeks = new List<ProductShopping_Cart_Week>();
-            ProductShopping_Cart_Months = new List<ProductShopping_Cart_Month>();
-            ProductShopping_Cart_Years = new List<ProductShopping_Cart_Year>();
+            //ProductShopping_Cart_Weeks = new List<ProductShopping_Cart_Week>();
+            //ProductShopping_Cart_Months = new List<ProductShopping_Cart_Month>();
+            //ProductShopping_Cart_Years = new List<ProductShopping_Cart_Year>();
             ProductShopping_Cart_LookFor = new List<ProductShopping_Cart_LookFor>();
         }
 
@@ -226,9 +226,9 @@ namespace Special_Offer_Hunter.Models
         public virtual Product_Price Product_Price { get; set; }
 
         public virtual IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
-        public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
-        public virtual IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
-        public virtual IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
+        //public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
+        //public virtual IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
+        //public virtual IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
         public virtual IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
 
 
@@ -242,32 +242,32 @@ namespace Special_Offer_Hunter.Models
         public virtual Shopping_Cart_Day Shopping_Cart_Day { get; set; }
 
     }
-    public class ProductShopping_Cart_Week
-    {
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+    //public class ProductShopping_Cart_Week
+    //{
+    //    public int ProductId { get; set; }
+    //    public virtual Product Product { get; set; }
 
-        public int Shopping_Cart_WeekId { get; set; }
-        public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
+    //    public int Shopping_Cart_WeekId { get; set; }
+    //    public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
 
-    }
-    public class ProductShopping_Cart_Month
-    {
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+    //}
+    //public class ProductShopping_Cart_Month
+    //{
+    //    public int ProductId { get; set; }
+    //    public virtual Product Product { get; set; }
 
-        public int Shopping_Cart_MonthId { get; set; }
-        public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
+    //    public int Shopping_Cart_MonthId { get; set; }
+    //    public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
 
-    }
-    public class ProductShopping_Cart_Year
-    {
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+    //}
+    //public class ProductShopping_Cart_Year
+    //{
+    //    public int ProductId { get; set; }
+    //    public virtual Product Product { get; set; }
 
-        public int Shopping_Cart_YearId { get; set; }
-        public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
-    }
+    //    public int Shopping_Cart_YearId { get; set; }
+    //    public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
+    //}
     public class ProductShopping_Cart_LookFor
     {
         public int ProductId { get; set; }
@@ -333,24 +333,24 @@ namespace Special_Offer_Hunter.Models
             {
                 check = "Shopping_Cart_Day";
             }
-            else if (Shopping_Cart_Week != null)
-            {
+            //else if (Shopping_Cart_Week != null)
+            //{
 
-                check = "Shopping_Cart_Week";
+            //    check = "Shopping_Cart_Week";
 
-            }
-            else if (Shopping_Cart_Month != null)
-            {
+            //}
+            //else if (Shopping_Cart_Month != null)
+            //{
 
-                check = "Shopping_Cart_Month";
+            //    check = "Shopping_Cart_Month";
 
-            }
-            else if (Shopping_Cart_Year != null)
-            {
+            //}
+            //else if (Shopping_Cart_Year != null)
+            //{
 
-                check = "Shopping_Cart_Year";
+            //    check = "Shopping_Cart_Year";
 
-            }
+            //}
             else if (Shopping_Cart_LookFor != null)
             {
 
@@ -364,9 +364,9 @@ namespace Special_Offer_Hunter.Models
 
         public int StatisticOfCartId { get; set; }
         public virtual Shopping_Cart_Day Shopping_Cart_Day { get; set; }
-        public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
-        public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
-        public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
+        //public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
+        //public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
+        //public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
         public virtual Shopping_Cart_LookFor Shopping_Cart_LookFor { get; set; }
 
     }
@@ -397,84 +397,84 @@ namespace Special_Offer_Hunter.Models
 
 
     }
-    public class Shopping_Cart_Week
-    {
+    //public class Shopping_Cart_Week
+    //{
 
-        public Shopping_Cart_Week()
-        {
-            //Products = new List<Product>();
-            ProductShopping_Cart_Weeks = new List<ProductShopping_Cart_Week>();
-        }
+    //    public Shopping_Cart_Week()
+    //    {
+    //        //Products = new List<Product>();
+    //        ProductShopping_Cart_Weeks = new List<ProductShopping_Cart_Week>();
+    //    }
 
-        public DateTime DateFrom { get; set; }
-        public DateTime DateTo { get; set; }
+    //    public DateTime DateFrom { get; set; }
+    //    public DateTime DateTo { get; set; }
 
-        public int Shopping_Cart_WeekId { get; set; }
-        public string Name { get; set; }
+    //    public int Shopping_Cart_WeekId { get; set; }
+    //    public string Name { get; set; }
 
-        public string ApplicationUserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
-        //public virtual List<Product> Products { get; set; }
+    //    public string ApplicationUserId { get; set; }
+    //    public virtual ApplicationUser User { get; set; }
+    //    //public virtual List<Product> Products { get; set; }
 
-        public string? WeekUserId { get; set; }
-        //public virtual ApplicationUser ApplicationUser { get; set; }
-
-
-        public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
-        public virtual CartStatistics Statistic { get; set; }
-
-    }
-    public class Shopping_Cart_Month
-    {
-        public DateTime DateFrom { get; set; }
-        public DateTime DateTo { get; set; }
-
-        public Shopping_Cart_Month()
-        {
-            //Products = new List<Product>();
-            ProductShopping_Cart_Months = new List<ProductShopping_Cart_Month>();
-        }
-
-        public int Shopping_Cart_MonthId { get; set; }
-        public string Name { get; set; }
-
-        public string ApplicationUserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
-        //public virtual List<Product> Products { get; set; }
-
-        public string? MonthUserId { get; set; }
-        //public virtual ApplicationUser ApplicationUser { get; set; }
+    //    public string? WeekUserId { get; set; }
+    //    //public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public virtual IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
-        public virtual CartStatistics Statistic { get; set; }
+    //    public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
+    //    public virtual CartStatistics Statistic { get; set; }
 
-    }
-    public class Shopping_Cart_Year
-    {
-        public DateTime DateFrom { get; set; }
-        public DateTime DateTo { get; set; }
+    //}
+    //public class Shopping_Cart_Month
+    //{
+    //    public DateTime DateFrom { get; set; }
+    //    public DateTime DateTo { get; set; }
 
-        public Shopping_Cart_Year()
-        {
-            //Products = new List<Product>();
-            ProductShopping_Cart_Years = new List<ProductShopping_Cart_Year>();
-        }
+    //    public Shopping_Cart_Month()
+    //    {
+    //        //Products = new List<Product>();
+    //        ProductShopping_Cart_Months = new List<ProductShopping_Cart_Month>();
+    //    }
 
-        public int Shopping_Cart_YearId { get; set; }
-        public string Name { get; set; }
+    //    public int Shopping_Cart_MonthId { get; set; }
+    //    public string Name { get; set; }
 
-        public string ApplicationUserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
-        //public virtual List<Product> Products { get; set; }
+    //    public string ApplicationUserId { get; set; }
+    //    public virtual ApplicationUser User { get; set; }
+    //    //public virtual List<Product> Products { get; set; }
 
-        public string? YearUserId { get; set; }
-        //public virtual ApplicationUser ApplicationUser { get; set; }
+    //    public string? MonthUserId { get; set; }
+    //    //public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public virtual IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
-        public virtual CartStatistics Statistic { get; set; }
 
-    }
+    //    public virtual IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
+    //    public virtual CartStatistics Statistic { get; set; }
+
+    //}
+    //public class Shopping_Cart_Year
+    //{
+    //    public DateTime DateFrom { get; set; }
+    //    public DateTime DateTo { get; set; }
+
+    //    public Shopping_Cart_Year()
+    //    {
+    //        //Products = new List<Product>();
+    //        ProductShopping_Cart_Years = new List<ProductShopping_Cart_Year>();
+    //    }
+
+    //    public int Shopping_Cart_YearId { get; set; }
+    //    public string Name { get; set; }
+
+    //    public string ApplicationUserId { get; set; }
+    //    public virtual ApplicationUser User { get; set; }
+    //    //public virtual List<Product> Products { get; set; }
+
+    //    public string? YearUserId { get; set; }
+    //    //public virtual ApplicationUser ApplicationUser { get; set; }
+
+    //    public virtual IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
+    //    public virtual CartStatistics Statistic { get; set; }
+
+    //}
     public class Shopping_Cart_LookFor
     {
 

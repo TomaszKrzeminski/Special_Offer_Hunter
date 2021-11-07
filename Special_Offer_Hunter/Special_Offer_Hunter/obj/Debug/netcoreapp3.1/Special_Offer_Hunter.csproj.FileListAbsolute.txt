@@ -528,6 +528,8 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.TagHelpers.output.cache
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.RazorCoreGenerate.cache
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Cart\AddProductToShoppingCart.cshtml.g.cs
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Cart\AddProductToShoppingCart2.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Home\Components\ChartComponent\Default.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Home\Components\NavigationShowShopsOnMapComponent\NavigationShowShopsOnMapComponent.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Home\Components\OffersInNeighborhoodComponent\OffersInNeighborhoodComponent.cshtml.g.cs
@@ -555,5 +557,3 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.pdb
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.genruntimeconfig.cache
-C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Cart\AddProductToShoppingCart2.cshtml.g.cs
-C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Cart\AddProductToShoppingCart.cshtml.g.cs

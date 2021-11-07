@@ -78,25 +78,25 @@ namespace Special_Offer_Hunter.Data
             .WithOne(ad => ad.Shopping_Cart_Day)
             .HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
-            builder.Entity<Shopping_Cart_Week>()
-           .HasOne<CartStatistics>(s => s.Statistic)
-           .WithOne(ad => ad.Shopping_Cart_Week)
-           .HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
+            // builder.Entity<Shopping_Cart_Week>()
+            //.HasOne<CartStatistics>(s => s.Statistic)
+            //.WithOne(ad => ad.Shopping_Cart_Week)
+            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
-            builder.Entity<Shopping_Cart_Month>()
-           .HasOne<CartStatistics>(s => s.Statistic)
-           .WithOne(ad => ad.Shopping_Cart_Month)
-           .HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
+            // builder.Entity<Shopping_Cart_Month>()
+            //.HasOne<CartStatistics>(s => s.Statistic)
+            //.WithOne(ad => ad.Shopping_Cart_Month)
+            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
-            builder.Entity<Shopping_Cart_Month>()
-           .HasOne<CartStatistics>(s => s.Statistic)
-           .WithOne(ad => ad.Shopping_Cart_Month)
-           .HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
+            // builder.Entity<Shopping_Cart_Month>()
+            //.HasOne<CartStatistics>(s => s.Statistic)
+            //.WithOne(ad => ad.Shopping_Cart_Month)
+            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
-            builder.Entity<Shopping_Cart_Year>()
-           .HasOne<CartStatistics>(s => s.Statistic)
-           .WithOne(ad => ad.Shopping_Cart_Year)
-           .HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
+            // builder.Entity<Shopping_Cart_Year>()
+            //.HasOne<CartStatistics>(s => s.Statistic)
+            //.WithOne(ad => ad.Shopping_Cart_Year)
+            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
             builder.Entity<Shopping_Cart_LookFor>()
            .HasOne<CartStatistics>(s => s.Statistic)
@@ -109,9 +109,9 @@ namespace Special_Offer_Hunter.Data
             builder.Entity<ProductCategory>().HasKey(sc => new { sc.ProductId, sc.CategoryId });
 
             builder.Entity<ProductShopping_Cart_Day>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_DayId });
-            builder.Entity<ProductShopping_Cart_Week>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_WeekId });
-            builder.Entity<ProductShopping_Cart_Month>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_MonthId });
-            builder.Entity<ProductShopping_Cart_Year>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_YearId });
+            //builder.Entity<ProductShopping_Cart_Week>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_WeekId });
+            //builder.Entity<ProductShopping_Cart_Month>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_MonthId });
+            //builder.Entity<ProductShopping_Cart_Year>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_YearId });
             builder.Entity<ProductShopping_Cart_LookFor>().HasKey(sc => new { sc.ProductId, sc.Shopping_Cart_LookForId });
 
 
@@ -128,16 +128,16 @@ namespace Special_Offer_Hunter.Data
         public DbSet<CartStatistics> CartStatistics { get; set; }
 
         public DbSet<ProductShopping_Cart_Day> ProductShopping_Carts_Days { get; set; }
-        public DbSet<ProductShopping_Cart_Week> ProductShopping_Carts_Weeks { get; set; }
-        public DbSet<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
-        public DbSet<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
+        //public DbSet<ProductShopping_Cart_Week> ProductShopping_Carts_Weeks { get; set; }
+        //public DbSet<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
+        //public DbSet<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
         public DbSet<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
 
 
         public DbSet<Shopping_Cart_Day> Shopping_Carts_Day { get; set; }
-        public DbSet<Shopping_Cart_Week> Shopping_Carts_Week { get; set; }
-        public DbSet<Shopping_Cart_Month> Shopping_Cart_Month { get; set; }
-        public DbSet<Shopping_Cart_Year> Shopping_Cart_Year { get; set; }
+        //public DbSet<Shopping_Cart_Week> Shopping_Carts_Week { get; set; }
+        //public DbSet<Shopping_Cart_Month> Shopping_Cart_Month { get; set; }
+        //public DbSet<Shopping_Cart_Year> Shopping_Cart_Year { get; set; }
         public DbSet<Shopping_Cart_LookFor> Shopping_Cart_LookFor { get; set; }
 
 

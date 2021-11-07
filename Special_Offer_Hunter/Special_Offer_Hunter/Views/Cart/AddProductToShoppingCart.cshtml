@@ -19,8 +19,12 @@
                         <th>Nazwa</th>
                         <th>Cena</th>
                         <th>Sklep</th>
-                        <th>Usuń z koszyka</th>
-                        <th>Przenieś do innego koszyka</th>
+                        @if (Model.type == ShoppingCartType.Dzień || Model.type == ShoppingCartType.Poszukiwane)
+                        {
+                            <th>Usuń z koszyka</th>
+                            <th>Przenieś do innego koszyka</th>
+                        }
+
 
                     </tr>
                 </thead>
@@ -35,36 +39,40 @@
 
                         @if (Model.type == ShoppingCartType.Dzień)
                         {
-                    <td>
-                        <form asp-action="ProductBought" asp-controller="Statistics">
-                            <div class="form-check">
-                                <input class="cartTypeBuy" name="type" type="hidden" value="@Model.type" />
-                                <input class="ProductIdBuy" name="ProductIdBuy" type="hidden" value="@p.value.product.ProductId" />
-                                <input class="ProductPriceBuy" name="ProductPriceBuy" type="hidden" value="@p.value.product.Product_Price.Price" />
-                                <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" class="ChangeProductNumber">
+                            <td>
+                                <form asp-action="ProductBought" asp-controller="Statistics">
+                                    <div class="form-check">
+                                        <input class="cartTypeBuy" name="type" type="hidden" value="@Model.type" />
+                                        <input class="ProductIdBuy" name="ProductIdBuy" type="hidden" value="@p.value.product.ProductId" />
+                                        <input class="ProductPriceBuy" name="ProductPriceBuy" type="hidden" value="@p.value.product.Product_Price.Price" />
+                                        <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" class="ChangeProductNumber">
 
-                            </div>
+                                    </div>
 
-                        </form>
-                    </td>
-                                }
-                                else if (Model.type == ShoppingCartType.Poszukiwane)
-                                {
+                                </form>
+                            </td>
+                        }
+                        else if (Model.type == ShoppingCartType.Poszukiwane)
+                        {
 
-                                }
-                                else
-                                {
+                        }
+                        else
+                        {
                             <td>
                                 <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" readonly>
                             </td>
-                                
-                                }
+
+                        }
 
 
-                          
-                            <td>@p.value.product.Name</td>
-                            <td>@p.value.product.Product_Price.Price</td>
-                            <td>@p.value.product.Shop.Name</td>
+
+                        <td>@p.value.product.Name</td>
+                        <td>@p.value.product.Product_Price.Price</td>
+                        <td>@p.value.product.Shop.Name</td>
+
+                        @if (Model.type == ShoppingCartType.Dzień || Model.type == ShoppingCartType.Poszukiwane)
+                        {
+
                             <td>
                                 <form asp-action="RemoveProductFromCart" asp-controller="Cart">
 
@@ -83,7 +91,7 @@
                                     <input style="max-width:90px;" id="MoveProductToAnotherCartSubmit" class="btn btn-primary btn-sm" value="Przenieś" />
                                 </form>
                             </td>
-
+                        }
                         </tr>
                         }
                 </tbody>
