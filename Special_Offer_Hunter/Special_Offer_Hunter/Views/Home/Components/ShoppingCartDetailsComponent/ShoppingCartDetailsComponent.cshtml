@@ -86,7 +86,11 @@
 
                                             <input class="ProductIdMove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
                                             <input class="TypeFrom" name="Type" type="hidden" value="@Model.type" />
-                                            <select style="max-width:130px;" class="custom-select TypeTo" name="MoveType" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
+                                            @*<select style="max-width:130px;" class="custom-select TypeTo" name="MoveType" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
+                                            </select>*@
+                                            <select style="max-width:130px;" class="custom-select TypeTo" name="MoveType">
+                                                <option value="0">Dzień</option>
+                                                <option value="4">Poszukiwane</option>
                                             </select>
                                             <input style="max-width:90px;" id="MoveProductToAnotherCartSubmit" class="btn btn-primary btn-sm" value="Przenieś" />
                                         </form>

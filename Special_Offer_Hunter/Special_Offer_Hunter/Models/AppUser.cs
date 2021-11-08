@@ -302,74 +302,74 @@ namespace Special_Offer_Hunter.Models
         public virtual Shop Shop { get; set; }
         public int? ShopLocationId { get; set; }
     }
-    public class CartStatistics
-    {
+    //public class CartStatistics
+    //{
 
-        public CartStatistics()
-        {
+    //    public CartStatistics()
+    //    {
 
-        }
-
-
-        public int CartStatisticsId { get; set; }
-
-        public double MoneySpent { get; set; }
-
-        public double MaxMoneySpent { get; set; }
-
-        public double MinMoneySpent { get; set; }
-
-        public string MostFrequentlyPurchased { get; set; }
-
-        public int NumberOfProducts { get; set; }
+    //    }
 
 
+    //    public int CartStatisticsId { get; set; }
 
-        public string CheckStatistic()
-        {
-            string check = "none";
+    //    public double MoneySpent { get; set; }
 
-            if (Shopping_Cart_Day != null)
-            {
-                check = "Shopping_Cart_Day";
-            }
-            //else if (Shopping_Cart_Week != null)
-            //{
+    //    public double MaxMoneySpent { get; set; }
 
-            //    check = "Shopping_Cart_Week";
+    //    public double MinMoneySpent { get; set; }
 
-            //}
-            //else if (Shopping_Cart_Month != null)
-            //{
+    //    public string MostFrequentlyPurchased { get; set; }
 
-            //    check = "Shopping_Cart_Month";
-
-            //}
-            //else if (Shopping_Cart_Year != null)
-            //{
-
-            //    check = "Shopping_Cart_Year";
-
-            //}
-            else if (Shopping_Cart_LookFor != null)
-            {
-
-                check = "Shopping_Cart_LookFor";
-
-            }
+    //    public int NumberOfProducts { get; set; }
 
 
-            return check;
-        }
 
-        public int StatisticOfCartId { get; set; }
-        public virtual Shopping_Cart_Day Shopping_Cart_Day { get; set; }
-        //public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
-        //public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
-        //public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
-        public virtual Shopping_Cart_LookFor Shopping_Cart_LookFor { get; set; }
+    //    public string CheckStatistic()
+    //    {
+    //        string check = "none";
 
-    }
+    //        if (Shopping_Cart_Day != null)
+    //        {
+    //            check = "Shopping_Cart_Day";
+    //        }
+    //        //else if (Shopping_Cart_Week != null)
+    //        //{
+
+    //        //    check = "Shopping_Cart_Week";
+
+    //        //}
+    //        //else if (Shopping_Cart_Month != null)
+    //        //{
+
+    //        //    check = "Shopping_Cart_Month";
+
+    //        //}
+    //        //else if (Shopping_Cart_Year != null)
+    //        //{
+
+    //        //    check = "Shopping_Cart_Year";
+
+    //        //}
+    //        else if (Shopping_Cart_LookFor != null)
+    //        {
+
+    //            check = "Shopping_Cart_LookFor";
+
+    //        }
+
+
+    //        return check;
+    //    }
+
+    //    public int StatisticOfCartId { get; set; }
+    //    public virtual Shopping_Cart_Day Shopping_Cart_Day { get; set; }
+    //    //public virtual Shopping_Cart_Week Shopping_Cart_Week { get; set; }
+    //    //public virtual Shopping_Cart_Month Shopping_Cart_Month { get; set; }
+    //    //public virtual Shopping_Cart_Year Shopping_Cart_Year { get; set; }
+    //    public virtual Shopping_Cart_LookFor Shopping_Cart_LookFor { get; set; }
+
+    //}
     public class Shopping_Cart_Day
     {
         public Shopping_Cart_Day()
@@ -388,7 +388,7 @@ namespace Special_Offer_Hunter.Models
         //public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public virtual CartStatistics Statistic { get; set; }
+        //public virtual CartStatistics Statistic { get; set; }
         public virtual IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
 
         public DateTime DateFrom { get; set; }
@@ -499,7 +499,7 @@ namespace Special_Offer_Hunter.Models
 
 
         public virtual IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
-        public virtual CartStatistics Statistic { get; set; }
+        //public virtual CartStatistics Statistic { get; set; }
     }
     public class Product_Code
     {

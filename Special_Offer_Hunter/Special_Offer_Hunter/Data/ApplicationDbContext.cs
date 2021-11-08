@@ -73,10 +73,10 @@ namespace Special_Offer_Hunter.Data
 
 
 
-            builder.Entity<Shopping_Cart_Day>()
-            .HasOne<CartStatistics>(s => s.Statistic)
-            .WithOne(ad => ad.Shopping_Cart_Day)
-            .HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
+            //builder.Entity<Shopping_Cart_Day>()
+            //.HasOne<CartStatistics>(s => s.Statistic)
+            //.WithOne(ad => ad.Shopping_Cart_Day)
+            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
             // builder.Entity<Shopping_Cart_Week>()
             //.HasOne<CartStatistics>(s => s.Statistic)
@@ -98,10 +98,10 @@ namespace Special_Offer_Hunter.Data
             //.WithOne(ad => ad.Shopping_Cart_Year)
             //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
-            builder.Entity<Shopping_Cart_LookFor>()
-           .HasOne<CartStatistics>(s => s.Statistic)
-           .WithOne(ad => ad.Shopping_Cart_LookFor)
-           .HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
+            // builder.Entity<Shopping_Cart_LookFor>()
+            //.HasOne<CartStatistics>(s => s.Statistic)
+            //.WithOne(ad => ad.Shopping_Cart_LookFor)
+            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
 
 
 
@@ -125,7 +125,7 @@ namespace Special_Offer_Hunter.Data
         public DbSet<Product_Price> Product_Prices { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<CartStatistics> CartStatistics { get; set; }
+        //public DbSet<CartStatistics> CartStatistics { get; set; }
 
         public DbSet<ProductShopping_Cart_Day> ProductShopping_Carts_Days { get; set; }
         //public DbSet<ProductShopping_Cart_Week> ProductShopping_Carts_Weeks { get; set; }

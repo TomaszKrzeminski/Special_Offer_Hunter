@@ -35,7 +35,7 @@ namespace Special_Offer_Hunter.Models
 
         public Dictionary<Product, double> GetProductsWithSpecialOffer(SpecialOfferViewModel offer);
 
-        public bool AddStatisticsToCart(int ShoppingCartId, ShoppingCartType type, CartStatistics statisctic);
+        //public bool AddStatisticsToCart(int ShoppingCartId, ShoppingCartType type, CartStatistics statisctic);
 
 
 
@@ -1221,76 +1221,76 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-        public bool AddStatisticsToCart(int ShoppingCartId, ShoppingCartType type, CartStatistics statisctic)
-        {
-            try
-            {
+        //public bool AddStatisticsToCart(int ShoppingCartId, ShoppingCartType type, CartStatistics statisctic)
+        //{
+        //    try
+        //    {
 
-                switch (type)
-                {
-                    case ShoppingCartType.Dzień:
+        //        switch (type)
+        //        {
+        //            case ShoppingCartType.Dzień:
 
-                        Shopping_Cart_Day day = context.Shopping_Carts_Day.Include(x => x.Statistic).Where(x => x.Shopping_Cart_DayId == ShoppingCartId).FirstOrDefault();
+        //                Shopping_Cart_Day day = context.Shopping_Carts_Day.Include(x => x.Statistic).Where(x => x.Shopping_Cart_DayId == ShoppingCartId).FirstOrDefault();
 
-                        if (day.Statistic == null)
-                        {
-                            day.Statistic = new CartStatistics();
-                        }
+        //                if (day.Statistic == null)
+        //                {
+        //                    day.Statistic = new CartStatistics();
+        //                }
 
-                        day.Statistic = statisctic;
+        //                day.Statistic = statisctic;
 
-                        context.SaveChanges();
+        //                context.SaveChanges();
 
-                        break;
-                    //case ShoppingCartType.Tydzień:
+        //                break;
+        //            //case ShoppingCartType.Tydzień:
 
-                    //    Shopping_Cart_Week week = context.Shopping_Carts_Week.Include(x => x.Statistic).Where(x => x.Shopping_Cart_WeekId == ShoppingCartId).FirstOrDefault();
+        //            //    Shopping_Cart_Week week = context.Shopping_Carts_Week.Include(x => x.Statistic).Where(x => x.Shopping_Cart_WeekId == ShoppingCartId).FirstOrDefault();
 
-                    //    week.Statistic = statisctic;
+        //            //    week.Statistic = statisctic;
 
-                    //    context.SaveChanges();
+        //            //    context.SaveChanges();
 
-                    //    break;
-                    //case ShoppingCartType.Miesiąc:
+        //            //    break;
+        //            //case ShoppingCartType.Miesiąc:
 
-                    //    Shopping_Cart_Month month = context.Shopping_Cart_Month.Include(x => x.Statistic).Where(x => x.Shopping_Cart_MonthId == ShoppingCartId).FirstOrDefault();
+        //            //    Shopping_Cart_Month month = context.Shopping_Cart_Month.Include(x => x.Statistic).Where(x => x.Shopping_Cart_MonthId == ShoppingCartId).FirstOrDefault();
 
-                    //    month.Statistic = statisctic;
+        //            //    month.Statistic = statisctic;
 
-                    //    context.SaveChanges();
+        //            //    context.SaveChanges();
 
-                    //    break;
-                    //case ShoppingCartType.Rok:
+        //            //    break;
+        //            //case ShoppingCartType.Rok:
 
-                    //    Shopping_Cart_Year year = context.Shopping_Cart_Year.Include(x => x.Statistic).Where(x => x.Shopping_Cart_YearId == ShoppingCartId).FirstOrDefault();
+        //            //    Shopping_Cart_Year year = context.Shopping_Cart_Year.Include(x => x.Statistic).Where(x => x.Shopping_Cart_YearId == ShoppingCartId).FirstOrDefault();
 
-                    //    year.Statistic = statisctic;
+        //            //    year.Statistic = statisctic;
 
-                    //    context.SaveChanges();
+        //            //    context.SaveChanges();
 
-                    //    break;
-                    case ShoppingCartType.Poszukiwane:
+        //            //    break;
+        //            case ShoppingCartType.Poszukiwane:
 
-                        Shopping_Cart_LookFor look = context.Shopping_Cart_LookFor.Include(x => x.Statistic).Where(x => x.Shopping_Cart_LookForId == ShoppingCartId).FirstOrDefault();
+        //                Shopping_Cart_LookFor look = context.Shopping_Cart_LookFor.Include(x => x.Statistic).Where(x => x.Shopping_Cart_LookForId == ShoppingCartId).FirstOrDefault();
 
-                        look.Statistic = statisctic;
+        //                look.Statistic = statisctic;
 
-                        context.SaveChanges();
+        //                context.SaveChanges();
 
-                        break;
+        //                break;
 
-                }
-
-
+        //        }
 
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
+
+
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public bool ChangeNumberOfProducts(double number, int ProductId, string UserId, ShoppingCartType type)
         {

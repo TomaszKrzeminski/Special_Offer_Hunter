@@ -47,6 +47,24 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
+        [HttpGet]
+        public PartialViewResult GetChartData(ChangeProductNumber model)
+        {
+            string UserId = GetUser();
+
+
+            if (model.ProductId > 0)
+            {
+                bool check = repository.ChangeNumberOfProducts(model.number, model.ProductId, UserId, model.type);
+            }
+
+            ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.type);
+
+            return PartialView("AddProductToShoppingCart", viewModel);
+        }
+
+
+
 
     }
 }

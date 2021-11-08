@@ -3,109 +3,113 @@
     <div class="row">
         @if (Model.productList != null && Model.productList.Count > 0)
         {
-        <div class="col col-lg-12">
-            <h2>Zawartość twojego kosza : @Model.type</h2>
-        </div>
-        <div class="col col-lg-12">
+            <div class="col col-lg-12">
+                <h2>Zawartość twojego kosza : @Model.type</h2>
+            </div>
+            <div class="col col-lg-12">
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Numer</th>
-                        @if (Model.type != ShoppingCartType.Poszukiwane)
-                        {
-                            <th>Ilość Kupiona</th>
-                        }
-                        <th>Nazwa</th>
-                        <th>Cena</th>
-                        <th>Sklep</th>
-                        @if (Model.type == ShoppingCartType.Dzień || Model.type == ShoppingCartType.Poszukiwane)
-                        {
-                            <th>Usuń z koszyka</th>
-                            <th>Przenieś do innego koszyka</th>
-                        }
-
-
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var p in Model.productList.Select((value, i) => new { i, value }))
-                        {
-                    <tr>
-                        <td>@(p.i+1)</td>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Numer</th>
+                            @if (Model.type != ShoppingCartType.Poszukiwane)
+                            {
+                                <th>Ilość Kupiona</th>
+                            }
+                            <th>Nazwa</th>
+                            <th>Cena</th>
+                            <th>Sklep</th>
+                            @if (Model.type == ShoppingCartType.Dzień || Model.type == ShoppingCartType.Poszukiwane)
+                            {
+                                <th>Usuń z koszyka</th>
+                                <th>Przenieś do innego koszyka</th>
+                            }
 
 
-
-                        @if (Model.type == ShoppingCartType.Dzień)
-                        {
-                            <td>
-                                <form asp-action="ProductBought" asp-controller="Statistics">
-                                    <div class="form-check">
-                                        <input class="cartTypeBuy" name="type" type="hidden" value="@Model.type" />
-                                        <input class="ProductIdBuy" name="ProductIdBuy" type="hidden" value="@p.value.product.ProductId" />
-                                        <input class="ProductPriceBuy" name="ProductPriceBuy" type="hidden" value="@p.value.product.Product_Price.Price" />
-                                        <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" class="ChangeProductNumber">
-
-                                    </div>
-
-                                </form>
-                            </td>
-                        }
-                        else if (Model.type == ShoppingCartType.Poszukiwane)
-                        {
-
-                        }
-                        else
-                        {
-                            <td>
-                                <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" readonly>
-                            </td>
-
-                        }
-
-
-
-                        <td>@p.value.product.Name</td>
-                        <td>@p.value.product.Product_Price.Price</td>
-                        <td>@p.value.product.Shop.Name</td>
-
-                        @if (Model.type == ShoppingCartType.Dzień || Model.type == ShoppingCartType.Poszukiwane)
-                        {
-
-                            <td>
-                                <form asp-action="RemoveProductFromCart" asp-controller="Cart">
-
-                                    <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
-                                    <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
-                                    <input style="max-width:60px;" id="RemoveProductFromCartSubmit" class="btn btn-sm btn-danger" value="Usuń" />
-                                </form>
-                            </td>
-                            <td>
-                                <form asp-action="MoveProductToAnotherCart" asp-controller="Cart">
-
-                                    <input class="ProductIdMove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
-                                    <input class="TypeFrom" name="Type" type="hidden" value="@Model.type" />
-                                    <select style="max-width:130px;" class="custom-select TypeTo" name="MoveType" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
-                                    </select>
-                                    <input style="max-width:90px;" id="MoveProductToAnotherCartSubmit" class="btn btn-primary btn-sm" value="Przenieś" />
-                                </form>
-                            </td>
-                        }
                         </tr>
-                        }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
 
-        </div>
+                        @foreach (var p in Model.productList.Select((value, i) => new { i, value }))
+                        {
+                            <tr>
+                                <td>@(p.i+1)</td>
+
+
+
+                                @if (Model.type == ShoppingCartType.Dzień)
+                                {
+                                    <td>
+                                        <form asp-action="ProductBought" asp-controller="Statistics">
+                                            <div class="form-check">
+                                                <input class="cartTypeBuy" name="type" type="hidden" value="@Model.type" />
+                                                <input class="ProductIdBuy" name="ProductIdBuy" type="hidden" value="@p.value.product.ProductId" />
+                                                <input class="ProductPriceBuy" name="ProductPriceBuy" type="hidden" value="@p.value.product.Product_Price.Price" />
+                                                <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" class="ChangeProductNumber">
+
+                                            </div>
+
+                                        </form>
+                                    </td>
+                                }
+                                else if (Model.type == ShoppingCartType.Poszukiwane)
+                                {
+
+                                }
+                                else
+                                {
+                                    <td>
+                                        <input min="0" type="number" style="max-width:55px;" name="Number" value="@p.value.ProductNumber" readonly>
+                                    </td>
+
+                                }
+
+
+
+                                <td>@p.value.product.Name</td>
+                                <td>@p.value.product.Product_Price.Price</td>
+                                <td>@p.value.product.Shop.Name</td>
+
+                                @if (Model.type == ShoppingCartType.Dzień || Model.type == ShoppingCartType.Poszukiwane)
+                                {
+
+                                    <td>
+                                        <form asp-action="RemoveProductFromCart" asp-controller="Cart">
+
+                                            <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
+                                            <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
+                                            <input style="max-width:60px;" id="RemoveProductFromCartSubmit" class="btn btn-sm btn-danger" value="Usuń" />
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form asp-action="MoveProductToAnotherCart" asp-controller="Cart">
+
+                                            <input class="ProductIdMove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
+                                            <input class="TypeFrom" name="Type" type="hidden" value="@Model.type" />
+                                            @*<select style="max-width:130px;" class="custom-select TypeTo" name="MoveType" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
+                                                </select>*@
+                                        <select style="max-width:130px;" class="custom-select TypeTo" name="MoveType">
+                                            <option value="0">Dzień</option>
+                                            <option value="4">Poszukiwane</option>
+                                        </select>
+                                            <input style="max-width:90px;" id="MoveProductToAnotherCartSubmit" class="btn btn-primary btn-sm" value="Przenieś" />
+                                        </form>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
 
         }
         else
         {<br />
-        <br />
-        <div class="col col-lg-2"></div>
-        <div class="col col-lg-8"> <h3>Tu pojawi się zawartość Twojego koszyka</h3></div>
-        <div class="col col-lg-2"></div>
+            <br />
+            <div class="col col-lg-2"></div>
+            <div class="col col-lg-8"> <h3>Tu pojawi się zawartość Twojego koszyka</h3></div>
+            <div class="col col-lg-2"></div>
 
 
         }

@@ -1,0 +1,96 @@
+﻿
+
+<div class="col col-lg-12">
+
+    <div class="row">
+        <div class="col col-lg-12">
+            <canvas id="line-chartWeek" width="800" height="250"></canvas>
+        </div>
+    </div>
+</div>
+<div class="col col-lg-12">
+
+    <div class="row">
+        <div class="col col-lg-12">
+            <canvas id="line-chartMonth" width="800" height="250"></canvas>
+        </div>
+    </div>
+</div>
+<div class="col col-lg-12">
+
+    <div class="row">
+        <div class="col col-lg-12">
+            <canvas id="line-chartYear" width="800" height="250"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/lib/Chart.js/chart.js"></script>
+
+
+<script>
+
+
+    new Chart(document.getElementById("line-chartWeek"), {
+        type: 'line',
+        data: {
+            labels: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
+            datasets: [{
+                data: [86, 114, 106, 106, 107, 111, 133, 221],
+                label: "Wydatki Tydzień",
+                borderColor: "#3e95cd",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: ''
+            }
+        }
+    });
+    new Chart(document.getElementById("line-chartMonth"), {
+        type: 'line',
+        data: {
+            labels: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+            datasets: [{
+                data: [86, 114, 106, 106, 107, 111, 133, 221, 107, 111, 133, 221],
+                label: "Wydatki Miesiąc",
+                borderColor: "#3e95cd",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: ''
+            }
+        }
+    });
+
+    new Chart(document.getElementById("line-chartYear"), {
+        type: 'line',
+        data: {
+            labels: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
+            datasets: [{
+                data: [86, 114, 106, 106, 107, 111, 133, 221],
+                label: "Wydatki Rok",
+                borderColor: "#3e95cd",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: ''
+            }
+        }
+    });
+
+
+
