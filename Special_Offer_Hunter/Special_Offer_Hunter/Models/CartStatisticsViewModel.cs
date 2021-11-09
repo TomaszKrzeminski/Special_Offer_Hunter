@@ -66,6 +66,13 @@ namespace Special_Offer_Hunter.Models
     public class CartStatisticsViewModel
     {
 
+        public CartStatisticsViewModel()
+        {
+            Week = new CartStatisticWeek();
+            Month = new CartStatisticMonth();
+            Year = new CartStatisticYear();
+        }
+
         public CartStatisticWeek Week { get; set; }
         public CartStatisticMonth Month { get; set; }
         public CartStatisticYear Year { get; set; }

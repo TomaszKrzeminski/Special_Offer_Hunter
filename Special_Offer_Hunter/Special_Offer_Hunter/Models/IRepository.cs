@@ -35,6 +35,8 @@ namespace Special_Offer_Hunter.Models
 
         public Dictionary<Product, double> GetProductsWithSpecialOffer(SpecialOfferViewModel offer);
 
+        CartStatisticsViewModel GetStatistics(string UserId);
+
         //public bool AddStatisticsToCart(int ShoppingCartId, ShoppingCartType type, CartStatistics statisctic);
 
 
@@ -1351,7 +1353,126 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        public CartStatisticsViewModel GetStatistics(string UserId)
+        {
+            CartStatisticsViewModel model = new CartStatisticsViewModel();
+            DateTime Now = DateTime.Now;
+            try
+            {
+                ///Week
+                List<ProductsBought> listWeek = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.Time.Month == Now.Month).ToList();
+                List<ProductsBought> listWeekCheckded = new List<ProductsBought>();
+                foreach (var item in listWeek)
+                {
+                    if (CheckWeek(item.Time))
+                    {
+                        listWeekCheckded.Add(item);
+                    }
 
+
+                }
+
+
+                foreach (var item in model.Week.Expenses)
+                {
+
+                    double all = 0;
+
+                    for (int j = 0; j < listWeekCheckded.Count(); j++)
+                    {
+                        string Day = listWeekCheckded[j].Time.DayOfWeek.ToString();
+
+                        if (Day == item.Key)
+                        {
+                            all += listWeekCheckded[j].Price;
+                        }
+
+
+                    }
+                    model.Week.Expenses.Add(item.Key, all);
+
+                }
+
+
+                /// Month
+                List<ProductsBought> listMonth = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.Time.Year == Now.Year).ToList();
+                List<ProductsBought> listMonthCheckded = new List<ProductsBought>();
+                foreach (var item in listMonth)
+                {
+                    if (CheckYear(item.Time))
+                    {
+                        listMonthCheckded.Add(item);
+                    }
+
+
+                }
+
+
+                foreach (var item in model.Month.Expenses)
+                {
+
+                    double all = 0;
+
+                    for (int j = 0; j < listMonthCheckded.Count(); j++)
+                    {
+                        string Month = listMonthCheckded[j].Time.Month.ToString("MMMM");
+
+                        if (Month == item.Key)
+                        {
+                            all += listWeekCheckded[j].Price;
+                        }
+
+
+                    }
+                    model.Month.Expenses.Add(item.Key, all);
+
+                }
+
+
+                ///
+                /// Year
+                List<ProductsBought> listYears = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.ToList();
+                List<ProductsBought> listYearsCheckded = new List<ProductsBought>();
+                foreach (var item in listYears)
+                {
+                    if (CheckYear(item.Time))
+                    {
+                        listYearsCheckded.Add(item);
+                    }
+
+
+                }
+
+
+                foreach (var item in model.Month.Expenses)
+                {
+
+                    double all = 0;
+
+                    for (int j = 0; j < listMonthCheckded.Count(); j++)
+                    {
+                        string Month = listMonthCheckded[j].Time.Month.ToString("MMMM");
+
+                        if (Month == item.Key)
+                        {
+                            all += listWeekCheckded[j].Price;
+                        }
+
+
+                    }
+                    model.Month.Expenses.Add(item.Key, all);
+
+                }
+
+
+                ///
+                return model;
+            }
+            catch (Exception ex)
+            {
+                return model;
+            }
+        }
     }
 
 }
