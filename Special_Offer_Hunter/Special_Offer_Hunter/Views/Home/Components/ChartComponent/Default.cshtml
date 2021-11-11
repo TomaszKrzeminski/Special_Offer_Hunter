@@ -1,7 +1,6 @@
 ﻿
-
 <div class="col col-lg-12">
-   
+
     <div class="row">
         <div class="col col-lg-12">
             <canvas id="line-chartWeek" width="800" height="250"></canvas>
@@ -9,7 +8,7 @@
     </div>
 </div>
 <div class="col col-lg-12">
-   
+
     <div class="row">
         <div class="col col-lg-12">
             <canvas id="line-chartMonth" width="800" height="250"></canvas>
@@ -17,7 +16,7 @@
     </div>
 </div>
 <div class="col col-lg-12">
-   
+
     <div class="row">
         <div class="col col-lg-12">
             <canvas id="line-chartYear" width="800" height="250"></canvas>
@@ -28,56 +27,250 @@
 
 
 <script src="~/lib/Chart.js/chart.js"></script>
-
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script>
+    $(document).ready(function () {
 
 
-    new Chart(document.getElementById("line-chartWeek"), {
-        type: 'line',
-        data: {
-            labels: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
-            datasets: [{
-                data: [86, 114, 106, 106, 107, 111, 133, 221],
-                label: "Wydatki Tydzień",
-                borderColor: "#3e95cd",
-                fill: false
-            }
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: ''
-            }
+        function GetJSON_Simple() {
+            var resp = [];
+            $.ajax({
+                type: "GET",
+                url: '/Statistics/GetChartData',
+                async: false,
+                contentType: "application/json",
+                success: function (data) {
+                    resp.push(data);
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                    alert("error");
+                }
+            });
+            return resp;
         }
-    });
-    new Chart(document.getElementById("line-chartMonth"), {
-        type: 'line',
-        data: {
-            labels: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
-            datasets: [{
-                data: [86, 114, 106, 106, 107, 111, 133, 221, 107, 111, 133, 221],
-                label: "Wydatki Miesiąc",
-                borderColor: "#3e95cd",
-                fill: false
-            }
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: ''
-            }
-        }
-    });
 
-    new Chart(document.getElementById("line-chartYear"), {
+        var simpleData = GetJSON_Simple();
+
+        new Chart(document.getElementById("line-chartWeek"), {
+            type: 'line',
+            data: {
+                labels: simpleData[0].weekLabel,
+                datasets: [{
+                    data: simpleData[0].weekData,
+                    label: "Wydatki Tydzień",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+
+        new Chart(document.getElementById("line-chartMonth"), {
+            type: 'line',
+            data: {
+                labels: simpleData[0].monthLabel,
+                datasets: [{
+                    data: simpleData[0].monthData,
+                    label: "Wydatki Rok",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+
+        new Chart(document.getElementById("line-chartYear"), {
+            type: 'line',
+            data: {
+                labels: simpleData[0].yearLabel,
+                datasets: [{
+                    data: simpleData[0].yearData,
+                    label: "Wydatki Ostatnie Lata",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+
+
+
+
+
+
+    });
+</script>
+
+
+
+
+
+@*<input type="hidden" id="WK" value="@Model.Week.KeysToString()" />
+    <input type="hidden" id="WV" value="@Model.Week.ValuesToString()" />*@
+
+
+
+
+
+
+@*var simpleData = GetJSON_Simple();
+        var ctx = document.getElementById("canvas")
+        var lineChartData = {
+            labels: simpleData[0].myDate,
+            datasets: [{
+                label: 'Sucess',
+                borderColor: "MediumSeaGreen",
+                backgroundColor: "MediumSeaGreen",
+                fill: false,
+                data: simpleData[0].mySuccess,
+                yAxisID: 'y-axis-1',
+            }, {
+                label: 'Exceptioned',
+                borderColor: "Tomato",
+                backgroundColor: "Tomato",
+                fill: false,
+                data: simpleData[0].myException,
+                yAxisID: 'y-axis-2'
+            }]
+        };
+
+        window.myLine = Chart.Line(ctx, {
+            data: lineChartData,
+            options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                title: {
+                    display: true,
+                    text: 'Processes'
+                },
+                scales: {
+                    yAxes: [{
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        id: 'y-axis-1',
+                    }, {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        id: 'y-axis-2',
+
+                        // grid line settings
+                        gridLines: {
+                            drawOnChartArea: false, // only want the grid lines for one axis to show up
+                        },
+                    }],
+                }
+            }
+        });
+
+    </script>*@
+
+
+
+
+
+
+
+
+@*//const Wk = ['Raz', 'Dwa', 'trzy'];
+
+    //var WV = { };
+
+    //new Chart(document.getElementById("line-chartWeek"), {
+    //    type: 'line',
+    //    data: {
+    //        labels: WK,
+    //        datasets: [{
+    //            data: [1.1, 2.2, 3.2],
+    //            label: "Wydatki Tydzień",
+    //            borderColor: "#3e95cd",
+    //            fill: false
+    //        }
+    //        ]
+    //    },
+    //    options: {
+    //        title: {
+    //            display: true,
+    //            text: ''
+    //        }
+    //    }
+    //});*@
+
+
+
+
+@*
+
+
+
+
+    @*new Chart(document.getElementById("line-chartMonth"), {
+            type: 'line',
+            data: {
+                labels: @Model.Month.Expenses.Keys.ToList(),
+                datasets: [{
+                    data: @Model.Month.Expenses.Values.ToList(),
+                    label: "Wydatki Miesiąc",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });*@
+
+@*//new Chart(document.getElementById("line-chartYear"), {
+    //    type: 'line',
+    //    data: {
+    //        labels: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
+    //        datasets: [{
+    //            data: [86, 114, 106, 106, 107, 111, 133, 221],
+    //            label: "Wydatki Rok",
+    //            borderColor: "#3e95cd",
+    //            fill: false
+    //        }
+    //        ]
+    //    },
+    //    options: {
+    //        title: {
+    //            display: true,
+    //            text: ''
+    //        }
+    //    }
+    //});*@
+@*new Chart(document.getElementById("line-chartYear"), {
         type: 'line',
         data: {
-            labels: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
+            labels: @Model.Year.Expenses.Keys.ToList(),
             datasets: [{
-                data: [86, 114, 106, 106, 107, 111, 133, 221],
+                data: @Model.Year.Expenses.Values.ToList(),
                 label: "Wydatki Rok",
                 borderColor: "#3e95cd",
                 fill: false
@@ -90,8 +283,7 @@
                 text: ''
             }
         }
-    });
+    });*@
 
-   
 
-</script>
+

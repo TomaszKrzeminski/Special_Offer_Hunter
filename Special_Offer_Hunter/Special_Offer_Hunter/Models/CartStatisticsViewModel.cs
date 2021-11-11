@@ -14,7 +14,7 @@ namespace Special_Offer_Hunter.Models
 
     public class CartStatisticWeek : CartStatistics
     {
-        List<string> Week = new List<string>() { "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela" };
+        List<string> Week = new List<string>() { "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota", "niedziela" };
         public CartStatisticWeek()
         {
             Expenses = new Dictionary<string, double>();
@@ -23,6 +23,36 @@ namespace Special_Offer_Hunter.Models
                 Expenses.Add(item, 0);
             }
 
+        }
+
+        public string KeysToString()
+        {
+            Dictionary<string, double> d = Expenses;
+            string text = "";
+
+            foreach (var item in d.Keys)
+            {
+                text += item;
+                text += ",";
+            }
+
+            text = text.Remove(text.Length - 1, 1);
+            return text;
+
+        }
+        public string ValuesToString()
+        {
+            Dictionary<string, double> d = Expenses;
+            string text = "";
+
+            foreach (var item in d.Values)
+            {
+                text += item;
+                text += ",";
+            }
+
+            text = text.Remove(text.Length - 1, 1);
+            return text;
         }
         public Dictionary<string, double> Expenses { get; set; }
     }
@@ -51,13 +81,15 @@ namespace Special_Offer_Hunter.Models
             int Year = DateTime.Now.Year;
             int Stop = Year - 10;
             Expenses = new Dictionary<string, double>();
-            for (int i = Year; i <= Stop; i--)
+            for (int i = Stop; i <= Year; i++)
             {
                 Expenses.Add(i.ToString(), 0);
             }
 
 
         }
+
+
         public Dictionary<string, double> Expenses { get; set; }
     }
 

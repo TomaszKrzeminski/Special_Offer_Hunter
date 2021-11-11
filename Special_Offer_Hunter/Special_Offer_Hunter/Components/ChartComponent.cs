@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Newtonsoft.Json;
 using Special_Offer_Hunter.Models;
 using Special_Offer_Hunter.Models2;
@@ -38,10 +39,10 @@ namespace Special_Offer_Hunter.Components
 
 
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public IViewComponentResult Invoke()
         {
-            return View();
 
+            return View();
 
         }
 

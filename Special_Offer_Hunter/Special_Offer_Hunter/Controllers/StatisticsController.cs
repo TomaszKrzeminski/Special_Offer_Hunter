@@ -48,19 +48,39 @@ namespace Special_Offer_Hunter.Controllers
 
 
         [HttpGet]
-        public PartialViewResult GetChartData(ChangeProductNumber model)
+        public async Task<ActionResult> GetChartData()
         {
             string UserId = GetUser();
 
 
-            if (model.ProductId > 0)
+            CartStatisticsViewModel model = repository.GetStatistics(UserId);
+
+
+            List<string> WeekLabel = model.Week.Expenses.Keys.ToList<string>();
+            List<double> WeekData1 = model.Week.Expenses.Values.ToList();
+            List<string> WeekData = new List<string>();
+            foreach (var item in WeekData1)
             {
-                bool check = repository.ChangeNumberOfProducts(model.number, model.ProductId, UserId, model.type);
+                WeekData.Add(item.ToString());
             }
 
-            ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.type);
+            List<string> MonthLabel = model.Month.Expenses.Keys.ToList<string>();
+            List<double> MonthData1 = model.Month.Expenses.Values.ToList();
+            List<string> MonthData = new List<string>();
+            foreach (var item in MonthData1)
+            {
+                MonthData.Add(item.ToString());
+            }
+            List<string> YearLabel = model.Year.Expenses.Keys.ToList<string>();
+            List<double> YearData1 = model.Year.Expenses.Values.ToList();
+            List<string> YearData = new List<string>();
+            foreach (var item in YearData1)
+            {
+                YearData.Add(item.ToString());
+            }
 
-            return PartialView("AddProductToShoppingCart", viewModel);
+
+            return new JsonResult(new { WeekLabel = WeekLabel, WeekData = WeekData, MonthLabel = MonthLabel, MonthData = MonthData, YearLabel = YearLabel, YearData = YearData });
         }
 
 
