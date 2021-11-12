@@ -185,9 +185,16 @@ namespace Special_Offer_Hunter.Models
         public bool CheckWeek(DateTime a)
         {
             DateTime b = DateTime.Now;
+            int x = (int)a.DayOfWeek;
+            int y = (int)b.DayOfWeek;
 
-            if (a.AddDays(7 - (int)a.DayOfWeek).Date.Equals(b.AddDays(
-             7 - (int)b.DayOfWeek).Date))
+            int z = 7 - x;
+            int c = 7 - y;
+
+            DateTime one = a.AddDays(z).Date;
+            DateTime two = b.AddDays(c).Date;
+
+            if (one.Equals(two))
             {
 
                 return true;
@@ -1362,17 +1369,26 @@ namespace Special_Offer_Hunter.Models
                 ///Week
                 List<ProductsBought> listWeek = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.Time.Month == Now.Month).ToList();
                 List<ProductsBought> listWeekCheckded = new List<ProductsBought>();
+
+                CultureInfo poland = new CultureInfo("pl-PL");
+                Calendar myCal = poland.Calendar;
+                CalendarWeekRule myCWR = poland.DateTimeFormat.CalendarWeekRule;
+                DayOfWeek myFirstDOW = poland.DateTimeFormat.FirstDayOfWeek;
+
+
+                int X = myCal.GetWeekOfYear(Now, myCWR, myFirstDOW);
+
+
                 foreach (var item in listWeek)
                 {
-                    if (CheckWeek(item.Time))
+                    int Y = myCal.GetWeekOfYear(item.Time, myCWR, myFirstDOW);
+                    if (X == Y)
                     {
                         listWeekCheckded.Add(item);
                     }
 
 
                 }
-
-                CultureInfo poland = new CultureInfo("pl-PL");
 
 
                 for (int i = 0; i < model.Week.Expenses.Keys.Count(); i++)
@@ -1400,77 +1416,67 @@ namespace Special_Offer_Hunter.Models
 
 
                 /// Month
-                //List<ProductsBought> listMonth = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.Time.Year == Now.Year).ToList();
-                //List<ProductsBought> listMonthCheckded = new List<ProductsBought>();
-                //foreach (var item in listMonth)
-                //{
-                //    if (CheckYear(item.Time))
-                //    {
-                //        listMonthCheckded.Add(item);
-                //    }
+                List<ProductsBought> listMonth = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.Time.Year == Now.Year).ToList();
+                List<ProductsBought> listMonthCheckded = listMonth;
 
 
-                //}
+                for (int i = 0; i < model.Month.Expenses.Keys.Count(); i++)
+                {
+
+                    double all = 0;
+
+                    for (int j = 0; j < listMonthCheckded.Count(); j++)
+                    {
+                        string Month = listMonthCheckded[j].Time.ToString("MMMM").ToUpper();
+
+                        if (Month == (model.Month.Expenses.ElementAt(i).Key).ToUpper())
+                        {
+                            all += listMonthCheckded[j].Price;
+                        }
 
 
-                //foreach (var item in model.Month.Expenses)
-                //{
-
-                //    double all = 0;
-
-                //    for (int j = 0; j < listMonthCheckded.Count(); j++)
-                //    {
-                //        string Month = listMonthCheckded[j].Time.Month.ToString("MMMM");
-
-                //        if (Month == item.Key)
-                //        {
-                //            all += listWeekCheckded[j].Price;
-                //        }
+                    }
+                    string key = model.Month.Expenses.ElementAt(i).Key;
+                    model.Month.Expenses[key] = all;
+                    all = 0;
 
 
-                //    }
-                //    model.Month.Expenses.Add(item.Key, all);
-
-                //}
+                }
 
 
                 ///
                 /// Year
-                //List<ProductsBought> listYears = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.ToList();
-                //List<ProductsBought> listYearsCheckded = new List<ProductsBought>();
-                //foreach (var item in listYears)
-                //{
-                //    if (CheckYear(item.Time))
-                //    {
-                //        listYearsCheckded.Add(item);
-                //    }
+
+                int YearFrom = Int32.Parse(model.Year.Expenses.Keys.First());
+                int YearTo = Int32.Parse(model.Year.Expenses.Keys.Last());
+
+                List<ProductsBought> listYears = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.Time.Year >= YearFrom && x.Time.Year <= YearTo).ToList();
+                List<ProductsBought> listYearsCheckded = listYears;
+
+                for (int i = 0; i < model.Year.Expenses.Keys.Count(); i++)
+                {
+
+                    double all = 0;
+
+                    for (int j = 0; j < listYearsCheckded.Count(); j++)
+                    {
+                        int Year = listYearsCheckded[j].Time.Year;
+
+                        if (Year == Int32.Parse(model.Year.Expenses.ElementAt(i).Key))
+                        {
+                            all += listYearsCheckded[j].Price;
+                        }
 
 
-                //}
+                    }
+                    string key = model.Year.Expenses.ElementAt(i).Key;
+                    model.Year.Expenses[key] = all;
+                    all = 0;
 
 
-                //foreach (var item in model.Month.Expenses)
-                //{
-
-                //    double all = 0;
-
-                //    for (int j = 0; j < listMonthCheckded.Count(); j++)
-                //    {
-                //        string Month = listMonthCheckded[j].Time.Month.ToString("MMMM");
-
-                //        if (Month == item.Key)
-                //        {
-                //            all += listWeekCheckded[j].Price;
-                //        }
+                }
 
 
-                //    }
-                //    model.Month.Expenses.Add(item.Key, all);
-
-                //}
-
-
-                ///
                 return model;
             }
             catch (Exception ex)
