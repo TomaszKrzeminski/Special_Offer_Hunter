@@ -1,5 +1,4 @@
 ﻿
-
 <div class="col col-lg-12">
 
     <div class="row">
@@ -28,69 +27,98 @@
 
 
 <script src="~/lib/Chart.js/chart.js"></script>
-
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 <script>
+    $(document).ready(function () {
 
 
-    new Chart(document.getElementById("line-chartWeek"), {
-        type: 'line',
-        data: {
-            labels: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
-            datasets: [{
-                data: [86, 114, 106, 106, 107, 111, 133, 221],
-                label: "Wydatki Tydzień",
-                borderColor: "#3e95cd",
-                fill: false
-            }
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: ''
-            }
+        function GetJSON_Simple() {
+            var resp = [];
+            $.ajax({
+                type: "GET",
+                url: '/Statistics/GetChartData',
+                async: false,
+                contentType: "application/json",
+                success: function (data) {
+                    resp.push(data);
+                },
+                error: function (req, status, error) {
+                    // do something with error
+                    alert("error");
+                }
+            });
+            return resp;
         }
-    });
-    new Chart(document.getElementById("line-chartMonth"), {
-        type: 'line',
-        data: {
-            labels: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
-            datasets: [{
-                data: [86, 114, 106, 106, 107, 111, 133, 221, 107, 111, 133, 221],
-                label: "Wydatki Miesiąc",
-                borderColor: "#3e95cd",
-                fill: false
-            }
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: ''
-            }
-        }
-    });
 
-    new Chart(document.getElementById("line-chartYear"), {
-        type: 'line',
-        data: {
-            labels: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
-            datasets: [{
-                data: [86, 114, 106, 106, 107, 111, 133, 221],
-                label: "Wydatki Rok",
-                borderColor: "#3e95cd",
-                fill: false
-            }
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: ''
-            }
-        }
-    });
+        var simpleData = GetJSON_Simple();
 
+        new Chart(document.getElementById("line-chartWeek"), {
+            type: 'line',
+            data: {
+                labels: simpleData[0].weekLabel,
+                datasets: [{
+                    data: simpleData[0].weekData,
+                    label: "Wydatki Tydzień",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+
+        new Chart(document.getElementById("line-chartMonth"), {
+            type: 'line',
+            data: {
+                labels: simpleData[0].monthLabel,
+                datasets: [{
+                    data: simpleData[0].monthData,
+                    label: "Wydatki Rok",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+
+        new Chart(document.getElementById("line-chartYear"), {
+            type: 'line',
+            data: {
+                labels: simpleData[0].yearLabel,
+                datasets: [{
+                    data: simpleData[0].yearData,
+                    label: "Wydatki Ostatnie Lata",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+
+
+
+
+
+
+    });
+</script>
 
 

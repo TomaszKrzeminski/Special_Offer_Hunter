@@ -184,28 +184,25 @@ namespace Special_Offer_Hunter.Models
 
         public bool CheckWeek(DateTime a)
         {
-            DateTime b = DateTime.Now;
-            int x = (int)a.DayOfWeek;
-            int y = (int)b.DayOfWeek;
+            DateTime Now = DateTime.Now;
+            CultureInfo poland = new CultureInfo("pl-PL");
+            Calendar myCal = poland.Calendar;
+            CalendarWeekRule myCWR = poland.DateTimeFormat.CalendarWeekRule;
+            DayOfWeek myFirstDOW = poland.DateTimeFormat.FirstDayOfWeek;
 
-            int z = 7 - x;
-            int c = 7 - y;
 
-            DateTime one = a.AddDays(z).Date;
-            DateTime two = b.AddDays(c).Date;
+            int X = myCal.GetWeekOfYear(Now, myCWR, myFirstDOW);
+            int Y = myCal.GetWeekOfYear(a, myCWR, myFirstDOW);
 
-            if (one.Equals(two))
+
+            if (X == Y)
             {
-
                 return true;
-
             }
             else
             {
                 return false;
             }
-
-
 
         }
 
@@ -1402,7 +1399,7 @@ namespace Special_Offer_Hunter.Models
 
                         if (Day == model.Week.Expenses.ElementAt(i).Key)
                         {
-                            all += listWeekCheckded[j].Price;
+                            all += (listWeekCheckded[j].Price * listWeekCheckded[j].Number);
                         }
 
 
@@ -1431,7 +1428,7 @@ namespace Special_Offer_Hunter.Models
 
                         if (Month == (model.Month.Expenses.ElementAt(i).Key).ToUpper())
                         {
-                            all += listMonthCheckded[j].Price;
+                            all += (listMonthCheckded[j].Price * listMonthCheckded[j].Number);
                         }
 
 
@@ -1464,7 +1461,7 @@ namespace Special_Offer_Hunter.Models
 
                         if (Year == Int32.Parse(model.Year.Expenses.ElementAt(i).Key))
                         {
-                            all += listYearsCheckded[j].Price;
+                            all += (listYearsCheckded[j].Price * listYearsCheckded[j].Number);
                         }
 
 

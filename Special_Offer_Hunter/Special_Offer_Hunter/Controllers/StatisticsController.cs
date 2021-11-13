@@ -84,6 +84,11 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
+        public PartialViewResult GetStatistics()
+        {
+            return PartialView("GetChartData");
+        }
+
 
 
     }

@@ -39,7 +39,7 @@
 
     </div>
     <div class="row block bg-light">
-        <div class="col-lg-12">
+        <div id="StatisticsDisplay" class="col-lg-12">
             @await Component.InvokeAsync("ChartComponent")
         </div>
     </div>
@@ -86,6 +86,34 @@
         $(document).ready(function ()
         {
 
+            ////////GetStatistics
+
+            function GetStatistics()
+            {
+
+                $.ajax({
+                    url: '@Url.Action( "GetStatistics", "Statistics")',
+                    type: "get",
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#StatisticsDisplay').empty();
+                        $('#StatisticsDisplay').html(result);
+
+                    }
+                });
+
+
+
+
+            }
+
+
+
+            //////
             /////// change number of products in cart
 
             $('#ShoppingCartDetails').on('change', '.ChangeProductNumber', function (e)
@@ -121,6 +149,8 @@
                         $('#ShoppingCartDetails').empty();
                         $('#ShoppingCartDetails').html(result);
 
+                        GetStatistics();
+
                     }
                 });
 
@@ -128,9 +158,6 @@
 
 
             });
-
-
-
 
             //////
             /////// webcam code
@@ -201,13 +228,6 @@
 
 
             ////
-
-
-
-
-
-
-
 
             //Change shopping cart icon
 
@@ -343,9 +363,6 @@
 
 
             });
-
-
-
 
             ////
 
