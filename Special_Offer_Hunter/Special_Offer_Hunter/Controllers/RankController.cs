@@ -12,5 +12,21 @@ namespace Special_Offer_Hunter.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult AddRank()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult AddComment()
+        {
+            return View();
+        }
+
+
+
     }
 }

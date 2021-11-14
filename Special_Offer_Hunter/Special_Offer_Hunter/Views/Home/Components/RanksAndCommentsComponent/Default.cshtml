@@ -1,0 +1,163 @@
+﻿@model ShopRanksAndCommentsViewModel
+
+    <style>
+        .rating > input {
+            display: none
+        }
+
+        .rating > label {
+            position: relative;
+            width: 19px;
+            font-size: 25px;
+            color: #ff0000;
+            cursor: pointer
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0
+            }
+
+            .rating > label:hover:before,
+            .rating > label:hover ~ label:before {
+                opacity: 1 !important
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1
+        }
+
+        .rating:hover > input:checked ~ label:before {
+            opacity: 0.4
+        }
+
+        .rating2 > input {
+            display: none
+        }
+
+        .rating2 > label {
+            position: relative;
+            width: 19px;
+            font-size: 25px;
+            color: #ff0000;
+            cursor: pointer
+        }
+
+            .rating2 > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 1
+            }
+
+           /* .rating2 > label:hover:before,
+            .rating2 > label:hover ~ label:before {
+                opacity: 1 !important
+            }
+
+        .rating2 > input:checked ~ label:before {
+            opacity: 1
+        }
+
+        .rating2:hover > input:checked ~ label:before {
+            opacity: 0.4
+        }*/
+    </style>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h5>Ocena</h5>
+            <div class="rating2">
+                @for (int i = 0; i < Model.shopRank; i++)
+                {
+                    <input type="radio" name="rating" value="@(i+1)" id="@(i+1)"><label for="@(i+1)">☆</label>
+                }
+
+               
+            </div>
+
+        </div>
+        <div class="col-lg-12">
+            <h5>Liczba Komentarzy </h5>
+            <div>
+                <h7>@Model.shopComments</h7>
+            </div>
+        </div>
+        <div class="col-lg-12">
+           
+
+                <div class="card">
+                    <div class="row">
+                        <div class="col-2"> <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2"> </div>
+                        <div class="col-10">
+                            <div class="comment-box ml-2">
+                                <h4>Oceń</h4>
+                                <form asp-action="AddRank" asp-controller="Rank" method="post">
+                                    <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label> </div>
+                                </form>                                
+
+                               
+
+                                <form asp-action="AddComment" asp-controller="Rank" method="post">
+                                    <div class="comment-area"> <textarea class="form-control" placeholder="what is your view?" rows="4"></textarea> </div>
+
+                                    <div class="comment-btns mt-2"></div>
+                                        <div class="row">
+
+                                            <div class="col-6">
+                                                <div class="pull-right"> <button class="btn btn-warning send btn-sm">Dodaj <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
+                                            </div>
+                                        </div>
+                                </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+          
+        </div>
+        <div class="col-lg-12">
+            <form asp-action="AddRank" asp-controller="Rank" method="post">
+            </form>
+        </div>
+        <div class="col-lg-12">
+            <h3>Komentarze</h3>
+            @if (Model.listOfComments != null && Model.listOfComments.Count() > 0)
+            {
+                foreach (var item in Model.listOfComments)
+                {
+
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-2"> <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2"> </div>
+                            <div class="col-10">
+                                <div class="comment-box ml-2">
+                                    <h4>Add a comment</h4>
+                                    <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label> </div>
+                                    <div class="comment-area"> <textarea class="form-control" placeholder="what is your view?" rows="4"></textarea> </div>
+                                    <div class="comment-btns mt-2">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="pull-left"> <button class="btn btn-success btn-sm">Cancel</button> </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="pull-right"> <button class="btn btn-success send btn-sm">Send <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+            }
+
+        </div>
+    </div>
