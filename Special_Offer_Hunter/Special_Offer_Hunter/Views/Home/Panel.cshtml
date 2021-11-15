@@ -94,6 +94,86 @@
         $(document).ready(function ()
         {
 
+            ///////Rank And Comment
+
+            $('#RanksAndCommentsElement').on('click', 'input[name=rating]', function (e)
+            {
+
+
+                var RatingValue = $(this).val();
+                var RankShopId = $('#RankShopId').val();
+
+
+
+
+                $.ajax({
+                    url: '@Url.Action("AddRank", "Rank")',
+                    type: "post",
+                    data: {
+                        ShopId: RankShopId,
+                        Rank: RatingValue
+                    },
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#RanksAndCommentsElement').empty();
+                        $('#RanksAndCommentsElement').html(result);
+
+                      
+
+                    }
+                });
+
+
+
+
+            });
+
+            $('#RanksAndCommentsElement').on('click', '#AddShopComment', function (e)
+            {
+
+
+                var text = $('#CommentShopText').val();
+                var RankShopId = $('#CommentShopId').val();
+
+
+
+
+                $.ajax({
+                    url: '@Url.Action("AddComment", "Rank")',
+                    type: "post",
+                    data: {
+                        ShopId: RankShopId,
+                        Text: text
+                    },
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#RanksAndCommentsElement').empty();
+                        $('#RanksAndCommentsElement').html(result);
+
+                       
+
+                    }
+                });
+
+
+
+
+            });
+
+
+
+
+
+
+            //////
             ////////GetStatistics
 
             function GetStatistics()

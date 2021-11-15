@@ -14,9 +14,10 @@ namespace Special_Offer_Hunter.Models
             shopComments = 112;
             AddComment = new Shop_Comment();
             AddRank = new Shop_Rank();
+            ShopId = 987;
         }
 
-
+        public int ShopId { get; set; }
 
         public int shopRank { get; set; }
         public int shopComments { get; set; }

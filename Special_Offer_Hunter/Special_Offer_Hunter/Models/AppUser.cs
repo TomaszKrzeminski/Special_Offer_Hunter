@@ -366,8 +366,7 @@ namespace Special_Offer_Hunter.Models
     public class Shop_Rank
     {
         public int Shop_RankId { get; set; }
-        public string Name { get; set; }
-
+        public int Rank { get; set; }
 
 
         public string UserId { get; set; }

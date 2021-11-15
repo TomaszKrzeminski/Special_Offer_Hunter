@@ -37,8 +37,8 @@ namespace Special_Offer_Hunter.Models
 
         CartStatisticsViewModel GetStatistics(string UserId);
 
-        Shop_Comment AddCommentToShop(int ShopId, string UserId, Shop_Comment comment);
-        Shop_Rank AddRankToShop(int ShopId, string UserId, Shop_Rank rank);
+        Shop_Comment AddCommentToShop(string UserId, Shop_Comment comment);
+        Shop_Rank AddRankToShop(string UserId, Shop_Rank rank);
 
     }
 
@@ -1042,20 +1042,23 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-        public Shop_Comment AddCommentToShop(int ShopId, string UserId, Shop_Comment comment)
+        public Shop_Comment AddCommentToShop(string UserId, Shop_Comment comment)
         {
             try
             {
-                Shop shop = context.Shops.Include(x => x.Comments).Where(x => x.ShopId == ShopId).FirstOrDefault();
+                Shop shop = context.Shops.Include(x => x.Comments).Where(x => x.ShopId == comment.ShopId).FirstOrDefault();
+                ApplicationUser user = context.Users.Include(x => x.UserComments).Where(x => x.Id == UserId).FirstOrDefault();
 
                 if (shop != null)
                 {
                     shop.Comments.Add(comment);
+                    user.UserComments.Add(comment);
                 }
                 else
                 {
                     return null;
                 }
+                context.SaveChanges();
                 return comment;
 
             }
@@ -1065,20 +1068,23 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-        public Shop_Rank AddRankToShop(int ShopId, string UserId, Shop_Rank rank)
+        public Shop_Rank AddRankToShop(string UserId, Shop_Rank rank)
         {
             try
             {
-                Shop shop = context.Shops.Include(x => x.Ranks).Where(x => x.ShopId == ShopId).FirstOrDefault();
+                Shop shop = context.Shops.Include(x => x.Ranks).Where(x => x.ShopId == rank.ShopId).FirstOrDefault();
+                ApplicationUser user = context.Users.Include(x => x.UserRanks).Where(x => x.Id == UserId).FirstOrDefault();
 
                 if (shop != null)
                 {
                     shop.Ranks.Add(rank);
+                    user.UserRanks.Add(rank);
                 }
                 else
                 {
                     return null;
                 }
+                context.SaveChanges();
                 return rank;
 
             }

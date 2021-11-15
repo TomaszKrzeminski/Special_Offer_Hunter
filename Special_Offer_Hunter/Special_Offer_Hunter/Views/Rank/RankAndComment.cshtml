@@ -87,13 +87,13 @@
 
 
                         <form asp-action="AddComment" asp-controller="Rank" method="post">
-                            <div  class="comment-area"> <textarea id="CommentShopText" class="form-control" placeholder="what is your view?" rows="4"></textarea> </div>
-                            <input id="CommentShopId" type="hidden" name="ShopId" value="@Model.ShopId" />
+                            <div class="comment-area"> <textarea class="form-control" placeholder="what is your view?" rows="4"></textarea> </div>
+                            <input type="hidden" name="ShopId" value="@Model.ShopId" />
                             <div class="comment-btns mt-2"></div>
                             <div class="row">
 
                                 <div class="col-6">
-                                    <div class="pull-right"> <input class="btn btn-primary" id="AddShopComment" value="Dodaj" /> </div>
+                                    <div class="pull-right"> <button class="btn btn-warning send btn-sm">Dodaj <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
                                 </div>
                             </div>
                         </form>
@@ -147,4 +147,3 @@
         }
     }
 
-</div>
