@@ -51,7 +51,7 @@ namespace Special_Offer_Hunter.Controllers
             string UserId = GetUser();
             Shop_Rank r = repository.AddRankToShop(UserId, data);
 
-            ShopRanksAndCommentsViewModel model = new ShopRanksAndCommentsViewModel();
+            ShopRanksAndCommentsViewModel model = repository.GetRankAndCommentShopViewModel(data.ShopId, UserId);
 
             return PartialView("RankAndComment", model);
         }
@@ -62,7 +62,7 @@ namespace Special_Offer_Hunter.Controllers
         {
             string UserId = GetUser();
             Shop_Comment c = repository.AddCommentToShop(UserId, data);
-            ShopRanksAndCommentsViewModel model = new ShopRanksAndCommentsViewModel();
+            ShopRanksAndCommentsViewModel model = repository.GetRankAndCommentShopViewModel(data.ShopId, UserId);
             return PartialView("RankAndComment", model);
         }
 

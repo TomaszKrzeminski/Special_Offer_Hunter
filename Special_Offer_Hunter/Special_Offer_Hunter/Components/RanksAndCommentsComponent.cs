@@ -34,7 +34,7 @@ namespace Special_Offer_Hunter.Components
 
         public IViewComponentResult Invoke()
         {
-            ShopRanksAndCommentsViewModel model = new ShopRanksAndCommentsViewModel();
+            ShopRanksAndCommentsViewModel model = repository.GetRankAndCommentShopViewModel(1, "a399bc4f-4a4c-4bc1-ada2-23ca2a881e9d");
 
             return View(model);
         }

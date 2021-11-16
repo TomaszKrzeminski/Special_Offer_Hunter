@@ -40,6 +40,9 @@ namespace Special_Offer_Hunter.Models
         Shop_Comment AddCommentToShop(string UserId, Shop_Comment comment);
         Shop_Rank AddRankToShop(string UserId, Shop_Rank rank);
 
+        ShopRanksAndCommentsViewModel GetRankAndCommentShopViewModel(int ShopId, string UserId);
+
+
     }
 
 
@@ -1042,15 +1045,56 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+
+        bool CheckIfRankedShop(int ShopId, string UserId)
+        {
+            bool check = context.Users.Include(x => x.UserRanks).Where(x => x.Id == UserId).SelectMany(x => x.UserRanks).Any(x => x.ShopId == ShopId);
+
+
+            if (check == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+
+        bool CheckIfCommentedShop(int ShopId, string UserId)
+        {
+            bool check = context.Users.Include(x => x.UserComments).Where(x => x.Id == UserId).SelectMany(x => x.UserComments).Any(x => x.ShopId == ShopId);
+            if (check == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
         public Shop_Comment AddCommentToShop(string UserId, Shop_Comment comment)
         {
             try
             {
+
+                bool check = CheckIfCommentedShop(comment.ShopId, UserId);
+
+                if (check == false)
+                {
+                    return null;
+                }
+
                 Shop shop = context.Shops.Include(x => x.Comments).Where(x => x.ShopId == comment.ShopId).FirstOrDefault();
                 ApplicationUser user = context.Users.Include(x => x.UserComments).Where(x => x.Id == UserId).FirstOrDefault();
 
                 if (shop != null)
                 {
+                    comment.Time = DateTime.Now;
                     shop.Comments.Add(comment);
                     user.UserComments.Add(comment);
                 }
@@ -1072,6 +1116,15 @@ namespace Special_Offer_Hunter.Models
         {
             try
             {
+
+                bool check = CheckIfRankedShop(rank.ShopId, UserId);
+
+                if (check == false)
+                {
+                    return null;
+                }
+
+
                 Shop shop = context.Shops.Include(x => x.Ranks).Where(x => x.ShopId == rank.ShopId).FirstOrDefault();
                 ApplicationUser user = context.Users.Include(x => x.UserRanks).Where(x => x.Id == UserId).FirstOrDefault();
 
@@ -1091,6 +1144,62 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+
+        //bool CheckIfRankedShop(int ShopId, string UserId)
+        //{
+        //    bool check = context.Users.Include(x => x.UserRanks).Where(x => x.Id == UserId).SelectMany(x => x.UserRanks).Any(x => x.ShopId == ShopId);
+
+
+        //    if (check == true)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+
+
+        //}
+
+        //bool CheckIfCommentedShop(int ShopId, string UserId)
+        //{
+        //    bool check = context.Users.Include(x => x.UserComments).Where(x => x.Id == UserId).SelectMany(x => x.UserComments).Any(x => x.ShopId == ShopId);
+        //    if (check == true)
+        //    {
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        return true;
+        //    }
+        //}
+
+
+
+        public ShopRanksAndCommentsViewModel GetRankAndCommentShopViewModel(int ShopId, string UserId)
+        {
+            ShopRanksAndCommentsViewModel model = new ShopRanksAndCommentsViewModel();
+            try
+            {
+                model.Comment = CheckIfCommentedShop(ShopId, UserId);
+                model.Rank = CheckIfRankedShop(ShopId, UserId);
+                model.ShopId = ShopId;
+                List<Shop_Comment> list = context.Shop_Comments.Where(x => x.ShopId == ShopId).ToList();
+                model.listOfComments = list;
+                model.shopComments = list.Count();
+
+                model.shopRank = (int)context.Shop_Ranks.Where(x => x.ShopId == ShopId).Select(x => x.Rank).Average();
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                return model;
+
             }
         }
     }

@@ -10,12 +10,18 @@ namespace Special_Offer_Hunter.Models
         public ShopRanksAndCommentsViewModel()
         {
             listOfComments = new List<Shop_Comment>();
-            shopRank = 3;
-            shopComments = 112;
+            shopRank = 0;
+            shopComments = 0;
             AddComment = new Shop_Comment();
             AddRank = new Shop_Rank();
-            ShopId = 987;
+            ShopId = 0;
+            Rank = false;
+            Comment = false;
         }
+
+        public bool Rank { get; set; }
+        public bool Comment { get; set; }
+
 
         public int ShopId { get; set; }
 
