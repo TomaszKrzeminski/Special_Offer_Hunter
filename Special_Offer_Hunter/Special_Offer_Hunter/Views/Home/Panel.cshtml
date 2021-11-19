@@ -18,10 +18,10 @@
             @await Component.InvokeAsync("ShoppingCartDetailsComponent")
         </div>
     </div>
-    <div class="row block bg-lignt">
+    <div id="RanksAndCommentsDiv" class="row @*block*@ bg-lignt">
         <div id="RanksAndCommentsElement" class="col-lg-12">
 
-            @await Component.InvokeAsync("RanksAndCommentsComponent")
+            @*@await Component.InvokeAsync("RanksAndCommentsComponent")*@
 
         </div>
     </div>
@@ -94,6 +94,20 @@
         $(document).ready(function ()
         {
 
+            /////Close Rank Panel
+
+            $('#RanksAndCommentsElement').on('click', '#CloseShopRank', function (e)
+            {
+                
+                $('#RanksAndCommentsElement').empty();
+                $('#RanksAndCommentsDiv').removeClass("block");
+
+
+
+            });
+
+
+
             ///RankAndCommentShopPanel
             $('#OffersInNeighborhoodElement').on('click', '.ShopRank', function (e)
             {
@@ -108,7 +122,7 @@
                 data = { ShopId: Id };
 
 
-
+                $('#RanksAndCommentsDiv').addClass("block");
 
                 $.ajax({
                     url: '@Url.Action("ShopRankPanel", "Rank")',
@@ -147,7 +161,7 @@
                 var RankShopId = $('#RankShopId').val();
 
 
-
+                $('#RanksAndCommentsDiv').addClass("block");
 
                 $.ajax({
                     url: '@Url.Action("AddRank", "Rank")',

@@ -17,8 +17,10 @@ namespace Special_Offer_Hunter.Models
             ShopId = 0;
             Rank = false;
             Comment = false;
+            ShopName = "";
         }
 
+        public string ShopName { get; set; }
         public bool Rank { get; set; }
         public bool Comment { get; set; }
 

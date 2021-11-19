@@ -52,6 +52,16 @@
 </style>
 
 <div class="row">
+    <div class="col col-lg-9">
+        <h3 class="text-center">
+            @Model.ShopName 
+        </h3>
+    </div>
+    <div class="col col-lg-3">
+        <button type="button" class="close" aria-label="Close" id="CloseShopRank">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <div class="col-lg-12"> <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2"> </div>
     <div class="col-lg-12">
         <h5>Ocena</h5>
@@ -114,8 +124,8 @@
 
 </div>
 <div class="col-lg-12">
-    <form asp-action="AddRank" asp-controller="Rank" method="post">
-    </form>
+    @*<form asp-action="AddRank" asp-controller="Rank" method="post">
+    </form>*@
 </div>
 <div class="col-lg-12">
     <h3>Komentarze</h3>

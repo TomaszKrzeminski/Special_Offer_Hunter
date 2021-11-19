@@ -55,8 +55,10 @@ namespace Special_Offer_Hunter.Models
             //Shopping_Cart_Years = new List<Shopping_Cart_Year>();
             Shopping_Cart_LookFor = new List<Shopping_Cart_LookFor>();
             ProductsBought = new List<ProductsBought>();
-            UserComments = new List<Shop_Comment>();
-            UserRanks = new List<Shop_Rank>();
+            UserShopComments = new List<Shop_Comment>();
+            UserShopRanks = new List<Shop_Rank>();
+            UserProductComments = new List<Product_Comment>();
+            UserProductRanks = new List<Product_Rank>();
         }
 
         public virtual IList<ProductsBought> ProductsBought { get; set; }
@@ -65,8 +67,11 @@ namespace Special_Offer_Hunter.Models
         //public virtual IList<Shopping_Cart_Month> Shopping_Cart_Months { get; set; }
         //public virtual IList<Shopping_Cart_Year> Shopping_Cart_Years { get; set; }
         public virtual IList<Shopping_Cart_LookFor> Shopping_Cart_LookFor { get; set; }
-        public virtual IList<Shop_Comment> UserComments { get; set; }
-        public virtual IList<Shop_Rank> UserRanks { get; set; }
+        public virtual IList<Shop_Comment> UserShopComments { get; set; }
+        public virtual IList<Shop_Rank> UserShopRanks { get; set; }
+
+        public virtual IList<Product_Comment> UserProductComments { get; set; }
+        public virtual IList<Product_Rank> UserProductRanks { get; set; }
 
 
 
@@ -358,10 +363,13 @@ namespace Special_Offer_Hunter.Models
     public class Product_Rank
     {
         public int Product_RankId { get; set; }
-        public string Name { get; set; }
+        public int Rank { get; set; }
 
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
+
+        public string UserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
     public class Shop_Rank
     {
@@ -396,6 +404,9 @@ namespace Special_Offer_Hunter.Models
 
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
+
+        public string UserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
 
