@@ -97,12 +97,16 @@
                     <th scope="row">@(p.i+1)</th>
                     <td>@p.value.Key.Name</td>
                     <td>@p.value.Key.Product_Price.Price</td>
-                    <td>@p.value.Key.Shop.Name</td>
+                    @*<td><a class="btn btn-primary ShopRank" asp-action="ShopRankPanel" asp-controller="Rank" asp-route-ShopId="@p.value.Key.ShopId" >@p.value.Key.Shop.Name</a></td>*@
+                  <td>
+                      <form asp-action="ShopRankPanel" asp-controller="Rank" >
+                          <input type="hidden" value="@p.value.Key.ShopId" class="ShopRankValue" />
+                          <input type="button" value="@p.value.Key.Shop.Name" class="btn btn-primary ShopRank" />
+                      </form>
+                  </td>
                     <td>@p.value.Value</td>
                     <td>
-                        <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">
-                            @*<select class="custom-select CartTypeForShoppingCart" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
-                            </select>*@
+                        <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">                           
                             <select style="max-width:130px;" class="custom-select CartTypeForShoppingCart">
                                 <option value="0">Dzień</option>
                                 <option value="4">Poszukiwane</option>

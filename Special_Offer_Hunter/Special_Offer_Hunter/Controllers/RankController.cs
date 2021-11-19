@@ -38,10 +38,13 @@ namespace Special_Offer_Hunter.Controllers
 
 
 
-
-        public IActionResult Index()
+        [HttpGet]
+        public PartialViewResult ShopRankPanel(string ShopId)
         {
-            return View();
+            string UserId = GetUser();
+            int Id = Int32.Parse(ShopId);
+            ShopRanksAndCommentsViewModel model = repository.GetRankAndCommentShopViewModel(Id, UserId);
+            return PartialView("RankAndComment", model);
         }
 
 
