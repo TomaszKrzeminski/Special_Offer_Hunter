@@ -39,4 +39,45 @@ namespace Special_Offer_Hunter.Models
 
 
     }
+
+    public class ProductRanksAndCommentsViewModel
+    {
+        public ProductRanksAndCommentsViewModel()
+        {
+            listOfComments = new List<Product_Comment>();
+            productRank = 0;
+            productComments = 0;
+            AddComment = new Product_Comment();
+            AddRank = new Product_Rank();
+            ProductId = 0;
+            Rank = false;
+            Comment = false;
+            ProductName = "";
+        }
+
+        public string ProductName { get; set; }
+        public bool Rank { get; set; }
+        public bool Comment { get; set; }
+
+
+        public int ProductId { get; set; }
+
+        public int productRank { get; set; }
+        public int productComments { get; set; }
+
+        public List<Product_Comment> listOfComments { get; set; }
+
+        public Product_Comment AddComment { get; set; }
+        public Product_Rank AddRank { get; set; }
+
+
+
+
+    }
+
+
+
+
+
+
 }

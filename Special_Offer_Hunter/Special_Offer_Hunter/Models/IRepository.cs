@@ -42,6 +42,8 @@ namespace Special_Offer_Hunter.Models
 
         ShopRanksAndCommentsViewModel GetRankAndCommentShopViewModel(int ShopId, string UserId);
         Product_Rank AddRankToProduct(string userId, Product_Rank data);
+        public Product_Comment AddCommentToProduct(string UserId, Product_Comment comment);
+        ProductRanksAndCommentsViewModel GetRankAndCommentProductViewModel(int ProductId, string UserId);
     }
 
 
@@ -809,24 +811,45 @@ namespace Special_Offer_Hunter.Models
                         Shopping_Cart_Day cart = context.Shopping_Carts_Day.Include(x => x.ProductShopping_Cart_Days).ThenInclude(x => x.Product).ThenInclude(x => x.Shop).ThenInclude(x => x.Location).Where(x => x.Shopping_Cart_DayId == user.Shopping_Cart_Days.Last().Shopping_Cart_DayId).FirstOrDefault();
                         productList = cart.ProductShopping_Cart_Days.Select(x => x.Product).ToList();
                         break;
-                    //case ShoppingCartType.Tydzień:
-                    //    Shopping_Cart_Week cart1 = context.Shopping_Carts_Week.Include(x => x.ProductShopping_Cart_Weeks).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_WeekId == user.Shopping_Cart_Weeks.Last().Shopping_Cart_WeekId).FirstOrDefault();
-                    //    productList = cart1.ProductShopping_Cart_Weeks.Select(x => x.Product).ToList();
-                    //    break;
-                    //case ShoppingCartType.Miesiąc:
-                    //    Shopping_Cart_Month cart2 = context.Shopping_Cart_Month.Include(x => x.ProductShopping_Cart_Months).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_MonthId == user.Shopping_Cart_Months.Last().Shopping_Cart_MonthId).FirstOrDefault();
-                    //    productList = cart2.ProductShopping_Cart_Months.Select(x => x.Product).ToList();
-                    //    break;
-                    //case ShoppingCartType.Rok:
-                    //    Shopping_Cart_Year cart3 = context.Shopping_Cart_Year.Include(x => x.ProductShopping_Cart_Years).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_YearId == user.Shopping_Cart_Years.Last().Shopping_Cart_YearId).FirstOrDefault();
-                    //    productList = cart3.ProductShopping_Cart_Years.Select(x => x.Product).ToList();
-                    //    break;
+
                     case ShoppingCartType.Poszukiwane:
                         Shopping_Cart_LookFor cart4 = context.Shopping_Cart_LookFor.Include(x => x.ProductShopping_Cart_LookFor).ThenInclude(x => x.Product).Where(x => x.Shopping_Cart_LookForId == user.Shopping_Cart_LookFor.Last().Shopping_Cart_LookForId).FirstOrDefault();
                         productList = cart4.ProductShopping_Cart_LookFor.Select(x => x.Product).ToList();
                         break;
 
                 }
+
+                List<Product> listBought = new List<Product>();
+
+                if (productList != null && productList.Count > 0&&type==ShoppingCartType.Dzień)
+                {
+
+                    foreach (var p in productList)
+                    {
+                        bool check = false;
+
+                        if (type == ShoppingCartType.Dzień)
+                        {
+
+                            check = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Any(x => x.ProductId == p.ProductId && x.Number > 0 && x.cartType == ShoppingCartType.Dzień && x.Time.Year == DateTime.Now.Year && x.Time.Month == DateTime.Now.Month && x.Time.Day == DateTime.Now.Day);
+
+                        }
+                       
+
+                        if (check)
+                        {
+                            listBought.Add(p);
+                        }
+                        //check = false;
+
+                    }
+productList = listBought;
+
+                }
+
+
+                
+
 
                 if (productList != null && productList.Count > 0)
                 {
@@ -1154,12 +1177,12 @@ namespace Special_Offer_Hunter.Models
                 model.Comment = CheckIfCommentedShop(ShopId, UserId);
                 model.Rank = CheckIfRankedShop(ShopId, UserId);
                 model.ShopId = ShopId;
-                List<Shop_Comment> list = context.Shop_Comments.Where(x => x.ShopId == ShopId).ToList();
+                List<Shop_Comment> list = context.Users.Include(x => x.UserShopComments).Where(x => x.Id == UserId).FirstOrDefault().UserShopComments.Where(x => x.ShopId == ShopId).ToList();
                 model.listOfComments = list;
                 model.shopComments = list.Count();
                 model.ShopName = context.Shops.Find(ShopId).Name;
 
-                model.shopRank = (int)context.Shop_Ranks.Where(x => x.ShopId == ShopId).Select(x => x.Rank).Average();
+                model.shopRank = (int)context.Users.Where(x => x.Id == UserId).FirstOrDefault().UserShopRanks.Where(x => x.ShopId == ShopId).Select(x => x.Rank).Average();
 
                 return model;
             }
@@ -1171,7 +1194,35 @@ namespace Special_Offer_Hunter.Models
         }
 
 
+        bool CheckIfRankedProduct(int ProductId, string UserId)
+        {
+            bool check = context.Users.Include(x => x.UserProductRanks).Where(x => x.Id == UserId).SelectMany(x => x.UserProductRanks).Any(x => x.ProductId == ProductId);
 
+
+            if (check == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+
+        bool CheckIfCommentedProduct(int ProductId, string UserId)
+        {
+            bool check = context.Users.Include(x => x.UserProductComments).Where(x => x.Id == UserId).SelectMany(x => x.UserProductComments).Any(x => x.ProductId == ProductId);
+            if (check == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
 
 
@@ -1180,7 +1231,7 @@ namespace Special_Offer_Hunter.Models
             try
             {
 
-                bool check = CheckIfRankedShop(rank.ShopId, UserId);
+                bool check = CheckIfRankedProduct(rank.ProductId, UserId);
 
                 if (check == false)
                 {
@@ -1188,13 +1239,13 @@ namespace Special_Offer_Hunter.Models
                 }
 
 
-                Shop shop = context.Shops.Include(x => x.Ranks).Where(x => x.ShopId == rank.ShopId).FirstOrDefault();
+                Product product = context.Products.Include(x => x.Ranks).Where(x => x.ProductId == rank.ProductId).FirstOrDefault();
                 ApplicationUser user = context.Users.Include(x => x.UserShopRanks).Where(x => x.Id == UserId).FirstOrDefault();
 
-                if (shop != null)
+                if (product != null)
                 {
-                    shop.Ranks.Add(rank);
-                    user.UserShopRanks.Add(rank);
+                    product.Ranks.Add(rank);
+                    user.UserProductRanks.Add(rank);
                 }
                 else
                 {
@@ -1215,20 +1266,45 @@ namespace Special_Offer_Hunter.Models
 
 
 
-        public ShopRanksAndCommentsViewModel GetRankAndCommentProductViewModel(int ShopId, string UserId)
+        public ProductRanksAndCommentsViewModel GetRankAndCommentProductViewModel(int ProductId, string UserId)
         {
-            ShopRanksAndCommentsViewModel model = new ShopRanksAndCommentsViewModel();
+            ProductRanksAndCommentsViewModel model = new ProductRanksAndCommentsViewModel();
             try
             {
-                model.Comment = CheckIfCommentedShop(ShopId, UserId);
-                model.Rank = CheckIfRankedShop(ShopId, UserId);
-                model.ShopId = ShopId;
-                List<Shop_Comment> list = context.Shop_Comments.Where(x => x.ShopId == ShopId).ToList();
+                model.Comment = CheckIfCommentedProduct(ProductId, UserId);
+                model.Rank = CheckIfRankedProduct(ProductId, UserId);
+                model.ProductId = ProductId;
+                List<Product_Comment> list = context.Users.Include(x => x.UserProductComments).Where(x => x.Id == UserId).FirstOrDefault().UserProductComments.Where(x => x.ProductId == ProductId).ToList();
                 model.listOfComments = list;
-                model.shopComments = list.Count();
-                model.ShopName = context.Shops.Find(ShopId).Name;
+                model.productComments = list.Count();
+                string productName = context.Products.Find(ProductId).Name;
+                int MaxLength = 20;
 
-                model.shopRank = (int)context.Shop_Ranks.Where(x => x.ShopId == ShopId).Select(x => x.Rank).Average();
+                if (productName.Length > MaxLength)
+                {
+                    model.ProductName = productName.Substring(0, MaxLength);
+                }
+                else
+                {
+                    model.ProductName = productName;
+                }
+
+
+
+
+
+
+
+                List<int> average = context.Users.Include(x => x.UserProductRanks).Where(x => x.Id == UserId).FirstOrDefault().UserProductRanks.Where(x => x.ProductId == ProductId).Select(x => x.Rank).ToList();
+
+                if (average != null && average.Count() > 0)
+                {
+                    model.productRank = (int)average.Average();
+                }
+
+
+
+
 
                 return model;
             }
@@ -1246,21 +1322,21 @@ namespace Special_Offer_Hunter.Models
             try
             {
 
-                bool check = CheckIfCommentedShop(comment.ShopId, UserId);
+                bool check = CheckIfCommentedProduct(comment.ProductId, UserId);
 
                 if (check == false)
                 {
                     return null;
                 }
 
-                Shop shop = context.Shops.Include(x => x.Comments).Where(x => x.ShopId == comment.ShopId).FirstOrDefault();
+                Product product = context.Products.Include(x => x.Comments).Where(x => x.ProductId == comment.ProductId).FirstOrDefault();
                 ApplicationUser user = context.Users.Include(x => x.UserShopComments).Where(x => x.Id == UserId).FirstOrDefault();
 
-                if (shop != null)
+                if (product != null)
                 {
                     comment.Time = DateTime.Now;
-                    shop.Comments.Add(comment);
-                    user.UserShopComments.Add(comment);
+                    product.Comments.Add(comment);
+                    user.UserProductComments.Add(comment);
                 }
                 else
                 {
@@ -1275,17 +1351,6 @@ namespace Special_Offer_Hunter.Models
                 return null;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

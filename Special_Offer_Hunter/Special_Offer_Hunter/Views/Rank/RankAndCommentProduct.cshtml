@@ -1,0 +1,163 @@
+﻿@model ProductRanksAndCommentsViewModel
+
+<style>
+    .ratingProduct > input {
+        display: none
+    }
+
+    .ratingProduct > label {
+        position: relative;
+        width: 19px;
+        font-size: 25px;
+        color: #ff0000;
+        cursor: pointer
+    }
+
+        .ratingProduct > label::before {
+            content: "\2605";
+            position: absolute;
+            opacity: 0
+        }
+
+        .ratingProduct > label:hover:before,
+        .ratingProduct > label:hover ~ label:before {
+            opacity: 1 !important
+        }
+
+    .ratingProduct > input:checked ~ label:before {
+        opacity: 1
+    }
+
+    .ratingProduct:hover > input:checked ~ label:before {
+        opacity: 0.4
+    }
+
+    .rating2Product > input {
+        display: none
+    }
+
+    .rating2Product > label {
+        position: relative;
+        width: 19px;
+        font-size: 25px;
+        color: #ff0000;
+        cursor: pointer
+    }
+
+        .rating2Product > label::before {
+            content: "\2605";
+            position: absolute;
+            opacity: 1
+        }
+</style>
+
+<div class="row">
+    <div class="col col-lg-9">
+        <h3 class="text-center">
+            @Model.ProductName
+        </h3>
+    </div>
+    <div class="col col-lg-3">
+        <button type="button" class="close" aria-label="Close" id="CloseProductRank">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="col-lg-12"> <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2"> </div>
+    <div class="col-lg-12">
+        <h5>Ocena</h5>
+        <div class="rating2Product">
+            @for (int i = 0; i < Model.productRank; i++)
+            {
+                <input type="radio" name="ratingProduct" value="@(i+1)" id="@(i+1)"><label for="@(i+1)">☆</label>
+            }
+
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-12">
+        <h5>Liczba Komentarzy </h5>
+        <div>
+            <h7>@Model.productComments</h7>
+        </div>
+    </div>
+    <div class="col-lg-12">
+
+
+        <div class="card">
+            <div class="row">
+                <div class="col-lg-2">  </div>
+                <div class="col-lg-10">
+                    <div class="comment-box ml-2">
+                        @if (Model.Rank)
+                        {
+                            <h4>Oceń</h4>
+                            <form asp-action="AddRank" asp-controller="Rank" method="post">
+                                <input type="hidden" id="RankProductId" value="@Model.ProductId" />
+                                <div class="ratingProduct"> <input type="radio" name="ratingProduct" value="5" id="5"><label for="5">☆</label> <input type="radio" name="ratingProduct" value="4" id="4"><label for="4">☆</label> <input type="radio" name="ratingProduct" value="3" id="3"><label for="3">☆</label> <input type="radio" name="ratingProduct" value="2" id="2"><label for="2">☆</label> <input type="radio" name="ratingProduct" value="1" id="1"><label for="1">☆</label> </div>
+                            </form>
+                        }
+                        @if (Model.Comment)
+                        {
+                            <form asp-action="AddComment" asp-controller="Rank" method="post">
+                                <div class="comment-area"> <textarea id="CommentProductText" class="form-control" placeholder="what is your view?" rows="4"></textarea> </div>
+                                <input id="CommentProductId" type="hidden" name="ProductId" value="@Model.ProductId" />
+                                <div class="comment-btns mt-2"></div>
+                                <div class="row">
+
+                                    <div class="col-lg-6">
+                                        <div class="pull-right"> <input class="btn btn-primary" id="AddProductComment" value="Dodaj" /> </div>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+<div class="col-lg-12">
+    @*<form asp-action="AddRank" asp-controller="Rank" method="post">
+        </form>*@
+</div>
+<div class="col-lg-12">
+    <h3>Komentarze</h3>
+    @if (Model.listOfComments != null && Model.listOfComments.Count() > 0)
+    {
+        foreach (var item in Model.listOfComments)
+        {
+
+            <div class="card">
+                <div class="row">
+                    @*<div class="col-2"> <img src="https://i.imgur.com/xELPaag.jpg" width="70" class="rounded-circle mt-2"> </div>*@
+
+                    <div class="col-lg-3"><h5> @item.ApplicationUser.Email</h5> </div>
+                    <div class="col-lg-3"> <h6>@item.Time.ToShortDateString()</h6> </div>
+                    <div class="col-lg-6"> </div>
+                    <div class="col-lg-12">
+                        <div class="comment-box ml-2">
+
+                            <div class="comment-area text-justify"> <textarea class="form-control">@item.Text</textarea> </div>
+                            <div class="comment-btns mt-2">
+                                <div class="row">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    }
+
+</div>
+

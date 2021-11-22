@@ -69,16 +69,24 @@ namespace Special_Offer_Hunter.Controllers
             return PartialView("RankAndComment", model);
         }
 
+        [HttpGet]
+        public PartialViewResult ProductRankPanel(string ProductId)
+        {
+            string UserId = GetUser();
+            int Id = Int32.Parse(ProductId);
+            ProductRanksAndCommentsViewModel model = repository.GetRankAndCommentProductViewModel(Id, UserId);
+            return PartialView("RankAndCommentProduct", model);
+        }
 
         [HttpPost]
         public PartialViewResult AddRankProduct(Product_Rank data)
         {
             string UserId = GetUser();
-            Shop_Rank r = repository.AddRankToProduct(UserId, data);
+            Product_Rank r = repository.AddRankToProduct(UserId, data);
 
-            ShopRanksAndCommentsViewModel model = repository.GetRankAndCommentShopViewModel(data.ProductId, UserId);
+            ProductRanksAndCommentsViewModel model = repository.GetRankAndCommentProductViewModel(data.ProductId, UserId);
 
-            return PartialView("RankAndComment", model);
+            return PartialView("RankAndCommentProduct", model);
         }
 
 
@@ -86,9 +94,9 @@ namespace Special_Offer_Hunter.Controllers
         public PartialViewResult AddCommentProduct(Product_Comment data)
         {
             string UserId = GetUser();
-            Shop_Comment c = repository.AddCommentToProduct(UserId, data);
-            ShopRanksAndCommentsViewModel model = repository.GetRankAndCommentProductViewModel(data.ProductId, UserId);
-            return PartialView("RankAndComment", model);
+            Product_Comment c = repository.AddCommentToProduct(UserId, data);
+            ProductRanksAndCommentsViewModel model = repository.GetRankAndCommentProductViewModel(data.ProductId, UserId);
+            return PartialView("RankAndCommentProduct", model);
         }
 
 

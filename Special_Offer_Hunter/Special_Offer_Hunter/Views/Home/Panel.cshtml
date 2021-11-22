@@ -93,12 +93,95 @@
 
         $(document).ready(function ()
         {
+             ///Change NavigationView
 
-            /////Close Rank Panel
-
-            $('#RanksAndCommentsElement').on('click', '#CloseShopRank', function (e)
+            function ChangeNavigationView(navType)
             {
-                
+
+                  $.ajax({
+                    url: '@Url.Action("ShowShoppingCartProductsOnMap", "Navigation")',
+                    type: "get",
+                    data: {
+                        shoppingCartType: navType,
+
+
+                    },
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+                        alert("Navi");
+                        $('#NavigationOnMap').empty();
+                        $('#NavigationOnMap').html(result);
+
+                    }
+                });
+
+
+
+
+            }
+
+           
+
+
+
+
+           
+
+
+
+            ////
+
+            ///Product Ranks And Comments
+
+              $('#OffersInNeighborhoodElement').on('click', '.ProductRank', function (e)
+            {
+
+
+                var x = $(this).closest('td');
+                  var y = x.find('.ProductRankValue');
+                var Id = y.val();
+
+
+                data = { ProductId: Id };
+
+
+                $('#RanksAndCommentsDiv').addClass("block");
+
+                $.ajax({
+                    url: '@Url.Action("ProductRankPanel", "Rank")',
+                    type: "get",
+                    data:data,
+                    //ShopId: {
+                    //    ShopId:Id
+                    //},
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+
+                        $('#RanksAndCommentsElement').empty();
+                        $('#RanksAndCommentsElement').html(result);
+
+
+
+                    }
+                });
+
+
+
+
+            });
+            //////////
+
+            /////Close Product Rank Panel
+
+            $('#RanksAndCommentsElement').on('click', '#CloseProductRank', function (e) {
+
                 $('#RanksAndCommentsElement').empty();
                 $('#RanksAndCommentsDiv').removeClass("block");
 
@@ -106,18 +189,103 @@
 
             });
 
+            ////// Rank and Comment Product
 
+
+            $('#RanksAndCommentsElement').on('click', 'input[name=ratingProduct]', function (e)
+            {
+
+
+                var RatingValue = $(this).val();
+                var RankShopId = $('#RankProductId').val();
+
+
+                $('#RanksAndCommentsDiv').addClass("block");
+
+                $.ajax({
+                    url: '@Url.Action("AddRankProduct", "Rank")',
+                    type: "post",
+                    data: {
+                        ProductId: RankShopId,
+                        Rank: RatingValue
+                    },
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#RanksAndCommentsElement').empty();
+                        $('#RanksAndCommentsElement').html(result);
+
+
+
+                    }
+                });
+
+
+
+
+            });
+
+            $('#RanksAndCommentsElement').on('click', '#AddProductComment', function (e)
+            {
+
+
+                var text = $('#CommentProductText').val();
+                var RankProductId = $('#CommentProductId').val();
+
+
+
+
+                $.ajax({
+                    url: '@Url.Action("AddCommentProduct", "Rank")',
+                    type: "post",
+                    data: {
+                        ProductId: RankProductId,
+                        Text: text
+                    },
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#RanksAndCommentsElement').empty();
+                        $('#RanksAndCommentsElement').html(result);
+
+
+
+                    }
+                });
+
+
+
+
+            });
+
+            /////
+            /////Close Rank Panel
+
+            $('#RanksAndCommentsElement').on('click', '#CloseShopRank', function (e)
+            {
+
+                $('#RanksAndCommentsElement').empty();
+                $('#RanksAndCommentsDiv').removeClass("block");
+
+
+
+            });
 
             ///RankAndCommentShopPanel
             $('#OffersInNeighborhoodElement').on('click', '.ShopRank', function (e)
             {
-                //var link = $(this).attr('href');
-                //var Id = link.split('=')[1];
+
 
                 var x = $(this).closest('td');
                 var y = x.find('.ShopRankValue');
                 var Id = y.val();
-                alert(Id);
+                //alert(Id);
 
                 data = { ShopId: Id };
 
@@ -225,11 +393,6 @@
 
             });
 
-
-
-
-
-
             //////
             ////////GetStatistics
 
@@ -255,9 +418,6 @@
 
 
             }
-
-
-
             //////
             /////// change number of products in cart
 
@@ -295,9 +455,11 @@
                         $('#ShoppingCartDetails').html(result);
 
                         GetStatistics();
-
+                        ChangeNavigationView(type);
                     }
                 });
+
+
 
 
 
@@ -340,42 +502,8 @@
             });
             //////
 
-            ///Change NavigationView
-
-
-            function ChangeNavigationView(navType)
-            {
-
-                  $.ajax({
-                    url: '@Url.Action("ShowShoppingCartProductsOnMap", "Navigation")',
-                    type: "get",
-                    data: {
-                        shoppingCartType: navType,
-
-
-                    },
-                    headers:
-                    {
-                        //"RequestVerificationToken": t
-                    },
-                    success: function (result) {
-
-                        $('#NavigationOnMap').empty();
-                        $('#NavigationOnMap').html(result);
-
-                    }
-                });
-
-
-
-
-            }
-
-
-            ////
 
             //Change shopping cart icon
-
             function ChangeIcon(typeName)
             {
 
@@ -399,11 +527,7 @@
 
 
             }
-
             ///
-
-
-
             //Change shopping cart view
             $('#ShoppingCartPanel').on('click', '.ShoppingCartTypeSelect', function (e)
             {
@@ -448,10 +572,7 @@
 
 
             });
-
-
             ///
-
             ///  MoveProductToAnotherCart
             $('#ShoppingCartDetails').on('click', '#MoveProductToAnotherCartSubmit', function (e)
             {
@@ -508,10 +629,7 @@
 
 
             });
-
             ////
-
-
             //// add to shoping cart
             $('#OffersInNeighborhoodElement').on('click', '#AddProductToShoppingCart', function (e)
             {
@@ -571,20 +689,12 @@
 
 
             });
-
             /////
-
             ////Remove Product from cart
             RemoveProductFromCartSubmit
-
             $('#ShoppingCartDetails').on('click', '#RemoveProductFromCartSubmit', function (e)
             {
-
-
                 var FormElem = $(this).closest('form');
-
-
-
 
                 var cartType = FormElem.find(".TypeRemove").val();
                 var productId = FormElem.find(".ProductIdRemove").val();
@@ -641,25 +751,17 @@
         navigator.geolocation.getCurrentPosition(function (position) {
             let lat = position.coords.latitude;
             let long = position.coords.longitude;
-
            let x = lat.toFixed(2);
            let y = long.toFixed(2);
-
-
-            //var form = $('#Coordinates');
-        //var x = $("#Latitude").val();
-        //var y = $("#Longitude").val();
-        //var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
                 url: '@Url.Action("ChangeCoordinates", "Home")',
                type: "post",
                 data: {
-                    //__RequestVerificationToken: token,
-                    Latitude:x /* $("#Latitude").val()*/,
-                    Longitude:y /*$("#Longitude").val()*/
+
+                    Latitude:x,
+                    Longitude:y
                 },
                 success: function (result) {
-
 
                 }
             });
@@ -694,7 +796,6 @@
     }
 
             SendCoordinates();
-
             $("body").on('click', "#SearchProductByFoundBarCode", function (e) {
 
 
@@ -747,7 +848,6 @@
 
 
             });
-
             $('#OffersInNeighborhoodElement').on('click', '#FiltrOffersInNeighborhood', function (e)
             {
 
@@ -805,10 +905,6 @@
             });
 
   });
-
-
-
-
 
     </script>
 }
