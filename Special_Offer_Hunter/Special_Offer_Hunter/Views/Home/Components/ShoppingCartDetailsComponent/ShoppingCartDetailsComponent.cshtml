@@ -1,4 +1,8 @@
 ﻿@model ShoppingCartViewModel
+<style>
+    .RemoveProductFromCartSubmit {
+    }
+</style>
 <div class="col col-lg-12">
     <div class="row">
         @if (Model.productList != null && Model.productList.Count > 0)
@@ -78,7 +82,7 @@
 
                                             <input class="ProductIdRemove" name="ProductId" type="hidden" value="@p.value.product.ProductId" />
                                             <input class="TypeRemove" name="Type" type="hidden" value="@Model.type" />
-                                            <input style="max-width:60px;" id="RemoveProductFromCartSubmit" class="btn btn-sm btn-danger" value="Usuń" />
+                                            <input style="max-width:60px;" @*id="RemoveProductFromCartSubmit"*@ class="btn btn-sm btn-danger RemoveProductFromCartSubmit" value="Usuń" />
                                         </form>
                                     </td>
                                     <td>

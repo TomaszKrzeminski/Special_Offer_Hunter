@@ -54,6 +54,7 @@ namespace Special_Offer_Hunter.Controllers
             string UserId = GetUser();
 
             repository.RemoveProductFromShoppingCart(UserId, model.Type, model.ProductId);
+            repository.RemoveProductBought(model.ProductId, UserId);
             ShoppingCartViewModel viewModel = repository.GetShoppingCart(UserId, model.Type);
             return PartialView("AddProductToShoppingCart", viewModel);
         }

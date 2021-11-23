@@ -21,6 +21,7 @@ namespace Special_Offer_Hunter.Models
         List<string> GetCategories();
 
         bool ChangeNumberOfProducts(double number, int ProductId, string UserId, ShoppingCartType type);
+        bool RemoveProductBought(int ProductId, string UserId);
         bool AddProductToUserShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         bool RemoveProductFromShoppingCart(string UserId, ShoppingCartType type, int ProductId);
         public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type);
@@ -182,8 +183,6 @@ namespace Special_Offer_Hunter.Models
 
 
         }
-
-
         public ShoppingCartViewModel GetShoppingCart(string UserId, ShoppingCartType type)
         {
 
@@ -352,8 +351,6 @@ namespace Special_Offer_Hunter.Models
                 return model;
             }
         }
-
-
         public Product GetProductById(int Id)
         {
             Product product = new Product();
@@ -729,7 +726,6 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-
         public bool RemoveProductFromShoppingCart(string UserId, ShoppingCartType type, int ProductId)
         {
             try
@@ -821,7 +817,7 @@ namespace Special_Offer_Hunter.Models
 
                 List<Product> listBought = new List<Product>();
 
-                if (productList != null && productList.Count > 0&&type==ShoppingCartType.Dzień)
+                if (productList != null && productList.Count > 0 && type == ShoppingCartType.Dzień)
                 {
 
                     foreach (var p in productList)
@@ -834,7 +830,7 @@ namespace Special_Offer_Hunter.Models
                             check = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Any(x => x.ProductId == p.ProductId && x.Number > 0 && x.cartType == ShoppingCartType.Dzień && x.Time.Year == DateTime.Now.Year && x.Time.Month == DateTime.Now.Month && x.Time.Day == DateTime.Now.Day);
 
                         }
-                       
+
 
                         if (check)
                         {
@@ -843,12 +839,12 @@ namespace Special_Offer_Hunter.Models
                         //check = false;
 
                     }
-productList = listBought;
+                    productList = listBought;
 
                 }
 
 
-                
+
 
 
                 if (productList != null && productList.Count > 0)
@@ -891,7 +887,7 @@ productList = listBought;
 
                 ProductsBought prodB = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == ProductId && x.Time.Day == DateTime.Now.Day).FirstOrDefault();
                 Product product = context.Products.Include(x => x.Product_Price).Where(x => x.ProductId == ProductId).FirstOrDefault();
-                ApplicationUser user = context.Users.Find(UserId);
+                ApplicationUser user = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault();
                 bool check = false;
 
 
@@ -1192,8 +1188,6 @@ productList = listBought;
 
             }
         }
-
-
         bool CheckIfRankedProduct(int ProductId, string UserId)
         {
             bool check = context.Users.Include(x => x.UserProductRanks).Where(x => x.Id == UserId).SelectMany(x => x.UserProductRanks).Any(x => x.ProductId == ProductId);
@@ -1260,12 +1254,6 @@ productList = listBought;
                 return null;
             }
         }
-
-
-
-
-
-
         public ProductRanksAndCommentsViewModel GetRankAndCommentProductViewModel(int ProductId, string UserId)
         {
             ProductRanksAndCommentsViewModel model = new ProductRanksAndCommentsViewModel();
@@ -1315,8 +1303,6 @@ productList = listBought;
             }
         }
 
-
-
         public Product_Comment AddCommentToProduct(string UserId, Product_Comment comment)
         {
             try
@@ -1352,7 +1338,30 @@ productList = listBought;
             }
         }
 
+        public bool RemoveProductBought(int ProductId, string UserId)
+        {
+            try
+            {
+                DateTime now = DateTime.Now;
+                ProductsBought remove = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == ProductId && x.Time.DayOfYear == now.DayOfYear).FirstOrDefault();
 
+                if (remove != null)
+                {
+                    context.ProductsBought.Remove(remove);
+                }
+                else
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
     }
 
 }

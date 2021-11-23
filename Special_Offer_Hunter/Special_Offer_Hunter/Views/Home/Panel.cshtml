@@ -111,7 +111,7 @@
                         //"RequestVerificationToken": t
                     },
                     success: function (result) {
-                        alert("Navi");
+                        
                         $('#NavigationOnMap').empty();
                         $('#NavigationOnMap').html(result);
 
@@ -691,8 +691,8 @@
             });
             /////
             ////Remove Product from cart
-            RemoveProductFromCartSubmit
-            $('#ShoppingCartDetails').on('click', '#RemoveProductFromCartSubmit', function (e)
+           
+            $('#ShoppingCartDetails').on('click',/* '#RemoveProductFromCartSubmit'*/ '.RemoveProductFromCartSubmit', function (e)
             {
                 var FormElem = $(this).closest('form');
 
@@ -716,6 +716,8 @@
 
                         $('#ShoppingCartDetails').empty();
                         $('#ShoppingCartDetails').html(result);
+
+                        ChangeNavigationView(cartType);
 
                     }
                 });
