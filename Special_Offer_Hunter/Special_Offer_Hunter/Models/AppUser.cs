@@ -29,8 +29,14 @@ namespace Special_Offer_Hunter.Models
 
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public string City { get; set; }
         public DateTime Dateofbirth { get; set; }
+        public string City { get; set; }
+
+        public string Street { get; set; }
+
+        public string PostalCode { get; set; }
+
+        public string HouseNumber { get; set; }
 
         public double Longitude { get; set; }
         public double Latitude { get; set; }
