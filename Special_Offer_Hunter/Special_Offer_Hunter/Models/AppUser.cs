@@ -43,6 +43,8 @@ namespace Special_Offer_Hunter.Models
 
         public virtual NetTopologySuite.Geometries.Point userlocation { get; set; }
 
+        public override string PhoneNumber { get; set; }
+
 
 
 
