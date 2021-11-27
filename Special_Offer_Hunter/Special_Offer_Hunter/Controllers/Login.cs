@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Special_Offer_Hunter.Models;
 
 namespace Special_Offer_Hunter.Controllers
 {
@@ -12,10 +18,23 @@ namespace Special_Offer_Hunter.Controllers
     {
 
 
-        private readonly IHostingEnvironment _environment;
-        public LoginController(IHostingEnvironment _environment)
+        private IRepository repository;
+        private Func<string> GetUser;
+        IHttpContextAccessor httpContextAccessor;
+        IHostingEnvironment _environment;
+        public LoginController(IHostingEnvironment _environment, IRepository repo, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
         {
             this._environment = _environment;
+            //if (GetUser == null)
+            //{
+            //    //string UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //    //this.GetUser = () => UserId;
+
+            //}
+            //else
+            //{
+            //    this.GetUser = GetUser;
+            //}
         }
 
 
@@ -26,49 +45,61 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
+
         [HttpPost]
         public IActionResult Capture(string name)
         {
-            var files = HttpContext.Request.Form.Files;
-            if (files != null)
+            //string UserId = GetUser();
+            //string Name = repository.GetUserEmail(UserId);
+            Random rnd = new Random();
+            int FileName = rnd.Next(1, 1000000);
+
+            string FileNameOfUser = "";
+
+            try
             {
-                foreach (var file in files)
+                var files = HttpContext.Request.Form.Files;
+                if (files != null)
                 {
-                    if (file.Length > 0)
+                    foreach (var file in files)
                     {
-                        // Getting Filename  
-                        var fileName = file.FileName;
-                        // Unique filename "Guid"  
-                        var myUniqueFileName = Convert.ToString(Guid.NewGuid());
-                        // Getting Extension  
-                        var fileExtension = Path.GetExtension(fileName);
-                        // Concating filename + fileExtension (unique filename)  
-                        var newFileName = string.Concat(myUniqueFileName, fileExtension);
-                        //  Generating Path to store photo   
-                        var filepath = Path.Combine(_environment.WebRootPath, "CameraPhotos") + $@"\{newFileName}";
-
-                        if (!string.IsNullOrEmpty(filepath))
+                        if (file.Length > 0)
                         {
-                            // Storing Image in Folder  
-                            //StoreInFolder(file, filepath);
-                        }
 
-                        var imageBytes = System.IO.File.ReadAllBytes(filepath);
-                        if (imageBytes != null)
-                        {
-                            // Storing Image in Folder  
-                            //StoreInDatabase(imageBytes);
-                        }
+                            var fileName = file.FileName;
 
+                            var fileNameToStore = string.Concat(name + FileName, Path.GetExtension(fileName));
+                            var filepath = Path.Combine(_environment.WebRootPath, "UserImages") + $@"\{fileNameToStore}";
+                            FileNameOfUser = filepath;
+                            if (!string.IsNullOrEmpty(filepath))
+                            {
+                                using (FileStream fileStream = System.IO.File.Create(filepath))
+                                {
+                                    file.CopyTo(fileStream);
+                                    fileStream.Flush();
+                                }
+                            }
+
+
+                        }
                     }
+                    UserImageFileNameViewModel model = new UserImageFileNameViewModel(FileNameOfUser);
+
+                    return PartialView("FileName", model);
+
+
                 }
-                return Json(true);
+                else
+                {
+                    return Json(false);
+                }
             }
-            else
+            catch (Exception)
             {
-                return Json(false);
+                throw;
             }
         }
+               
 
 
 

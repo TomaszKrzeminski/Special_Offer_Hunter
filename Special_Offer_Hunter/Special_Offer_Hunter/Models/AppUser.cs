@@ -45,6 +45,8 @@ namespace Special_Offer_Hunter.Models
 
         public override string PhoneNumber { get; set; }
 
+        public string UserImagePath { get; set; }
+
 
 
 

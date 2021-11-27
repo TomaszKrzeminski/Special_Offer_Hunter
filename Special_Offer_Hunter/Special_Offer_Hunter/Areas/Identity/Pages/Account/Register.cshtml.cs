@@ -74,6 +74,8 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account
             [Required]
             public string HouseNumber { get; set; }
 
+            public string UserImagePath { get; set; }
+
             [RegularExpression(@"^[0-9]{9}$",
          ErrorMessage = "Zły numer")]
             public string PhoneNumber { get; set; }
@@ -106,7 +108,7 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { PhoneNumber = Input.PhoneNumber, FirstName = Input.FirstName, Surname = Input.Surname, Dateofbirth = Input.Dateofbirth, City = Input.City, Street = Input.Street, PostalCode = Input.PostalCode, HouseNumber = Input.HouseNumber, UserName = Input.Email, Email = Input.Email };    /// tu dodać input
+                var user = new ApplicationUser { PhoneNumber = Input.PhoneNumber, FirstName = Input.FirstName, Surname = Input.Surname, Dateofbirth = Input.Dateofbirth, City = Input.City, Street = Input.Street, PostalCode = Input.PostalCode, HouseNumber = Input.HouseNumber, UserName = Input.Email, Email = Input.Email, UserImagePath = Input.UserImagePath };    /// tu dodać input
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

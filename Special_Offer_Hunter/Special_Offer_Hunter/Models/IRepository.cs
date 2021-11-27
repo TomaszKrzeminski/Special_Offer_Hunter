@@ -20,6 +20,7 @@ namespace Special_Offer_Hunter.Models
         Location GetUserLocation(string UserId);
         List<string> GetCategories();
 
+        public string GetUserEmail(string UserId);
         bool ChangeNumberOfProducts(double number, int ProductId, string UserId, ShoppingCartType type);
         bool RemoveProductBought(int ProductId, string UserId);
         bool AddProductToUserShoppingCart(string UserId, ShoppingCartType type, int ProductId);
@@ -1361,6 +1362,18 @@ namespace Special_Offer_Hunter.Models
                 return false;
             }
 
+        }
+
+        public string GetUserEmail(string UserId)
+        {
+            try
+            {
+                return context.Users.Find(UserId).Email;
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
     }
 

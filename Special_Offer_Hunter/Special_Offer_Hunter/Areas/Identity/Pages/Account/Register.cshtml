@@ -6,14 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
- string FirstName { get; set; }
-        public string Surname { get; set; }
-        public DateTime Dateofbirth { get; set; }
-        public string City { get; set; }
-          public string PostalCode
-        public string Street { get; set; }
 
-        public string HouseNumber { get; set; }
 
 
 
@@ -77,6 +70,9 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div id="UserImagePath" >
+              
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
@@ -174,11 +170,23 @@
                     data_uri +
                     '"/>';
 
+                //Webcam.upload(data_uri,
+                //    '/Login/Capture',
+                //    function (code, text) {
+                //        alert('Photo Captured');
+                //    });
+
                 Webcam.upload(data_uri,
                     '/Login/Capture',
-                    function (code, text) {
-                        alert('Photo Captured');
+                    function (code,text) {
+
+                        alert(text);
+
+                      
+                        $('#UserImagePath').empty();
+                        $('#UserImagePath').html(text);
                     });
+
 
             });
         }
