@@ -99,8 +99,56 @@ namespace Special_Offer_Hunter.Controllers
                 throw;
             }
         }
-               
 
+        [HttpPost]
+        public async Task<IActionResult> AddPicture(IFormFile file /*, string PictureNumber*/)
+        {
+            string Message = "Dodanie zdjęcia nie powiodło się !!!";
+            string FilePath = "Nie udało się dodać pliku";
+
+            bool success = false;
+            long size = 20000000;
+
+            if (file != null && file.Length < size)
+            {
+                var uploads = Path.Combine(_environment.WebRootPath, "UserImages");
+
+                if (file.Length > 0)
+                {
+
+                    if (Path.GetExtension(file.FileName) == ".jpg")
+                    {
+
+                        string PathText = Path.Combine(uploads, file.FileName);
+                        using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                        {
+                            FilePath = "/Upload/GetPicture/" + file.FileName;
+                            await file.CopyToAsync(fileStream);
+                        }
+                        //string Id = GetUser();
+                        //PictureType type = GetPictureType(PictureNumber);
+                        //success = repository.AddPicture(Id, type, FilePath);
+                    }
+                    else
+                    {
+                        Message = "Zdjęcie musi być w formacie jpg";
+                        success = false;
+                    }
+
+
+
+
+                }
+
+
+
+            }
+
+            UserImageFileNameViewModel model = new UserImageFileNameViewModel(FilePath);
+            return PartialView("FileName", model);
+
+
+        }
 
 
 

@@ -34,6 +34,18 @@ namespace Special_Offer_Hunter.Controllers
             //}
         }
 
+
+
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+
+
+
+
         public enum PictureType
         {
             MainPhotoPath,
@@ -116,10 +128,10 @@ namespace Special_Offer_Hunter.Controllers
         //    }
 
         //}
-        [Authorize]
-        [ValidateAntiForgeryToken]
+
+        //[ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> AddPictureAsync(IFormFile file, string PictureNumber)
+        public async Task<IActionResult> AddPicture(IFormFile file /*, string PictureNumber*/)
         {
             string Message = "Dodanie zdjęcia nie powiodło się !!!";
 
@@ -144,8 +156,8 @@ namespace Special_Offer_Hunter.Controllers
                             await file.CopyToAsync(fileStream);
                         }
                         string Id = GetUser();
-                        PictureType type = GetPictureType(PictureNumber);
-                        success = repository.AddPicture(Id, type, FilePath);
+                        //PictureType type = GetPictureType(PictureNumber);
+                        //success = repository.AddPicture(Id, type, FilePath);
                     }
                     else
                     {

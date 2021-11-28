@@ -71,8 +71,8 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <div id="UserImagePath" >
-              
+            <div id="UserImagePath">
+
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
@@ -82,22 +82,26 @@
         <div class="col-md-2"></div>
         <div class="col-md-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Camera</div>
+                @*<div class="panel-heading">Obraz</div>*@
                 <div class="panel-body">
                     <div id="my_camera"></div>
-                    <!-- A button for taking snaps -->
+
                     <form>
-                        <input type="button" class="btn btn-success" value="Take Snapshot" onClick="take_snapshot()">
+                        <input type="button" class="btn btn-success" value="Zrób zdjęcie" onClick="take_snapshot()">
+                        <input id="dialogOpen" class="btn btn-primary" value="Dodaj zdjęcie z dysku" />
                     </form>
+                    <div class="col col-lg-12">
+
+                    </div>
 
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Captured Photo</div>
+                <div class="panel-heading"></div>
                 <div class="panel-body">
-                    <div id="results">Your captured image will appear here...</div>
+                    <div id="results">Twoje zdjęcie pojawi się tutaj</div>
                 </div>
                 <br />
                 <br />
@@ -145,8 +149,172 @@
     </div>
 </div>
 
+
+
+<div style="display:none;" id="dialog">
+
+
+    <form id="PictureAddForm" asp-controller="Login" asp-action="AddPicture" method="post" enctype="multipart/form-data">
+        <div>
+            <div>
+                <label>Dodaj Zdjęcie</label>
+            </div>
+            <div>
+                <input title="Musisz wybrać plik" class="required error" id="choose" type="file" name="file" @*multiple*@ />
+                @*<input id="PictureNumber" style="display:none" name="PictureNumber" value="" />*@
+                <input id="Upload" style="display:none" @*type="submit"*@ value="Upload" />
+
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<div style="display:none;">
+    <form id="RemoveForm" asp-action="RemovePicture" asp-controller="Home" method="post">
+        <input id="RemovePicture" style="display:none" name="Number" value="" />
+    </form>
+</div>
+
+
+
+
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+    <script>
+        $(document).ready(function () {
+
+
+              function SavePicture()
+        {
+                  alert("Save");
+
+
+
+
+                  var formData = new FormData();
+                  formData.append('file', $('#choose')[0].files[0]);
+
+
+                  $.ajax({
+                      url: '@Url.Action("AddPicture", "Login")',
+                      type: 'POST',
+                      data: formData,
+                      processData: false,  // tell jQuery not to process the data
+                      contentType: false,  // tell jQuery not to set contentType
+                      success: function (result) {
+                          $('#UserImagePath').empty();
+                          $('#UserImagePath').html(result);
+
+                      },
+                      error: function (jqXHR) {
+                      },
+                      complete: function (jqXHR, status) {
+                      }
+                  });
+
+
+
+
+
+
+            @*$.ajax(
+                    {
+                url: '@Url.Action("AddPicture", "Login")',
+               type: "post",
+                data: {
+                    file:formData
+                },
+                headers:
+                {
+
+                },
+                success: function (result) {
+
+                    $('#OffersInNeighborhoodElement').empty();
+                    $('#OffersInNeighborhoodElement').html(result);
+
+                }
+            });*@
+        }
+
+
+
+
+            $("#dialog").dialog({
+                autoOpen: false,
+                draggable: false,
+                resizable: false,
+                width: 500,
+                height: 400,
+                modal: true,
+                show: 'slideDown',
+                hide: 'slideUp',
+                dialogClass: "no-close",
+                omplete: function (code,text) {
+
+                    alert("Complete");
+                    $('#UserImagePath').empty();
+                    $('#UserImagePath').html(text);
+
+                },
+                buttons: [
+                    {
+
+                        text: "Anuluj",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+
+
+                    },
+                    {
+
+                        text: "Potwierdź",
+                        click: function () {
+                            //$("#Upload").click();
+
+                            SavePicture();
+                        }
+                    }
+                ]
+            });
+
+
+            $("#dialogOpen").click(function () {
+
+
+
+                $("#dialog").dialog('open');
+            });
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+    </script>
+
 
 
     <script src="~/webcamjs/webcam.js"></script>
@@ -178,11 +346,11 @@
 
                 Webcam.upload(data_uri,
                     '/Login/Capture',
-                    function (code,text) {
+                    function (code, text) {
 
-                        alert(text);
 
-                      
+
+
                         $('#UserImagePath').empty();
                         $('#UserImagePath').html(text);
                     });
