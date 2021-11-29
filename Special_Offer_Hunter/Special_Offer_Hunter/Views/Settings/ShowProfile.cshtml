@@ -1,0 +1,307 @@
+﻿@page
+@model AppUserSettingsViewModel
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Settings" asp-action="ChangeProfile" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label @*asp-for="Input.Email"*@>Imie</label>
+                <input asp-for="userData.FirstName" class="form-control" />
+                <span asp-validation-for="userData.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label @*asp-for="Input.Email"*@>Nazwisko</label>
+                <input asp-for="userData.Surname" class="form-control" />
+                <span asp-validation-for="userData.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label @*asp-for="Input.Email"*@></label>
+                <input asp-for="userData.Dateofbirth" class="form-control" />
+                <span asp-validation-for="userData.Dateofbirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label @*asp-for="Input.Email"*@>Miasto</label>
+                <input asp-for="userData.City" class="form-control" />
+                <span asp-validation-for="userData.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label @*asp-for="Input.Email"*@>Ulica</label>
+                <input asp-for="userData.Street" class="form-control" />
+                <span asp-validation-for="userData.Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label @*a@*sp-for="Input.Email"*@>Numer domu</label>
+                <input asp-for="userData.HouseNumber" class="form-control" />
+                <span asp-validation-for="userData.HouseNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label @*asp-for="Input.Email"*@>Kod Pocztowy</label>
+                <input asp-for="userData.PostalCode" class="form-control" />
+                <span asp-validation-for="userData.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="userData.Email"></label>
+                <input asp-for="userData.Email" class="form-control" />
+                <span asp-validation-for="userData.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Numer Telefonu</label>
+                <input asp-for="userData.PhoneNumber" class="form-control" />
+                <span asp-validation-for="userData.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div id="UserImagePath">
+
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+
+    <div class="col col-lg-12">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                @*<div class="panel-heading">Obraz</div>*@
+                <div class="panel-body">
+                    <div id="my_camera"></div>
+
+                    <form>
+                        <input type="button" class="btn btn-success" value="Zrób zdjęcie" onClick="take_snapshot()">
+                        <input id="dialogOpen" class="btn btn-primary" value="Dodaj zdjęcie z dysku" />
+                    </form>
+                    <div class="col col-lg-12">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <div id="results">Twoje zdjęcie pojawi się tutaj</div>
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+<div style="display:none;" id="dialog">
+
+
+    <form id="PictureAddForm" asp-controller="Login" asp-action="AddPicture" method="post" enctype="multipart/form-data">
+        <div>
+            <div>
+                <label>Dodaj Zdjęcie</label>
+            </div>
+            <div>
+                <input title="Musisz wybrać plik" class="required error" id="choose" type="file" name="file" @*multiple*@ />
+                @*<input id="PictureNumber" style="display:none" name="PictureNumber" value="" />*@
+                <input id="Upload" style="display:none" @*type="submit"*@ value="Upload" />
+
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<div style="display:none;">
+    <form id="RemoveForm" asp-action="RemovePicture" asp-controller="Home" method="post">
+        <input id="RemovePicture" style="display:none" name="Number" value="" />
+    </form>
+</div>
+
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+    <script>
+        $(document).ready(function () {
+
+
+              function SavePicture()
+        {
+
+
+
+
+                  var formData = new FormData();
+                  formData.append('file', $('#choose')[0].files[0]);
+
+
+                  $.ajax({
+                      url: '@Url.Action("AddPicture", "Login")',
+                      type: 'POST',
+                      data: formData,
+                      processData: false,  // tell jQuery not to process the data
+                      contentType: false,  // tell jQuery not to set contentType
+                      success: function (result) {
+                          $('#UserImagePath').empty();
+                          $('#UserImagePath').html(result);
+
+                      },
+                      error: function (jqXHR) {
+                      },
+                      complete: function (jqXHR, status) {
+                      }
+                  });
+
+
+
+
+
+
+
+        }
+
+
+
+
+            $("#dialog").dialog({
+                autoOpen: false,
+                draggable: false,
+                resizable: false,
+                width: 500,
+                height: 400,
+                modal: true,
+                show: 'slideDown',
+                hide: 'slideUp',
+                dialogClass: "no-close",
+                omplete: function (code,text) {
+
+                    alert("Complete");
+                    $('#UserImagePath').empty();
+                    $('#UserImagePath').html(text);
+
+                },
+                buttons: [
+                    {
+
+                        text: "Anuluj",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+
+
+                    },
+                    {
+
+                        text: "Potwierdź",
+                        click: function () {
+
+
+                            SavePicture();
+                        }
+                    }
+                ]
+            });
+
+
+            $("#dialogOpen").click(function () {
+
+
+
+                $("#dialog").dialog('open');
+            });
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+    <script src="~/webcamjs/webcam.js"></script>
+    <script language="JavaScript">
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#my_camera');
+    </script>
+    <!-- Code to handle taking the snapshot and displaying it locally -->
+    <script language="JavaScript">
+        function take_snapshot() {
+            // take snapshot and get image data
+            Webcam.snap(function (data_uri) {
+                // display results in page
+                document.getElementById('results').innerHTML =
+                    '<img src="' +
+                    data_uri +
+                    '"/>';
+
+                //Webcam.upload(data_uri,
+                //    '/Login/Capture',
+                //    function (code, text) {
+                //        alert('Photo Captured');
+                //    });
+
+                Webcam.upload(data_uri,
+                    '/Login/Capture',
+                    function (code, text) {
+
+
+
+
+                        $('#UserImagePath').empty();
+                        $('#UserImagePath').html(text);
+                    });
+
+
+            });
+        }
+    </script>
+
+
+}

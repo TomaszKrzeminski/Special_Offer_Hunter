@@ -14,6 +14,7 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IRepository repository;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
@@ -36,6 +37,9 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            public ApplicationUser userData { get; set; }
+
+            public string Username { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -43,12 +47,14 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-            Username = userName;
+
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
-            };
+                Username = userName,
+                PhoneNumber = phoneNumber,
+                userData = user
+           };
         }
 
         public async Task<IActionResult> OnGetAsync()

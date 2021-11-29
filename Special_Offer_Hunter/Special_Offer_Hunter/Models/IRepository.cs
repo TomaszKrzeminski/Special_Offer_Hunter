@@ -46,6 +46,8 @@ namespace Special_Offer_Hunter.Models
         Product_Rank AddRankToProduct(string userId, Product_Rank data);
         public Product_Comment AddCommentToProduct(string UserId, Product_Comment comment);
         ProductRanksAndCommentsViewModel GetRankAndCommentProductViewModel(int ProductId, string UserId);
+
+        ApplicationUser GetUserData(string UserId);
     }
 
 
@@ -1374,6 +1376,25 @@ namespace Special_Offer_Hunter.Models
             {
                 return "";
             }
+        }
+
+        public ApplicationUser GetUserData(string UserId)
+        {
+            ApplicationUser model = new ApplicationUser();
+
+            try
+            {
+                ApplicationUser user = context.Users.Find(UserId);
+
+
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
     }
 
