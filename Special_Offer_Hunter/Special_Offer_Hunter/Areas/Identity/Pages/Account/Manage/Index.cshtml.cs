@@ -18,10 +18,11 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, IRepository repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.repository = repository;
         }
 
         public string Username { get; set; }
@@ -47,14 +48,14 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
-
+            ApplicationUser u = new ApplicationUser();
 
             Input = new InputModel
             {
                 Username = userName,
                 PhoneNumber = phoneNumber,
                 userData = user
-           };
+            };
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -84,6 +85,28 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            /////////
+
+
+
+            if (Input.userData != null)
+            {
+                ApplicationUser User = await _userManager.FindByIdAsync(user.Id);
+
+                User.SetUser(Input.userData);
+                IdentityResult check = await _userManager.UpdateAsync(User);
+
+
+                if (!check.Succeeded)
+                {
+                    StatusMessage = "Nie udało się wprowadzić zmian";
+                    return RedirectToPage();
+                }
+
+
+            }
+
+            //////////
             if (Input.PhoneNumber != phoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);

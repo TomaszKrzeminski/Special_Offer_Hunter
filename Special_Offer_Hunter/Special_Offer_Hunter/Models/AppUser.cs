@@ -23,9 +23,30 @@ namespace Special_Offer_Hunter.Models
     }
 
 
+
+
+
+
+
     public class ApplicationUser : IdentityUser
     {
 
+
+        public void SetUser(ApplicationUser user)
+        {
+
+
+
+            this.FirstName = user.FirstName;
+            this.Surname = user.Surname;
+            this.Dateofbirth = user.Dateofbirth;
+            this.Email = user.Email;
+            this.City = user.City;
+            this.Street = user.Street;
+            this.HouseNumber = user.HouseNumber;
+            this.PostalCode = user.PostalCode;
+
+        }
 
         public string FirstName { get; set; }
         public string Surname { get; set; }

@@ -48,6 +48,8 @@ namespace Special_Offer_Hunter.Models
         ProductRanksAndCommentsViewModel GetRankAndCommentProductViewModel(int ProductId, string UserId);
 
         ApplicationUser GetUserData(string UserId);
+
+        bool ChangeUser(ApplicationUser user);
     }
 
 
@@ -1395,6 +1397,22 @@ namespace Special_Offer_Hunter.Models
                 return null;
             }
 
+        }
+
+        public bool ChangeUser(ApplicationUser user)
+        {
+            try
+            {
+                ApplicationUser User = context.Users.Where(x => x.Id == user.Id).FirstOrDefault();
+                User.City = user.City;
+                User.Dateofbirth = user.Dateofbirth;
+                User.Email = user.Email;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 
