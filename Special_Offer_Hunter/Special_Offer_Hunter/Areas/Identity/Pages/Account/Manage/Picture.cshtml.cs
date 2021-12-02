@@ -10,13 +10,15 @@ using Special_Offer_Hunter.Models;
 
 namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
 {
-    public partial class IndexModel : PageModel
+
+
+    public partial class PictureModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IRepository repository;
 
-        public IndexModel(
+        public PictureModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, IRepository repository)
         {
@@ -122,7 +124,6 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
             return RedirectToPage();
         }
     }
-
 
 
 
