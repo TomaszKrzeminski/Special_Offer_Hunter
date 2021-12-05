@@ -32,31 +32,30 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
+        public string ReturnUrl { get; set; }
+
         [BindProperty]
         public InputModel Input { get; set; }
 
         public class InputModel
         {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-            public ApplicationUser userData { get; set; }
-
-            public string Username { get; set; }
+            public string UserPhotoPath { get; set; }
+            public string UserId { get; set; }
+            public string UserName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var UserX = await _userManager.GetUserAsync(User);
 
             ApplicationUser u = new ApplicationUser();
 
             Input = new InputModel
             {
-                Username = userName,
-                PhoneNumber = phoneNumber,
-                userData = user
+                UserName = userName,
+                UserId = UserX.Id,
+                UserPhotoPath = UserX.UserImagePath
             };
         }
 
@@ -74,6 +73,7 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
+            //returnUrl = returnUrl ?? Url.Content("~/");
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -86,16 +86,17 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             /////////
 
 
 
-            if (Input.userData != null)
+            if (Input.UserPhotoPath != null)
             {
                 ApplicationUser User = await _userManager.FindByIdAsync(user.Id);
 
-                User.SetUser(Input.userData);
+                User.UserImagePath = Input.UserPhotoPath;
+
                 IdentityResult check = await _userManager.UpdateAsync(User);
 
 
@@ -109,15 +110,7 @@ namespace Special_Offer_Hunter.Areas.Identity.Pages.Account.Manage
             }
 
             //////////
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-            }
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

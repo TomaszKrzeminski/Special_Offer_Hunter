@@ -50,6 +50,10 @@ namespace Special_Offer_Hunter.Models
         ApplicationUser GetUserData(string UserId);
 
         bool ChangeUser(ApplicationUser user);
+
+        bool ChangeUserPicture(string UserId, string Path);
+
+        bool CheckPictureOwner(string Path, string UserId);
     }
 
 
@@ -1408,6 +1412,33 @@ namespace Special_Offer_Hunter.Models
                 User.Dateofbirth = user.Dateofbirth;
                 User.Email = user.Email;
                 return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool ChangeUserPicture(string UserId, string Path)
+        {
+            try
+            {
+                ApplicationUser User = context.Users.Where(x => x.Id == UserId).FirstOrDefault();
+                User.UserImagePath = Path;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool CheckPictureOwner(string Path, string UserId)
+        {
+            try
+            {
+                string PathToCompare = context.Users.Find(UserId).UserImagePath;
+                return PathToCompare == Path;
             }
             catch (Exception ex)
             {

@@ -5,4 +5,252 @@
     ViewData["ActivePage"] = ManageNavPages.Picture;
 }
 
-<h1>Tu dodasz zdjęcie</h1>
+<style>
+</style>
+
+
+
+
+
+
+   
+
+
+
+
+    <div class="container">
+        <div class="col col-lg-12">
+            <h3>Zmień swoje zdjęcie</h3>
+        </div>
+        <div class="col col-lg-12">
+            <img style="width: 640px;
+        height: 480px;" src=@Model.Input.UserPhotoPath alt="">  @*"/AppPictures/photo.png"*@
+    </div>
+        <div class="col col-lg-4">
+
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div id="UserImagePath">
+
+</div>
+                <button class="btn btn-success" type="submit">Zmień</button>
+            </form>
+
+
+            
+            <div class="col col-lg-12">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            <div id="my_camera"></div>
+
+                            <form>
+                                <input type="button" class="btn btn-success" value="Zrób zdjęcie" onClick="take_snapshot()">
+                                <input id="dialogOpen" class="btn btn-primary" value="Dodaj zdjęcie z dysku" />
+                            </form>
+                            <div class="col col-lg-12">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <div id="results">Twoje zdjęcie pojawi się tutaj</div>
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    <div class="col col-lg-4"></div>
+    <div class="col col-lg-4"></div>
+
+</div>
+<div style="display:none;" id="dialog">
+
+
+    <form id="PictureAddForm" asp-controller="Login" asp-action="ChangePicture" method="post" enctype="multipart/form-data">
+        <div>
+            <div>
+                <label>Dodaj Zdjęcie</label>
+            </div>
+            <div>
+                <input title="Musisz wybrać plik" class="required error" id="choose" type="file" name="file" />
+
+                <input id="Upload" style="display:none" @*type="submit"*@ value="Upload" />
+
+            </div>
+
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+    <script>
+        $(document).ready(function () {
+
+
+              function SavePicture()
+        {
+
+
+
+
+
+                  var formData = new FormData();
+                  formData.append('file', $('#choose')[0].files[0]);
+
+
+                  $.ajax({
+                      url: '@Url.Action("ChangePicture", "Login")',
+                      type: 'POST',
+                      data: formData,
+                      processData: false,  // tell jQuery not to process the data
+                      contentType: false,  // tell jQuery not to set contentType
+                      success: function (result) {
+                          $('#UserImagePath').empty();
+                          $('#UserImagePath').html(result);
+
+                      },
+                      error: function (jqXHR) {
+                      },
+                      complete: function (jqXHR, status) {
+                      }
+                  });
+
+
+        }
+
+
+
+
+            $("#dialog").dialog({
+                autoOpen: false,
+                draggable: false,
+                resizable: false,
+                width: 500,
+                height: 400,
+                modal: true,
+                show: 'slideDown',
+                hide: 'slideUp',
+                dialogClass: "no-close",
+                omplete: function (code,text) {
+
+                    alert("Complete");
+                    $('#UserImagePath').empty();
+                    $('#UserImagePath').html(text);
+
+                },
+                buttons: [
+                    {
+
+                        text: "Anuluj",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+
+
+                    },
+                    {
+
+                        text: "Potwierdź",
+                        click: function () {
+                            //$("#Upload").click();
+
+                            SavePicture();
+                        }
+                    }
+                ]
+            });
+
+
+            $("#dialogOpen").click(function () {
+
+
+
+                $("#dialog").dialog('open');
+            });
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+    <script src="~/webcamjs/webcam.js"></script>
+    <script language="JavaScript">
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#my_camera');
+    </script>
+    <!-- Code to handle taking the snapshot and displaying it locally -->
+    <script language="JavaScript">
+        function take_snapshot() {
+            // take snapshot and get image data
+            Webcam.snap(function (data_uri) {
+                // display results in page
+                document.getElementById('results').innerHTML =
+                    '<img src="' +
+                    data_uri +
+                    '"/>';
+
+                //Webcam.upload(data_uri,
+                //    '/Login/Capture',
+                //    function (code, text) {
+                //        alert('Photo Captured');
+                //    });
+
+                Webcam.upload(data_uri,
+                    '/Login/Capture',
+                    function (code, text) {
+
+
+
+
+                        $('#UserImagePath').empty();
+                        $('#UserImagePath').html(text);
+                    });
+
+
+            });
+        }
+    </script>
+
+
+}

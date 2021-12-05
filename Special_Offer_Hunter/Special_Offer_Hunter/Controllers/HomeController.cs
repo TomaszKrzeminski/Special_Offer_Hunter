@@ -15,6 +15,8 @@ using Newtonsoft.Json.Linq;
 using Special_Offer_Hunter.Models;
 using Special_Offer_Hunter.Models2;
 using System.Text.Json;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Special_Offer_Hunter.Controllers
 {
@@ -25,11 +27,14 @@ namespace Special_Offer_Hunter.Controllers
         private IRepository repository;
         private Func<string> GetUser;
         IHttpContextAccessor httpContextAccessor;
+        IHostingEnvironment _environment;
 
-        public HomeController(ILogger<HomeController> logger, IRepository repo, UserManager<ApplicationUser> userMgr, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
+
+        public HomeController(ILogger<HomeController> logger, IHostingEnvironment env, IRepository repo, UserManager<ApplicationUser> userMgr, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
         {
             _logger = logger;
             repository = repo;
+            _environment = env;
             this.httpContextAccessor = httpContextAccessor;
             if (GetUser == null)
             {
@@ -64,6 +69,28 @@ namespace Special_Offer_Hunter.Controllers
             return list2;
 
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetPicture(string id)
+        {
+            string UserId = GetUser();
+            string uploads = Path.Combine(_environment.WebRootPath, "AppPictures");
+            string text = Path.Combine(uploads, "photo.png");
+            //var image;
+            var image = System.IO.File.OpenRead(text);
+
+            if (repository.CheckPictureOwner("/Home/GetPicture/" + id, UserId))
+            {
+                uploads = Path.Combine(_environment.ContentRootPath, "UserImages");
+                text = Path.Combine(uploads, id);
+                image = System.IO.File.OpenRead(text);
+            }
+
+            return File(image, "image/jpeg");
+        }
+
+
 
         string MakeLocationString(List<ProductLocation> list)
         {
