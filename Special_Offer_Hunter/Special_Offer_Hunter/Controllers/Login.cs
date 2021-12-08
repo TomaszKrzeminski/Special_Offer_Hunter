@@ -29,8 +29,16 @@ namespace Special_Offer_Hunter.Controllers
             this._environment = _environment;
             if (GetUser == null)
             {
-                string UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                this.GetUser = () => UserId;
+                try
+                {
+                    string UserId = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    this.GetUser = () => UserId;
+                }
+                catch (Exception ex)
+                {
+                    GetUser = null;
+                }
+
 
             }
             else
@@ -55,6 +63,8 @@ namespace Special_Offer_Hunter.Controllers
             //string Name = repository.GetUserEmail(UserId);
             Random rnd = new Random();
             int FileName = rnd.Next(1, 1000000);
+            string Date = DateTime.Now.ToShortDateString();
+            string FilePath = "";
 
             string FileNameOfUser = "";
 
@@ -70,13 +80,15 @@ namespace Special_Offer_Hunter.Controllers
 
                             var fileName = file.FileName;
 
-                            var fileNameToStore = string.Concat(+FileName, Path.GetExtension(fileName));
-                            var filepath = Path.Combine(_environment.WebRootPath, "UserImages") + $@"\{fileNameToStore}";
+                            var fileNameToStore = string.Concat(FileName + Date, Path.GetExtension(fileName));
+                            FilePath = fileNameToStore;
+                            var filepath = Path.Combine(_environment.ContentRootPath, "UserImages") + $@"\{fileNameToStore}";
                             FileNameOfUser = filepath;
                             if (!string.IsNullOrEmpty(filepath))
                             {
                                 using (FileStream fileStream = System.IO.File.Create(filepath))
                                 {
+                                    
                                     file.CopyTo(fileStream);
                                     fileStream.Flush();
                                 }
@@ -85,7 +97,7 @@ namespace Special_Offer_Hunter.Controllers
 
                         }
                     }
-                    UserImageFileNameViewModel model = new UserImageFileNameViewModel(FileNameOfUser);
+                    UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/" +FilePath);
 
                     return PartialView("FileName", model);
 
@@ -127,7 +139,7 @@ namespace Special_Offer_Hunter.Controllers
                             var fileName = file.FileName;
 
                             var fileNameToStore = string.Concat(name + FileName, Path.GetExtension(fileName));
-                            var filepath = Path.Combine(_environment.WebRootPath, "UserImages") + $@"\{fileNameToStore}";
+                            var filepath = Path.Combine(_environment.ContentRootPath, "UserImages") + $@"\{fileNameToStore}";
                             FileNameOfUser = filepath;
                             if (!string.IsNullOrEmpty(filepath))
                             {
@@ -210,32 +222,18 @@ namespace Special_Offer_Hunter.Controllers
 
                 }
 
-                bool check = repository.ChangeUserPicture(UserId, "/Home/GetPicture/"+FilePath);
+                bool check = repository.ChangeUserPicture(UserId, "/Home/GetPicture/" + FilePath);
 
 
 
 
             }
 
-            UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/"+FilePath);
+            UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/" + FilePath);
             return PartialView("FileName", model);
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -245,12 +243,15 @@ namespace Special_Offer_Hunter.Controllers
             string Message = "Dodanie zdjęcia nie powiodło się !!!";
             string FilePath = "Nie udało się dodać pliku";
 
+            //string UserId = GetUser();
+            int Number = GetRandomNumber();
             bool success = false;
             long size = 20000000;
-            int Number = GetRandomNumber();
+
             if (file != null && file.Length < size)
             {
-                var uploads = Path.Combine(_environment.WebRootPath, "UserImages");
+                var uploads = Path.Combine(_environment.ContentRootPath, "UserImages");
+                //var uploads = Path.Combine(_environment.WebRootPath, "UserImages");
 
                 if (file.Length > 0)
                 {
@@ -261,12 +262,10 @@ namespace Special_Offer_Hunter.Controllers
                         string PathText = Path.Combine(uploads, file.FileName);
                         using (var fileStream = new FileStream(Path.Combine(uploads, Number + file.FileName), FileMode.Create))
                         {
-                            FilePath = "~/UserImages/" + Number + file.FileName;
+                            FilePath = Number + file.FileName;
                             await file.CopyToAsync(fileStream);
                         }
-                        //string Id = GetUser();
-                        //PictureType type = GetPictureType(PictureNumber);
-                        //success = repository.AddPicture(Id, type, FilePath);
+
                     }
                     else
                     {
@@ -279,15 +278,16 @@ namespace Special_Offer_Hunter.Controllers
 
                 }
 
+                //bool check = repository.ChangeUserPicture(UserId, "/Home/GetPicture/" + FilePath);
+
+
 
 
             }
 
-            UserImageFileNameViewModel model = new UserImageFileNameViewModel(FilePath);
+            UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/" + FilePath);
             return PartialView("FileName", model);
 
-
         }
-
     }
 }

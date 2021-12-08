@@ -9,6 +9,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using Special_Offer_Hunter.Models;
 using System.Globalization;
+using System.IO;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+
 
 namespace Special_Offer_Hunter.Models
 {
@@ -68,9 +78,10 @@ namespace Special_Offer_Hunter.Models
     public class Repository : IRepository
     {
         ApplicationDbContext context;
-
-        public Repository(ApplicationDbContext ctx)
+        IHostingEnvironment env;
+        public Repository(ApplicationDbContext ctx, IHostingEnvironment _environment)
         {
+            env = _environment;
             context = ctx;
         }
 
@@ -1411,6 +1422,7 @@ namespace Special_Offer_Hunter.Models
                 User.City = user.City;
                 User.Dateofbirth = user.Dateofbirth;
                 User.Email = user.Email;
+                context.SaveChanges();
                 return true;
             }
             catch (Exception ex)
@@ -1424,7 +1436,38 @@ namespace Special_Offer_Hunter.Models
             try
             {
                 ApplicationUser User = context.Users.Where(x => x.Id == UserId).FirstOrDefault();
+
+
+                string rootFolder = "";
+                string authorsFile = "";
+
+                if (User.UserImagePath != null)
+                {
+                    string PictureName = User.UserImagePath.Split("/Home/GetPicture/").Last();
+                    string pathToRemove = System.IO.Path.Combine(env.ContentRootPath, "UserImages");
+                    string pathToRemoveFull = System.IO.Path.Combine(pathToRemove, PictureName);
+
+                    try
+                    {
+                        // Check if file exists with its full path    
+                        if (File.Exists(pathToRemoveFull))
+                        {
+                            // If file found, delete it    
+                            File.Delete(pathToRemoveFull);
+                            Console.WriteLine("File deleted.");
+                        }
+                        else Console.WriteLine("File not found");
+                    }
+                    catch (IOException ioExp)
+                    {
+                        Console.WriteLine(ioExp.Message);
+                    }
+                }
+
+
+
                 User.UserImagePath = Path;
+                context.SaveChanges();
                 return true;
             }
             catch (Exception ex)

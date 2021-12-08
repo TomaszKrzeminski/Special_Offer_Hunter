@@ -4,16 +4,50 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Rejestracja</h1>
 
 
 
 
 
 <div class="row">
+    <div class="col col-lg-12">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                @*<div class="panel-heading">Obraz</div>*@
+                <div class="panel-body">
+                    <div id="my_camera"></div>
+
+                    <form>
+                        <input type="button" class="btn btn-success" value="Zrób zdjęcie" onClick="take_snapshot()">
+                        <input id="dialogOpen" class="btn btn-primary" value="Dodaj zdjęcie z dysku" />
+                    </form>
+                    <div class="col col-lg-12">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <div id="results">Twoje zdjęcie pojawi się tutaj</div>
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+
+
+
+
+    </div>
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
+            <h4>Utwórz nowe konto</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -74,16 +108,23 @@
             <div id="UserImagePath">
 
             </div>
+
+
+
+
+
+
+
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
 
-    <div class="col col-lg-12">
+    <!--<div class="col col-lg-12">
         <div class="col-md-2"></div>
         <div class="col-md-4">
-            <div class="panel panel-default">
-                @*<div class="panel-heading">Obraz</div>*@
-                <div class="panel-body">
+            <div class="panel panel-default">-->
+    @*<div class="panel-heading">Obraz</div>*@
+    <!--<div class="panel-body">
                     <div id="my_camera"></div>
 
                     <form>
@@ -111,7 +152,7 @@
 
 
 
-    </div>
+    </div>-->
 
 
 
@@ -196,7 +237,7 @@
 
               function SavePicture()
         {
-                  alert("Save");
+                  
 
 
 
@@ -219,6 +260,10 @@
                       error: function (jqXHR) {
                       },
                       complete: function (jqXHR, status) {
+
+                          var D = $('#dialog');
+                          D.dialog("close");
+
                       }
                   });
 
@@ -227,24 +272,7 @@
 
 
 
-            @*$.ajax(
-                    {
-                url: '@Url.Action("AddPicture", "Login")',
-               type: "post",
-                data: {
-                    file:formData
-                },
-                headers:
-                {
-
-                },
-                success: function (result) {
-
-                    $('#OffersInNeighborhoodElement').empty();
-                    $('#OffersInNeighborhoodElement').html(result);
-
-                }
-            });*@
+          
         }
 
 
