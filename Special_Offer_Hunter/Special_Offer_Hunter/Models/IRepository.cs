@@ -1199,7 +1199,7 @@ namespace Special_Offer_Hunter.Models
                 model.ShopName = context.Shops.Find(ShopId).Name;
 
                 model.shopRank = (int)context.Users.Where(x => x.Id == UserId).FirstOrDefault().UserShopRanks.Where(x => x.ShopId == ShopId).Select(x => x.Rank).Average();
-
+                model.UserImage = context.Users.Find(UserId).UserImagePath;
                 return model;
             }
             catch (Exception ex)
@@ -1299,7 +1299,7 @@ namespace Special_Offer_Hunter.Models
 
 
 
-
+                model.UserImage = context.Users.Find(UserId).UserImagePath;
 
 
 
@@ -1481,7 +1481,17 @@ namespace Special_Offer_Hunter.Models
             try
             {
                 string PathToCompare = context.Users.Find(UserId).UserImagePath;
-                return PathToCompare == Path;
+
+                if (PathToCompare == Path)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
             }
             catch (Exception ex)
             {

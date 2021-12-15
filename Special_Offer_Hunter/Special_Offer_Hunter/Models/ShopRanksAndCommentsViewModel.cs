@@ -18,6 +18,7 @@ namespace Special_Offer_Hunter.Models
             Rank = false;
             Comment = false;
             ShopName = "";
+            UserImage = "unnamed.jpg";
         }
 
         public string ShopName { get; set; }
@@ -35,6 +36,7 @@ namespace Special_Offer_Hunter.Models
         public Shop_Comment AddComment { get; set; }
         public Shop_Rank AddRank { get; set; }
 
+        public string UserImage { get; set; }
 
 
 
@@ -53,6 +55,7 @@ namespace Special_Offer_Hunter.Models
             Rank = false;
             Comment = false;
             ProductName = "";
+            UserImage = "unnamed.jpg";
         }
 
         public string ProductName { get; set; }
@@ -65,6 +68,7 @@ namespace Special_Offer_Hunter.Models
         public int productRank { get; set; }
         public int productComments { get; set; }
 
+        public string UserImage { get; set; }
         public List<Product_Comment> listOfComments { get; set; }
 
         public Product_Comment AddComment { get; set; }

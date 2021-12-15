@@ -88,7 +88,7 @@ namespace Special_Offer_Hunter.Controllers
                             {
                                 using (FileStream fileStream = System.IO.File.Create(filepath))
                                 {
-                                    
+
                                     file.CopyTo(fileStream);
                                     fileStream.Flush();
                                 }
@@ -97,7 +97,7 @@ namespace Special_Offer_Hunter.Controllers
 
                         }
                     }
-                    UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/" +FilePath);
+                    UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/" + FilePath);
 
                     return PartialView("FileName", model);
 
@@ -115,15 +115,15 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
-
+        [Authorize]
         [HttpPost]
         public IActionResult ChangeCapture(string name)
         {
-            //string UserId = GetUser();
+            string UserId = GetUser();
             //string Name = repository.GetUserEmail(UserId);
             Random rnd = new Random();
             int FileName = rnd.Next(1, 1000000);
-
+            string fileNameToStore = "";
             string FileNameOfUser = "";
 
             try
@@ -138,7 +138,8 @@ namespace Special_Offer_Hunter.Controllers
 
                             var fileName = file.FileName;
 
-                            var fileNameToStore = string.Concat(name + FileName, Path.GetExtension(fileName));
+                            /* var*/
+                            fileNameToStore = string.Concat(name + FileName, Path.GetExtension(fileName));
                             var filepath = Path.Combine(_environment.ContentRootPath, "UserImages") + $@"\{fileNameToStore}";
                             FileNameOfUser = filepath;
                             if (!string.IsNullOrEmpty(filepath))
@@ -153,7 +154,9 @@ namespace Special_Offer_Hunter.Controllers
 
                         }
                     }
-                    UserImageFileNameViewModel model = new UserImageFileNameViewModel(FileNameOfUser);
+
+                    bool check = repository.ChangeUserPicture(UserId, "/Home/GetPicture/" + fileNameToStore);
+                    UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/" + fileNameToStore);
 
                     return PartialView("FileName", model);
 
@@ -171,16 +174,27 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
-
+       
         public int GetRandomNumber()
         {
             Random rnd = new Random();
             int FileName = rnd.Next(1, 1000000);
             return FileName;
         }
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> RemovePicture(string Path)
+        {
+            string UserId = GetUser();
 
+            bool check = repository.ChangeUserPicture(UserId, "/Home/GetPicture/" + "unnamed.jpg");
+        
 
+            UserImageFileNameViewModel model = new UserImageFileNameViewModel("/Home/GetPicture/" + "unnamed.jpg");
+            return PartialView("FileName", model);
+        }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ChangePicture(IFormFile file /*, string PictureNumber*/)
         {

@@ -70,24 +70,61 @@ namespace Special_Offer_Hunter.Controllers
 
         }
 
-        [Authorize]
+
         [HttpGet]
         public IActionResult GetPicture(string id)
         {
-            string UserId = GetUser();
-            string uploads = Path.Combine(_environment.WebRootPath, "AppPictures");
-            string text = Path.Combine(uploads, "photo.png");
-            //var image;
-            var image = System.IO.File.OpenRead(text);
 
-            if (repository.CheckPictureOwner("/Home/GetPicture/" + id, UserId))
+
+
+            try
             {
-                uploads = Path.Combine(_environment.ContentRootPath, "UserImages");
-                text = Path.Combine(uploads, id);
-                image = System.IO.File.OpenRead(text);
+                string UserId = GetUser();
+                var uploads = Path.Combine(_environment.ContentRootPath, "UserImageDefault");
+                var text = Path.Combine(uploads, "unnamed.jpg");
+                var image = System.IO.File.OpenRead(text);
+
+                if (repository.CheckPictureOwner("/Home/GetPicture/" + id, UserId))
+                {
+                    uploads = Path.Combine(_environment.ContentRootPath, "UserImages");
+                    text = Path.Combine(uploads, id);
+                    image = System.IO.File.OpenRead(text);
+                }
+
+                return File(image, "image/jpeg");
+            }
+            catch (Exception ex)
+            {
+
+                var uploads = Path.Combine(_environment.ContentRootPath, "UserImageDefault");
+                var text = Path.Combine(uploads, "unnamed.jpg");
+                var image = System.IO.File.OpenRead(text);
+
+                return File(image, "image/jpeg");
             }
 
-            return File(image, "image/jpeg");
+        }
+
+        [HttpGet]
+        public IActionResult GetUserPicturePatch(string Path)
+        {
+
+            int pFrom = Path.IndexOf("/Home");
+            int pTo = Path.LastIndexOf(".jpg");
+
+
+
+            String result = Path.Substring(pFrom, (pTo - pFrom) + 4);
+            if (result != null)
+            {
+                return PartialView("GetUserPicturePatch", result);
+            }
+            else
+            {
+                return PartialView("GetUserPicturePatch", "");
+            }
+
+
         }
 
 

@@ -31,12 +31,17 @@
 		<Folder Include="Data\Migrations\" />
 		<Folder Include="UserImages\" />
 		<Folder Include="Views\SpecialOffer\" />
-		<Folder Include="wwwroot\UserImages\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="wwwroot\AppPictures\photo.png" />
 		<None Include="wwwroot\Barcodes\1111.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="wwwroot\AppPictures\unnamed.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 </Project>

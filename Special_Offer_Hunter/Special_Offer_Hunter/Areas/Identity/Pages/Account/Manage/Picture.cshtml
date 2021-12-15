@@ -13,22 +13,22 @@
 
 
 
-   
 
 
 
 
-    <div class="container">
-        <div class="col col-lg-12">
-            <h3>Zmień swoje zdjęcie</h3>
-        </div>
-        <div class="col col-lg-12">
-            <img style="width: 640px;
+
+<div class="container">
+    <div class="col col-lg-12">
+        <h3>Zmień swoje zdjęcie</h3>
+    </div>
+    <div class="col col-lg-12" id="GetPicture">
+        <img style="width: 640px;
         height: 480px;" src=@Model.Input.UserPhotoPath alt="">  @*"/AppPictures/photo.png"*@
-          </div>
-        <div class="col col-lg-12">
+    </div>
+    <div class="col col-lg-12">
 
-            @*<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        @*<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <div id="UserImagePath">
 
                 </div>
@@ -36,44 +36,45 @@
             </form>*@
 
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default col-lg-12">
-                        <div class="row">
-                            <div class="panel-body col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default col-lg-12">
+                    <div class="row">
+                        <div class="panel-body col-lg-12">
 
 
-                                <div class="col-lg-12" id="my_camera"></div>
+                            <div class="col-lg-12" id="my_camera"></div>
 
-                                <form>
-                                    <input type="button" class="btn btn-success" value="Zrób zdjęcie" onClick="take_snapshot()">
-                                    <input id="dialogOpen" class="btn btn-primary" value="Dodaj zdjęcie z dysku" />
-                                </form>
-                                
+                            <form>
+                                <input type="button" class="btn btn-success" value="Zrób zdjęcie" onClick="take_snapshot()">
+                                <input id="dialogOpen" class="btn btn-primary" value="Dodaj zdjęcie z dysku" />
+                                <input id="RemovePicture" class="btn btn-danger" value="Usuń zdjęcie" onClick="remove_picture()" />
+                            </form>
 
-                            </div>
+
                         </div>
-
-
                     </div>
-                    <div class="panel panel-default col-lg-12">
-                        <div class="row">
-                            <div class="panel-heading col-lg-12"></div>
-                            <div class="panel-body col-lg-12 ">
-
-                                <div class="col-lg-12" id="results">Twoje zdjęcie pojawi się tutaj</div>
 
 
+                </div>
+                <div class="panel panel-default col-lg-12">
+                    <div class="row">
+                        <div class="panel-heading col-lg-12"></div>
+                        <div class="panel-body col-lg-12 ">
 
-                            </div>
-                            <div class="col-lg-12">
-                                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                                    <div id="UserImagePath">
+                            <div class="col-lg-12" id="results">Twoje zdjęcie pojawi się tutaj</div>
 
-                                    </div>
-                                    <button class="btn btn-danger" type="submit">Zmień</button>
-                                </form>
-                            
+
+
+                        </div>
+                        <div class="col-lg-12">
+                            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                <div id="UserImagePath">
+
+                                </div>
+                                @*<button class="btn btn-danger" type="submit">Zmień</button>*@
+                            </form>
+
                         </div>
 
                     </div>
@@ -84,23 +85,23 @@
 
                 </div>
 
-               
+
 
 
             </div>
-                
-              
-            </div>
-            
-           
-                
-               
 
 
-
-
-           
         </div>
+
+
+
+
+
+
+
+
+
+    </div>
     <div class="col col-lg-4"></div>
     <div class="col col-lg-4"></div>
 
@@ -138,7 +139,58 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
+
+
+
+
+            function ReloadPicture() {
+
+
+                var result = $('#UserImagePath input').val();
+
+                 $.ajax({
+                              url: '@Url.Action("GetUserPicturePatch", "Home")',
+                              type: 'GET',
+                              data: {Path:result},
+                      success: function (result) {
+                          $('#GetPicture').empty();
+                          $('#GetPicture').html(result);
+
+
+                      },
+                              error: function (jqXHR) {
+                                  alert("Error");
+                      },
+                      complete: function (jqXHR, status) {
+                              }
+
+                  });
+
+
+            }
+
+
+
+
+            
+
+
+
+
+
+            //$('UserImagePath').on('change','#FileName', function () {
+
+            //    alert("change");
+
+
+            //    var result = $('#UserImagePath input');
+            //    alert(result);
+
+
+
+            //});
 
 
               function SavePicture()
@@ -159,13 +211,23 @@
                       processData: false,  // tell jQuery not to process the data
                       contentType: false,  // tell jQuery not to set contentType
                       success: function (result) {
+                          var D = $('#dialog');
+                          D.dialog("close");
                           $('#UserImagePath').empty();
                           $('#UserImagePath').html(result);
+                          ReloadPicture();
 
                       },
                       error: function (jqXHR) {
                       },
                       complete: function (jqXHR, status) {
+
+
+
+
+
+
+
                       }
                   });
 
@@ -185,9 +247,9 @@
                 show: 'slideDown',
                 hide: 'slideUp',
                 dialogClass: "no-close",
-                omplete: function (code,text) {
+                complete: function (code,text) {
 
-                    alert("Complete");
+                    //alert("Complete");
                     $('#UserImagePath').empty();
                     $('#UserImagePath').html(text);
 
@@ -209,6 +271,7 @@
                             //$("#Upload").click();
 
                             SavePicture();
+
                         }
                     }
                 ]
@@ -221,6 +284,15 @@
 
                 $("#dialog").dialog('open');
             });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -254,6 +326,102 @@
     </script>
     <!-- Code to handle taking the snapshot and displaying it locally -->
     <script language="JavaScript">
+
+
+
+
+
+
+
+
+
+
+
+
+         function ReloadPicture() {
+
+
+                var result = $('#UserImagePath input').val();
+
+                 $.ajax({
+                              url: '@Url.Action("GetUserPicturePatch", "Home")',
+                              type: 'GET',
+                              data: {Path:result},
+                      success: function (result) {
+                          $('#GetPicture').empty();
+                          $('#GetPicture').html(result);
+
+
+                      },
+                              error: function (jqXHR) {
+                                  alert("Error");
+                      },
+                      complete: function (jqXHR, status) {
+                              }
+
+                  });
+
+
+            }
+
+
+
+
+        function remove_picture()
+            {
+
+                 //var result = $('#UserImagePath input').val();
+
+                 $.ajax({
+                              url: '@Url.Action("RemovePicture", "Login")',
+                              type: 'Post',
+                      success: function (result) {
+                          $('#GetPicture').empty();
+                          $('#GetPicture').html(result);
+
+
+                           var Result = $('#UserImagePath input').val();
+
+                 $.ajax({
+                              url: '@Url.Action("GetUserPicturePatch", "Home")',
+                              type: 'GET',
+                              data: {Path:result},
+                      success: function (resultt) {
+                          $('#GetPicture').empty();
+                          $('#GetPicture').html(resultt);
+
+
+                      },
+                              error: function (jqXHR) {
+                                  alert("Error");
+                      },
+                     complete: function (jqXHR, status) {
+
+
+
+
+                              }
+
+                  });
+
+
+
+                      },
+                              error: function (jqXHR) {
+                                  alert("Error");
+                      },
+                      complete: function (jqXHR, status) {
+                              }
+
+                  });
+
+
+
+
+
+
+            }
+
         function take_snapshot() {
             // take snapshot and get image data
             Webcam.snap(function (data_uri) {
@@ -270,7 +438,7 @@
                 //    });
 
                 Webcam.upload(data_uri,
-                    '/Login/Capture',
+                    '/Login/ChangeCapture',
                     function (code, text) {
 
 
@@ -278,6 +446,9 @@
 
                         $('#UserImagePath').empty();
                         $('#UserImagePath').html(text);
+
+                        ReloadPicture();
+
                     });
 
 
