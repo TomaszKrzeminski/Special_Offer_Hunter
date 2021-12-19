@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "AddShop2";
+}
+
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        SearchText();
+    });
+
+
+
+    function searchText()
+    {
+
+
+
+        $(".autosuggest").autocomplete(
+                {
+
+
+
+
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteOwnerName", "ManagementProductsAndShops")',
+                            data: { "prefix":   document.getElementById('txtSearch').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+
+                    },
+                    minLength: 1
+                });
+    }
+
+
+    function SearchText() {
+
+        $(".autosuggest").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    //contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("AutoCompleteOwnerName", "ManagementProductsAndShops")',
+                    data: { 'prefix': document.getElementById('txtSearch').value},
+                    dataType: "json",
+                    success: function (data) {
+
+                        response(data);
+                       
+                    },
+                    error: function (result) {
+                        alert("Error");
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<body>
+    <form id="form1" runat="server">
+
+        <div class="ui-widget">
+            <label for="tbAuto">Enter UserName: </label>
+            <input type="text" id="txtSearch" class="autosuggest" />
+        </div>
+    </form>
+</body>
+

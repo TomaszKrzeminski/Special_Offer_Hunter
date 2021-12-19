@@ -1,0 +1,138 @@
+﻿@model AddShopViewModel
+@{
+    ViewData["Title"] = "AddShop";
+    //Layout = null;
+}
+
+
+
+
+
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>*@
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>*@
+
+
+
+
+<div class="container">
+    <div class="col col-lg-12 text-center">
+        <h1>Dodaj sklep</h1>
+    </div>
+    <div class="col col-lg-4">
+
+    </div>
+    <div class="col col-lg-4">
+        <form asp-action="AddShop" asp-controller="ManagementProductsAndShops" method="post">
+            <div class="col col-lg-12">
+                <label class="font-weight-bold">Nazwa sklepu</label>
+                <input type="text" id="ShopNameAutoComplete" class="form-control" asp-for="shop.Name" />
+            </div>
+            <div class="col col-lg-12">
+                <label class="font-weight-bold" @*asp-for="shop.Owner"*@>Właściciel</label>
+                <input id="ProductName" class="form-control" asp-for="shop.Owner" />
+            </div>
+            <div class="col col-lg-12">
+                <label class="font-weight-bold" @*asp-for="shop.Location"*@>Lokalizacja</label>
+                <input id="ProductName" class="form-control" asp-for="shop.Location" />
+            </div>
+        </form>
+    </div>
+    <div class="col col-lg-4">
+
+    </div>
+</div>
+
+
+
+
+
+@section Scripts
+{
+
+
+    <script>
+
+
+
+        $(document).ready(function ()
+        {
+
+            @*$("#ShopNameAutoComplete").autocomplete(
+                {
+
+                source: function (request, response)
+                {
+                $.ajax({
+                    type: "POST",
+                    //contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("AutoCompleteOwnerName", "ManagementProductsAndShops")',
+                    data: { 'prefix': document.getElementById('ShopNameAutoComplete').value},
+                    dataType: "json",
+                    success: function (data) {
+
+                        response(data);
+
+                    },
+                    error: function (result) {
+                        alert("Error");
+                    }
+                });
+            }
+
+
+
+
+
+
+
+
+
+        });*@
+
+
+
+            $("#ShopNameAutoComplete").autocomplete(
+                {
+
+             source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteOwnerName", "ManagementProductsAndShops")',
+                            data: { "prefix": document.getElementById('ShopNameAutoComplete').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation()
+                        $("#ShopNameAutoComplete").text(i.item.value);
+                    },
+                    minLength: 1
+                });
+
+
+
+        });
+
+
+
+
+
+    </script>
+
+
+
+}

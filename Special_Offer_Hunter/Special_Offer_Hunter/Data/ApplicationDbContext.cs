@@ -105,6 +105,13 @@ namespace Special_Offer_Hunter.Data
 
 
 
+            builder.Entity<ApplicationUser>()
+           .HasOne<Shop>(s => s.OwnedShop)
+           .WithOne(ad => ad.Owner)
+           .HasForeignKey<Shop>(ad => ad.ApplicationUserId);
+
+
+
 
             builder.Entity<ProductCategory>().HasKey(sc => new { sc.ProductId, sc.CategoryId });
 

@@ -24,6 +24,7 @@ namespace Special_Offer_Hunter.Models
 {
     public interface IRepository
     {
+        List<string> GetShopNames(string Name);
         Product GetProductById(int Id);
         Product GetProductByName(string Name);
         Product GetProductByCode(string Code);
@@ -1496,6 +1497,21 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        public List<string> GetShopNames(string Name)
+        {
+            try
+            {
+
+                List<string> list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.Name).ToList();
+                return list;
+
+            }
+            catch (Exception ex)
+            {
+                return new List<string>();
             }
         }
     }
