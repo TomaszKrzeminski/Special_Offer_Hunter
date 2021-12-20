@@ -40,14 +40,71 @@ namespace Special_Offer_Hunter.Controllers
         }
 
         [HttpPost]
+        public JsonResult AutoCompleteShopName(string prefix)
+        {
+            var shops = repository.GetShopNames(prefix);
+
+            //var jsonResult = shops.Select(x => new { text = x });
+
+            return Json(shops);
+        }
+
+
+        [HttpPost]
         public JsonResult AutoCompleteOwnerName(string prefix)
         {
-            var customers = repository.GetShopNames(prefix);
+            var customers = repository.GetOwnerNames(prefix);
 
-            var jsonResult = customers.Select(x => new { text = x });
+            //var jsonResult = customers.Select(x => new { text = x });
 
             return Json(customers);
         }
+
+
+
+        public async Task<PartialViewResult> ShowShopOnMap()
+        {
+            string UserId = GetUser();
+            ShopLocationViewModel model = new ShopLocationViewModel();
+
+            model.UserLocation = repository.GetUserLocation(UserId);
+
+
+            Location location = repository.GetUserLocation(UserId);
+            ViewData["MyPositionLat"] = location.Latitude.ToString().Replace(',', '.');
+            ViewData["MyPositionLon"] = location.Longitude.ToString().Replace(',', '.'); ;
+
+            ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
+
+            /////
+
+
+
+
+            //var httpClient1 = new HttpClient();
+
+            //string LocationsX = MakeLocationStringX(model.UserLocation, model.list);
+
+            //var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + LocationsX + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O&routeType=fastest";
+            //HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
+            //string responseBody1 = await response1.Content.ReadAsStringAsync();
+
+            //Root root = JsonConvert.DeserializeObject<Root>(responseBody1);
+
+            //model.Distance = model.SetDistance(root);
+            //model.Time = model.SetTimeMinutes(root);
+            //model.ArrivalTime = model.SetTimeArrival(root);          ////
+
+
+            return PartialView("ShowShopOnMap", model);
+        }
+
+
+
+
+
+
+
 
         public IActionResult AddShop2()
         {

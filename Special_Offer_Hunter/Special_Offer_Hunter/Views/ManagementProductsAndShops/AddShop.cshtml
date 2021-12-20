@@ -1,16 +1,14 @@
 ﻿@model AddShopViewModel
 @{
     ViewData["Title"] = "AddShop";
-    //Layout = null;
+    Layout = "_LayoutAuto";
 }
 
 
 
 
-
 <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>*@
-@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>*@
+
 
 
 
@@ -20,21 +18,52 @@
         <h1>Dodaj sklep</h1>
     </div>
     <div class="col col-lg-4">
+        <div id="ShowShopMap">
+
+        </div>
 
     </div>
     <div class="col col-lg-4">
         <form asp-action="AddShop" asp-controller="ManagementProductsAndShops" method="post">
+            <h2>Dane podstawowe    </h2>
+
             <div class="col col-lg-12">
                 <label class="font-weight-bold">Nazwa sklepu</label>
                 <input type="text" id="ShopNameAutoComplete" class="form-control" asp-for="shop.Name" />
             </div>
             <div class="col col-lg-12">
-                <label class="font-weight-bold" @*asp-for="shop.Owner"*@>Właściciel</label>
-                <input id="ProductName" class="form-control" asp-for="shop.Owner" />
+                <label class="font-weight-bold">Właściciel</label>
+                <input id="OwnerNameAutoComplete" class="form-control" asp-for="shop.Owner" />
+            </div>
+            <h2>Lokalizacja</h2>
+            <div class="col col-lg-12">
+                <label class="font-weight-bold">Nazwa Lokalizacji</label>
+                <input class="form-control" asp-for="ShopLocation.Name" />
             </div>
             <div class="col col-lg-12">
-                <label class="font-weight-bold" @*asp-for="shop.Location"*@>Lokalizacja</label>
-                <input id="ProductName" class="form-control" asp-for="shop.Location" />
+                <label class="font-weight-bold">Numer domu</label>
+                <input class="form-control" asp-for="ShopLocation.Number" />
+            </div>
+
+            <div class="col col-lg-12">
+                <label class="font-weight-bold">Numer lokalu</label>
+                <input class="form-control" asp-for="ShopLocation.SecondNumber" />
+            </div>
+            <div class="col col-lg-12">
+                <label class="font-weight-bold">Kod pocztowy</label>
+                <input class="form-control" asp-for="ShopLocation.PostalCode" />
+            </div>
+            <div class="col col-lg-12">
+                <label class="font-weight-bold">Kraj</label>
+                <input class="form-control" asp-for="ShopLocation.Country" />
+            </div>
+            <div class="col col-lg-12">
+                <label class="font-weight-bold">Misto</label>
+                <input class="form-control" asp-for="ShopLocation.City" />
+            </div>
+            <div class="col col-lg-12">
+                <label class="font-weight-bold">Ulica</label>
+                <input class="form-control" asp-for="ShopLocation.Street" />
             </div>
         </form>
     </div>
@@ -47,48 +76,57 @@
 
 
 
-@section Scripts
-{
 
 
-    <script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+
+<script>
 
 
 
         $(document).ready(function ()
         {
 
-            @*$("#ShopNameAutoComplete").autocomplete(
-                {
 
-                source: function (request, response)
-                {
-                $.ajax({
-                    type: "POST",
-                    //contentType: "application/json; charset=utf-8",
-                    url: '@Url.Action("AutoCompleteOwnerName", "ManagementProductsAndShops")',
-                    data: { 'prefix': document.getElementById('ShopNameAutoComplete').value},
-                    dataType: "json",
-                    success: function (data) {
+            function ShowShopOnMap()
+            {
 
-                        response(data);
 
+                  $.ajax({
+                    url: '@Url.Action("ShowShopOnMap", "ManagementProductsAndShops")',
+                    type: "get",
+
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
                     },
-                    error: function (result) {
-                        alert("Error");
+                    success: function (result) {
+
+                        $('#ShowShopMap').empty();
+                        $('#ShowShopMap').html(result);
+
                     }
                 });
+
+
+
+
+
+
+
+
+
+
             }
 
+            ShowShopOnMap();
 
 
 
 
 
 
-
-
-        });*@
 
 
 
@@ -97,7 +135,7 @@
 
              source: function (request, response) {
                         $.ajax({
-                            url: '@Url.Action("AutoCompleteOwnerName", "ManagementProductsAndShops")',
+                            url: '@Url.Action("AutoCompleteShopName", "ManagementProductsAndShops")',
                             data: { "prefix": document.getElementById('ShopNameAutoComplete').value },
                             type: "POST",
                             success: function (data) {
@@ -124,6 +162,41 @@
                 });
 
 
+            ////
+
+             $("#OwnerNameAutoComplete").autocomplete(
+                {
+
+             source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteOwnerName", "ManagementProductsAndShops")',
+                            data: { "prefix": document.getElementById('OwnerNameAutoComplete').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation()
+                        $("#OwnerNameAutoComplete").text(i.item.value);
+                    },
+                    minLength: 1
+                });
+
+            //////
+
 
         });
 
@@ -131,8 +204,7 @@
 
 
 
-    </script>
+</script>
 
 
 
-}

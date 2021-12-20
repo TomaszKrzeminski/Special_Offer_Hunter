@@ -6,6 +6,23 @@ using System.Threading.Tasks;
 
 namespace Special_Offer_Hunter.Models
 {
+
+    public class ShopLocationViewModel
+    {
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        public Location UserLocation { get; set; }
+
+    }
+
+
+
+
+
+
+
     public class ProductLocationViewModel
     {
         public ProductLocationViewModel()

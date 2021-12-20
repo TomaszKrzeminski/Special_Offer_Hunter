@@ -10,5 +10,7 @@ namespace Special_Offer_Hunter.Models
         public Shop shop { get; set; }
         public string UserId { get; set; }
 
+        public Location ShopLocation { get; set; }
+
     }
 }

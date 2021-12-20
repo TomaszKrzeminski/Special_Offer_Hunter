@@ -25,6 +25,7 @@ namespace Special_Offer_Hunter.Models
     public interface IRepository
     {
         List<string> GetShopNames(string Name);
+        List<string> GetOwnerNames(string Name);
         Product GetProductById(int Id);
         Product GetProductByName(string Name);
         Product GetProductByCode(string Code);
@@ -1514,6 +1515,23 @@ namespace Special_Offer_Hunter.Models
                 return new List<string>();
             }
         }
+
+        public List<string> GetOwnerNames(string Name)
+        {
+            try
+            {
+
+                List<string> list = context.Users.Where(x => x.Surname.StartsWith(Name)).Select(x => x.Surname+" "+x.FirstName).ToList();
+                return list;
+
+            }
+            catch (Exception ex)
+            {
+                return new List<string>();
+            }
+        }
+
+
     }
 
 }

@@ -609,3 +609,6 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.pdb
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.genruntimeconfig.cache
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.csprojAssemblyReference.cache
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutAuto.cshtml.g.cs
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\ShowShopOnMap.cshtml.g.cs
