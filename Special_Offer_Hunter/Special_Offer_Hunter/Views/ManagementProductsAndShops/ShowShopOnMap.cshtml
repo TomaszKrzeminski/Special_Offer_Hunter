@@ -23,6 +23,47 @@
         transition: width .1s, height .1s;
         width: 32px;
     }
+
+
+    .marker-icon {
+        background-position: center;
+        background-size: 22px 22px;
+        border-radius: 50%;
+        height: 22px;
+        left: 4px;
+        position: absolute;
+        text-align: center;
+        top: 3px;
+        transform: rotate(45deg);
+        width: 22px;
+    }
+
+    .marker {
+        height: 30px;
+        width: 30px;
+    }
+
+    .marker-content {
+        background: #c30b82;
+        border-radius: 50% 50% 50% 0;
+        height: 30px;
+        left: 50%;
+        margin: -15px 0 0 -15px;
+        position: absolute;
+        top: 50%;
+        transform: rotate(-45deg);
+        width: 30px;
+    }
+
+        .marker-content::before {
+            background: #ffffff;
+            border-radius: 50%;
+            content: "";
+            height: 24px;
+            margin: 3px 0 0 3px;
+            position: absolute;
+            width: 24px;
+        }
 </style>
 
 
@@ -32,7 +73,8 @@
 <div class="col col-lg-12">
     <div class="row">
         <div class="col col-lg-12">
-            <div id='map' class='map'></div>
+            <div id='map' class='map' @*style="width:480px
+;height:640px;"*@></div>
         </div>
 
 
@@ -54,148 +96,85 @@
 <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.69.1/maps/maps-web.min.js'></script>
 <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.69.1/services/services-web.min.js'></script>
 <script src="~/js/mobile-or-tablet.js"></script>
+<script type='text/javascript' src='~/js/formatters.js'></script>
 <script>
 
 
-
+    ///// Map
     var myTomTomKey = document.getElementById('myTomTomKey').value;
 
     var myPLat = document.getElementById('myPositionLat').value;
     var myPLong = document.getElementById('myPositionLon').value;
 
-    var HQ = { lat: myPLat, lng: myPLong }
+    var center = { lat: myPLat, lng: myPLong }
 
 
 
 
+
+
+
+    function SendCoordinates()
+    {
+
+          $.ajax({
+                    url: '@Url.Action("ReverseGeoCoding", "ManagementProductsAndShops")',
+                    type: "get",
+
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+                    },
+                    success: function (result) {
+
+                        $('#ShowShopMap').empty();
+                        $('#ShowShopMap').html(result);
+
+                    }
+                });
+
+
+    }
+
+
+    var roundLatLng = Formatters.roundLatLng;
+    //var center = [4.890659, 52.373154];
+    var popup = new tt.Popup({
+        offset: 35
+    });
     var map = tt.map({
         key: myTomTomKey,
         container: 'map',
-        style: 'tomtom://vector/1/basic-main',
         dragPan: !isMobileOrTablet(),
-        center: HQ,
-        zoom: 15
+        center: center,
+        zoom: 14
     });
     map.addControl(new tt.FullscreenControl());
     map.addControl(new tt.NavigationControl());
 
-    //function createMarkerElement(type) {
-    //    var element = document.createElement('div');
-    //    var innerElement = document.createElement('div');
+    var marker = new tt.Marker({
+        draggable: true
+    }).setLngLat(center).addTo(map);
 
-    //    element.className = 'route-marker';
-    //    innerElement.className = 'icon tt-icon -white -' + type;
-    //    element.appendChild(innerElement);
-    //    return element;
-    //}
+    function onDragEnd() {
+        var lngLat = marker.getLngLat();
+        lngLat = new tt.LngLat(roundLatLng(lngLat.lng), roundLatLng(lngLat.lat));
 
-    //function addMarkers(feature) {
-    //    var startPoint, endPoint;
-    //    if (feature.geometry.type === 'MultiLineString') {
-    //        startPoint = feature.geometry.coordinates[0][0]; //get first point from first line
-    //        endPoint = feature.geometry.coordinates.slice(-1)[0].slice(-1)[0]; //get last point from last line
-    //    } else {
-    //        startPoint = feature.geometry.coordinates[0];
-    //        endPoint = feature.geometry.coordinates.slice(-1)[0];
-    //    }
+        alert(lngLat.lng.toString() + " " + lngLat.lat.toString());
 
-    //    new tt.Marker({ element: createMarkerElement('start') }).setLngLat(startPoint).addTo(map);
-    //    new tt.Marker({ element: createMarkerElement('finish') }).setLngLat(endPoint).addTo(map);
-    //}
-
-    //function findFirstBuildingLayerId() {
-    //    var layers = map.getStyle().layers;
-    //    for (var index in layers) {
-    //        if (layers[index].type === 'fill-extrusion') {
-    //            return layers[index].id;
-    //        }
-    //    }
-
-    //    throw new Error('Map style does not contain any layer with fill-extrusion type.');
-    //}
-
-
-
-    //var Shops2 = document.getElementById('Shops2').value;
-    //var obj = JSON.parse(Shops2);
-
-
-    //function MakeLocationElements(obj) {
-
-    //    var text = "";
+        popup.setHTML(lngLat.toString());
+        popup.setLngLat(lngLat);
+        marker.setPopup(popup);
+        marker.togglePopup();
+    }
 
 
 
 
-    //    for (var i = 0; i < obj.length; i++) {
-    //        var l1 = obj[i].center[0];
-    //        var l2 = obj[i].center[1];
-    //        text += l2 + "," + l1 + ":";
-    //    }
-
-    //    text = text.substring(0, text.length - 1);
-    //    return text;
-    //}
-
-
-    //var locationsChanges = MakeLocationElements(obj);
 
 
 
-
-    //map.once('load', function () {
-    //    tt.services.calculateRoute({
-    //        key: myTomTomKey,
-    //        traffic: false,
-    //        locations: locationsChanges
-    //    })
-    //        .go()
-    //        .then(function (response) {
-    //            var geojson = response.toGeoJson();
-    //            map.addLayer({
-    //                'id': 'route',
-    //                'type': 'line',
-    //                'source': {
-    //                    'type': 'geojson',
-    //                    'data': geojson
-    //                },
-    //                'paint': {
-    //                    'line-color': '#4a90e2',
-    //                    'line-width': 8
-    //                }
-    //            }, findFirstBuildingLayerId());
-
-    //            addMarkers(geojson.features[0]);
-
-    //            var bounds = new tt.LngLatBounds();
-    //            geojson.features[0].geometry.coordinates.forEach(function (point) {
-    //                bounds.extend(tt.LngLat.convert(point));
-    //            });
-    //            map.fitBounds(bounds, { duration: 0, padding: 50 });
-    //        });
-    //});
-
-
-    //for (var i = 0; i < obj.length; i++) {
-
-    //    var place = obj[i];
-
-    //    var d = { lat: place.center[0], lng: place.center[1] }
-
-    //    var marker = new tt.Marker().setLngLat(d).addTo(map);
-
-    //    var popupOffsets = {
-    //        top: [0, 0],
-    //        bottom: [0, -70],
-    //        'bottom-right': [0, -70],
-    //        'bottom-left': [0, -70],
-    //        left: [25, -35],
-    //        right: [-25, -35]
-    //    }
-
-    //    var popup = new tt.Popup({ offset: popupOffsets }).setHTML("<br/><b>" + place.name + "</b>");
-    //    marker.setPopup(popup).togglePopup();
-    //}
+    marker.on('dragend', onDragEnd);
 
 
 

@@ -17,12 +17,7 @@
     <div class="col col-lg-12 text-center">
         <h1>Dodaj sklep</h1>
     </div>
-    <div class="col col-lg-4">
-        <div id="ShowShopMap">
 
-        </div>
-
-    </div>
     <div class="col col-lg-4">
         <form asp-action="AddShop" asp-controller="ManagementProductsAndShops" method="post">
             <h2>Dane podstawowe    </h2>
@@ -37,34 +32,50 @@
             </div>
             <h2>Lokalizacja</h2>
             <div class="col col-lg-12">
-                <label class="font-weight-bold">Nazwa Lokalizacji</label>
-                <input class="form-control" asp-for="ShopLocation.Name" />
+                <div class="col col-lg-12" id="ShowShopMap">
+
+                </div>
+
             </div>
-            <div class="col col-lg-12">
-                <label class="font-weight-bold">Numer domu</label>
-                <input class="form-control" asp-for="ShopLocation.Number" />
+            <div class="col col-lg-12 text-center">
+
+                <input class="btn btn-primary" value="Pokaż lokalizacje" />
             </div>
 
-            <div class="col col-lg-12">
-                <label class="font-weight-bold">Numer lokalu</label>
-                <input class="form-control" asp-for="ShopLocation.SecondNumber" />
+            <div id="LocalizationData">
+                <div class="col col-lg-12">
+                    <label class="font-weight-bold">Nazwa Lokalizacji</label>
+                    <input class="form-control" asp-for="ShopLocation.Name" />
+                </div>
+                <div class="col col-lg-12">
+                    <label class="font-weight-bold">Numer domu</label>
+                    <input class="form-control" asp-for="ShopLocation.Number" />
+                </div>
+
+                <div class="col col-lg-12">
+                    <label class="font-weight-bold">Numer lokalu</label>
+                    <input class="form-control" asp-for="ShopLocation.SecondNumber" />
+                </div>
+                <div class="col col-lg-12">
+                    <label class="font-weight-bold">Kod pocztowy</label>
+                    <input class="form-control" asp-for="ShopLocation.PostalCode" />
+                </div>
+                <div class="col col-lg-12">
+                    <label class="font-weight-bold">Kraj</label>
+                    <input class="form-control" asp-for="ShopLocation.Country" />
+                </div>
+                <div class="col col-lg-12">
+                    <label class="font-weight-bold">Miasto</label>
+                    <input class="form-control" asp-for="ShopLocation.City" />
+                </div>
+                <div class="col col-lg-12">
+                    <label class="font-weight-bold">Ulica</label>
+                    <input class="form-control" asp-for="ShopLocation.Street" />
+                </div>
             </div>
-            <div class="col col-lg-12">
-                <label class="font-weight-bold">Kod pocztowy</label>
-                <input class="form-control" asp-for="ShopLocation.PostalCode" />
-            </div>
-            <div class="col col-lg-12">
-                <label class="font-weight-bold">Kraj</label>
-                <input class="form-control" asp-for="ShopLocation.Country" />
-            </div>
-            <div class="col col-lg-12">
-                <label class="font-weight-bold">Misto</label>
-                <input class="form-control" asp-for="ShopLocation.City" />
-            </div>
-            <div class="col col-lg-12">
-                <label class="font-weight-bold">Ulica</label>
-                <input class="form-control" asp-for="ShopLocation.Street" />
-            </div>
+
+
+
         </form>
     </div>
     <div class="col col-lg-4">

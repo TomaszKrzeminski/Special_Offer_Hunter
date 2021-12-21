@@ -50,6 +50,27 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
+
+
+
+        public IActionResult ReverseGeocoding()
+        {
+
+
+
+
+
+
+            AddShopViewModel model = new AddShopViewModel();
+            return PartialView(model);
+        }
+
+
+
+
+
+
+
         [HttpPost]
         public JsonResult AutoCompleteOwnerName(string prefix)
         {
