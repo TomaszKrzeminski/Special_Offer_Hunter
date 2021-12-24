@@ -7,13 +7,15 @@
 
 
 
-<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+@*<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>*@
 
 
 
-
-
-<div class="container">
+<div class="container" id="AddShop">
     <div class="col col-lg-12 text-center">
         <h1>Dodaj sklep</h1>
     </div>
@@ -39,7 +41,7 @@
             </div>
             <div class="col col-lg-12 text-center">
 
-                <input class="btn btn-primary" value="Pokaż lokalizacje" />
+                <input id="LocalizationData" class="btn btn-primary" value="Pokaż dane lokalizacji" />
             </div>
 
             <div id="LocalizationData">
@@ -89,8 +91,6 @@
 
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 
 <script>
 
@@ -99,8 +99,7 @@
         $(document).ready(function ()
         {
 
-
-            function ShowShopOnMap()
+             function ShowShopOnMap()
             {
 
 
@@ -134,6 +133,43 @@
             ShowShopOnMap();
 
 
+
+     function SendCoordinates()
+    {
+        var Lat = document.getElementById('Lat').value;
+
+         var Lon = document.getElementById('Lon').value;
+
+
+
+          $.ajax({
+                    url: '@Url.Action("ReverseGeoCoding", "ManagementProductsAndShops")',
+                    type: "get",
+
+                    headers:
+                    {
+                        //"RequestVerificationToken": t
+              },
+              data: { Latitude:Lat ,Longitude:Lon },
+                    success: function (result) {
+
+                        $('#AddShop #LocalizationData').empty();
+                        $('#AddShop #LocalizationData').html(result);
+
+                    }
+                });
+
+
+    }
+
+
+
+    $('#LocalizationData').on('click', function (e)
+            {
+
+        SendCoordinates();
+
+            });
 
 
 

@@ -69,12 +69,14 @@
 
 
 
+<input id="Lat" type="hidden" value="" />
+<input id="Lon" type="hidden" value="" />
+
 
 <div class="col col-lg-12">
     <div class="row">
         <div class="col col-lg-12">
-            <div id='map' class='map' @*style="width:480px
-;height:640px;"*@></div>
+            <div id='map' class='map'></div>
         </div>
 
 
@@ -91,12 +93,17 @@
 
 
 
+
+
+
+
 @*</div>*@
 
 <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.69.1/maps/maps-web.min.js'></script>
 <script src='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.69.1/services/services-web.min.js'></script>
 <script src="~/js/mobile-or-tablet.js"></script>
 <script type='text/javascript' src='~/js/formatters.js'></script>
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
 <script>
 
 
@@ -108,33 +115,20 @@
 
     var center = { lat: myPLat, lng: myPLong }
 
+    document.getElementById('Lat').value = myPLat;
+    document.getElementById('Lon').value = myPLong;
+
+
+
+
+
+   
 
 
 
 
 
 
-    function SendCoordinates()
-    {
-
-          $.ajax({
-                    url: '@Url.Action("ReverseGeoCoding", "ManagementProductsAndShops")',
-                    type: "get",
-
-                    headers:
-                    {
-                        //"RequestVerificationToken": t
-                    },
-                    success: function (result) {
-
-                        $('#ShowShopMap').empty();
-                        $('#ShowShopMap').html(result);
-
-                    }
-                });
-
-
-    }
 
 
     var roundLatLng = Formatters.roundLatLng;
@@ -158,9 +152,15 @@
 
     function onDragEnd() {
         var lngLat = marker.getLngLat();
-        lngLat = new tt.LngLat(roundLatLng(lngLat.lng), roundLatLng(lngLat.lat));
+        lngLat = new tt.LngLat(roundLatLng(lngLat.lng), roundLatLng(lngLat.lat));     
 
-        alert(lngLat.lng.toString() + " " + lngLat.lat.toString());
+
+
+        document.getElementById('Lat').value = lngLat.lng.toString();
+        document.getElementById('Lon').value = lngLat.lat.toString();
+
+
+
 
         popup.setHTML(lngLat.toString());
         popup.setLngLat(lngLat);
@@ -175,6 +175,9 @@
 
 
     marker.on('dragend', onDragEnd);
+
+
+
 
 
 

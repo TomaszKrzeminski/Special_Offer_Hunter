@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -53,15 +54,21 @@ namespace Special_Offer_Hunter.Controllers
 
 
 
-        public IActionResult ReverseGeocoding()
+        public async Task<IActionResult> ReverseGeocodingAsync(string Latitude, string Longitude)
         {
+            string ReverseGeocodingKey = "pk.6a0568ea2a60f5218a864c2d9f7e5432";
+            //string ReverseGeocodingKey = configuration.GetValue<string>("ApiOpenWeather");
+            var url1 = "https://us1.locationiq.com/v1/reverse.php?key=" + ReverseGeocodingKey + "&lat=" + Longitude + "&lon=" + Latitude + "&format=json";
+            var httpClient1 = new HttpClient();
+            HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
+
+            string responseBody1 = await response1.Content.ReadAsStringAsync();
 
 
-
-
-
-
+            ShopLocationData locationData = new ShopLocationData();
+            await locationData.GetLocation(Latitude, Longitude);
             AddShopViewModel model = new AddShopViewModel();
+            model.SetLocation(locationData);
             return PartialView(model);
         }
 
