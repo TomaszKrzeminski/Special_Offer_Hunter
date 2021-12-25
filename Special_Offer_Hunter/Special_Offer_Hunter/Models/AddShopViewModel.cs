@@ -32,6 +32,20 @@ namespace Special_Offer_Hunter.Models
         }
 
 
+        public void SetLocation2(Location data)
+        {
+            this.ShopLocation.SecondNumber = "";
+            this.ShopLocation.City = data.City;
+            this.ShopLocation.Country = data.Country;
+            this.ShopLocation.Number = data.Number;
+            this.ShopLocation.PostalCode = data.PostalCode;
+            this.ShopLocation.Street = data.Street;
+
+        }
+
+        public string LongitudeText { get; set; }
+        public string LatitudeText { get; set; }
+
         public Location ShopLocation { get; set; }
 
     }

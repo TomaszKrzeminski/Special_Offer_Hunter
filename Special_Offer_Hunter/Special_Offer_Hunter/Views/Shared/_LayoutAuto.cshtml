@@ -6,12 +6,14 @@
     <title>@ViewData["Title"] - Special_Offer_Hunter</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 
     <link href="~/lib/tomtom-international/web-sdk-maps/dist/maps.css" rel="stylesheet" />
 
 
 
-    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+
 
 
 
@@ -20,13 +22,13 @@
 </head>
 <body>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.js"></script>
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13/jquery-ui.min.js"></script>*@
     <script src="~/lib/tomtom-international/web-sdk-maps/dist/maps-web.min.js"></script>
-
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -43,6 +45,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" asp-controller="ManagementProductsAndShops" asp-action="AddShop">Sklep</a>
+                            <br />
                             <a class="dropdown-item" asp-controller="ManagementProductsAndShops" asp-action="AddProduct">Produkt</a>
                         </div>
                     </div>
@@ -57,12 +60,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Special_Offer_Hunter - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-
+   
 
 
 

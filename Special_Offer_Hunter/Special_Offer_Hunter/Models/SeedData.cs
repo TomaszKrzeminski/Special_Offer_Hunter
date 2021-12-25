@@ -93,6 +93,7 @@ namespace Special_Offer_Hunter.Models
                 location.Country = Country;
                 location.Latitude = Latitude;
                 location.Longitude = Longitude;
+
                 location.PostalCode = PostalCode;
                 location.Country = Country;
                 location.City = City;

@@ -104,25 +104,6 @@ namespace Special_Offer_Hunter.Controllers
 
             ViewData["MyTomTomKey"] = "YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O";
 
-            /////
-
-
-
-
-            //var httpClient1 = new HttpClient();
-
-            //string LocationsX = MakeLocationStringX(model.UserLocation, model.list);
-
-            //var url1 = "https://api.tomtom.com/routing/1/calculateRoute/" + LocationsX + "/json?avoid=unpavedRoads&key=YKCJ1ZeW4GdxXOmONZi4UoSKOKpOTT4O&routeType=fastest";
-            //HttpResponseMessage response1 = await httpClient1.GetAsync(url1);
-            //string responseBody1 = await response1.Content.ReadAsStringAsync();
-
-            //Root root = JsonConvert.DeserializeObject<Root>(responseBody1);
-
-            //model.Distance = model.SetDistance(root);
-            //model.Time = model.SetTimeMinutes(root);
-            //model.ArrivalTime = model.SetTimeArrival(root);          ////
-
 
             return PartialView("ShowShopOnMap", model);
         }
@@ -134,16 +115,41 @@ namespace Special_Offer_Hunter.Controllers
 
 
 
-        public IActionResult AddShop2()
-        {
-            return View("AddShop2");
-        }
+        //public IActionResult AddShop2()
+        //{
+        //    return View("AddShop2");
+        //}
 
 
         public IActionResult AddShop()
         {
-            return View();
+            AddShopViewModel model = new AddShopViewModel();
+
+            return View(model);
         }
+
+        [HttpPost]
+        public IActionResult AddShop(AddShopViewModel model)
+        {
+
+            bool check = false;
+            check = repository.AddShop(model);
+
+            if (!check)
+            {
+                return View("AddShop", model);
+            }
+            else
+            {
+                string Message = "Pomyślnie dodano nowy sklep " + model.shop.Name;
+                return View("Error_1", Message);
+            }
+
+
+
+        }
+
+
 
         public IActionResult AddProduct()
         {

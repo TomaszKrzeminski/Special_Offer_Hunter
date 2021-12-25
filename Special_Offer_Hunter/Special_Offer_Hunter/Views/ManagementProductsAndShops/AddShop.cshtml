@@ -9,9 +9,9 @@
 
 @*<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>*@
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>*@
 
 
 
@@ -40,15 +40,19 @@
 
             </div>
             <div class="col col-lg-12 text-center">
-
-                <input id="LocalizationData" class="btn btn-primary" value="Pokaż dane lokalizacji" />
+                @*<button  type="button" id="LocalizationData" class="btn btn-primary">Pokaż dane lokalizacji</button>*@
+                <input type="button" id="LocalizationData" class="btn btn-primary" value="Pokaż dane lokalizacji" />
             </div>
+            <input id="ShopLatitude" class="form-control" asp-for="LatitudeText" />
+            <input id="ShopLongitude" class="form-control" asp-for="LongitudeText" />
 
             <div id="LocalizationData">
                 <div class="col col-lg-12">
-                    <label class="font-weight-bold">Nazwa Lokalizacji</label>
-                    <input class="form-control" asp-for="ShopLocation.Name" />
+                    @*<input id="ShopLatitude" class="form-control" asp-for="ShopLocation.Latitude" />
+                <input id="ShopLongitude" class="form-control" asp-for="ShopLocation.Longitude" />*@
+
                 </div>
+
                 <div class="col col-lg-12">
                     <label class="font-weight-bold">Numer domu</label>
                     <input class="form-control" asp-for="ShopLocation.Number" />
@@ -75,7 +79,10 @@
                     <input class="form-control" asp-for="ShopLocation.Street" />
                 </div>
             </div>
+            <div class="col col-lg-12">
 
+                <button id="AddShopBtn" class="btn btn-success" type="submit">Dodaj</button>
+            </div>
 
 
         </form>
@@ -136,9 +143,17 @@
 
      function SendCoordinates()
     {
-        var Lat = document.getElementById('Lat').value;
+        let Lat = document.getElementById('Lat').value;
 
-         var Lon = document.getElementById('Lon').value;
+         let Lon = document.getElementById('Lon').value;
+
+
+         //var Lat = document.getElementById('LocalizationData').getElementById('ShopLatitude').value = Lat;
+
+         //var Lon = document.getElementById('LocalizationData').getElementById('ShopLongitude').value = Lon;
+
+
+
 
 
 
@@ -156,6 +171,12 @@
                         $('#AddShop #LocalizationData').empty();
                         $('#AddShop #LocalizationData').html(result);
 
+                        //$('#LocalizationData #ShopLatitude').val(Lat);
+                        //$('#LocalizationData #ShopLongitude').val(Lon);
+
+                        $('#ShopLatitude').val(Lat);
+                        $('#ShopLongitude').val(Lon);
+
                     }
                 });
 
@@ -172,7 +193,11 @@
             });
 
 
+            //$('#AddShopBtn').on('click', function (e) {
 
+            //    alert("Add");
+
+            //});
 
 
 

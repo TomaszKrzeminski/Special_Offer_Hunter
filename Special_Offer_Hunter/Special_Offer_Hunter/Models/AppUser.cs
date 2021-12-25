@@ -178,7 +178,7 @@ namespace Special_Offer_Hunter.Models
         public virtual Location Location { get; set; }
 
         //public virtual ApplicationUser ShopOwner { get; set; }
-        public string ApplicationUserId { get; set; }
+        public string? ApplicationUserId { get; set; }
 
     }
     public class Product_Price

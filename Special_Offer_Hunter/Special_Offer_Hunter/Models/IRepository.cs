@@ -24,6 +24,7 @@ namespace Special_Offer_Hunter.Models
 {
     public interface IRepository
     {
+        bool AddShop(AddShopViewModel model);
         List<string> GetShopNames(string Name);
         List<string> GetOwnerNames(string Name);
         Product GetProductById(int Id);
@@ -1521,7 +1522,7 @@ namespace Special_Offer_Hunter.Models
             try
             {
 
-                List<string> list = context.Users.Where(x => x.Surname.StartsWith(Name)).Select(x => x.Surname+" "+x.FirstName).ToList();
+                List<string> list = context.Users.Where(x => x.Surname.StartsWith(Name)).Select(x => x.Surname + " " + x.FirstName).ToList();
                 return list;
 
             }
@@ -1531,7 +1532,45 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        public bool AddShop(AddShopViewModel model)
+        {
+            try
+            {
+                bool checkName = context.Shops.Any(x => x.Name == model.shop.Name);
 
+                bool checkLocalization = context.Locations.Any(x => x.Country == model.ShopLocation.Country && x.City == model.ShopLocation.City && x.Street == model.ShopLocation.Street && x.Number == model.ShopLocation.Number && x.SecondNumber == model.ShopLocation.SecondNumber);
+
+
+                if (checkLocalization && checkName)
+                {
+                    return false;
+                }
+                else
+                {
+
+                    context.Shops.Add(model.shop);
+                    Location location = new Location();
+                    model.SetLocation2(model.ShopLocation);
+                    location = model.ShopLocation;
+                    context.Locations.Add(location);
+
+                    //context.Users.Find(model.UserId)
+
+
+                }
+
+
+
+
+                context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 
 }
