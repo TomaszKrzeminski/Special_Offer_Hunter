@@ -30,7 +30,7 @@
             </div>
             <div class="col col-lg-12">
                 <label class="font-weight-bold">Właściciel</label>
-                <input id="OwnerNameAutoComplete" class="form-control" asp-for="shop.Owner" />
+                <input id="OwnerNameAutoComplete" class="form-control" asp-for="shop.ApplicationUser.UserName" />
             </div>
             <h2>Lokalizacja</h2>
             <div class="col col-lg-12">
@@ -40,16 +40,15 @@
 
             </div>
             <div class="col col-lg-12 text-center">
-                @*<button  type="button" id="LocalizationData" class="btn btn-primary">Pokaż dane lokalizacji</button>*@
+
                 <input type="button" id="LocalizationData" class="btn btn-primary" value="Pokaż dane lokalizacji" />
             </div>
-            <input id="ShopLatitude" class="form-control" asp-for="LatitudeText" />
-            <input id="ShopLongitude" class="form-control" asp-for="LongitudeText" />
+            <input id="ShopLatitude" class="form-control" type="hidden" asp-for="LatitudeText" />
+            <input id="ShopLongitude" class="form-control" type="hidden" asp-for="LongitudeText" />
 
             <div id="LocalizationData">
                 <div class="col col-lg-12">
-                    @*<input id="ShopLatitude" class="form-control" asp-for="ShopLocation.Latitude" />
-                <input id="ShopLongitude" class="form-control" asp-for="ShopLocation.Longitude" />*@
+
 
                 </div>
 
@@ -148,9 +147,7 @@
          let Lon = document.getElementById('Lon').value;
 
 
-         //var Lat = document.getElementById('LocalizationData').getElementById('ShopLatitude').value = Lat;
 
-         //var Lon = document.getElementById('LocalizationData').getElementById('ShopLongitude').value = Lon;
 
 
 
@@ -163,7 +160,7 @@
 
                     headers:
                     {
-                        //"RequestVerificationToken": t
+
               },
               data: { Latitude:Lat ,Longitude:Lon },
                     success: function (result) {
@@ -171,8 +168,6 @@
                         $('#AddShop #LocalizationData').empty();
                         $('#AddShop #LocalizationData').html(result);
 
-                        //$('#LocalizationData #ShopLatitude').val(Lat);
-                        //$('#LocalizationData #ShopLongitude').val(Lon);
 
                         $('#ShopLatitude').val(Lat);
                         $('#ShopLongitude').val(Lon);
@@ -192,12 +187,6 @@
 
             });
 
-
-            //$('#AddShopBtn').on('click', function (e) {
-
-            //    alert("Add");
-
-            //});
 
 
 
@@ -229,6 +218,9 @@
                     select: function (e, i) {
                         event.stopPropagation()
                         $("#ShopNameAutoComplete").text(i.item.value);
+
+
+
                     },
                     minLength: 1
                 });
@@ -262,7 +254,21 @@
                     },
                     select: function (e, i) {
                         event.stopPropagation()
-                        $("#OwnerNameAutoComplete").text(i.item.value);
+                        //$("#OwnerNameAutoComplete").text(i.item.value);
+
+
+
+
+
+
+
+                        $("#OwnerNameAutoComplete").text(i.item.value+" "+i.item.key);
+
+
+
+
+
+
                     },
                     minLength: 1
                 });

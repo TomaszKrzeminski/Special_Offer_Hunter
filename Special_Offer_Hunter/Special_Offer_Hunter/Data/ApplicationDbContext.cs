@@ -43,72 +43,14 @@ namespace Special_Offer_Hunter.Data
             .HasForeignKey<Location>(ad => ad.ShopLocationId);
 
 
-            // builder.Entity<ApplicationUser>()
-            // .HasOne<Shopping_Cart_Day>(s => s.Shopping_Cart_Day)
-            // .WithOne(ad => ad.ApplicationUser)
-            // .HasForeignKey<Shopping_Cart_Day>(ad => ad.DayUserId);
+
+
 
 
             // builder.Entity<ApplicationUser>()
-            //            .HasOne<Shopping_Cart_Week>(s => s.Shopping_Cart_Week)
-            //            .WithOne(ad => ad.ApplicationUser)
-            //            .HasForeignKey<Shopping_Cart_Week>(ad => ad.WeekUserId);
-
-
-            // builder.Entity<ApplicationUser>()
-            //.HasOne<Shopping_Cart_Month>(s => s.Shopping_Cart_Month)
-            //.WithOne(ad => ad.ApplicationUser)
-            //.HasForeignKey<Shopping_Cart_Month>(ad => ad.MonthUserId);
-
-
-            // builder.Entity<ApplicationUser>()
-            //.HasOne<Shopping_Cart_Year>(s => s.Shopping_Cart_Year)
-            //.WithOne(ad => ad.ApplicationUser)
-            //.HasForeignKey<Shopping_Cart_Year>(ad => ad.YearUserId);
-
-            // builder.Entity<ApplicationUser>()
-            //.HasOne<Shopping_Cart_LookFor>(s => s.Shopping_Cart_LookFor)
-            //.WithOne(ad => ad.ApplicationUser)
-            //.HasForeignKey<Shopping_Cart_LookFor>(ad => ad.LookForUserId);
-
-
-
-            //builder.Entity<Shopping_Cart_Day>()
-            //.HasOne<CartStatistics>(s => s.Statistic)
-            //.WithOne(ad => ad.Shopping_Cart_Day)
-            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
-
-            // builder.Entity<Shopping_Cart_Week>()
-            //.HasOne<CartStatistics>(s => s.Statistic)
-            //.WithOne(ad => ad.Shopping_Cart_Week)
-            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
-
-            // builder.Entity<Shopping_Cart_Month>()
-            //.HasOne<CartStatistics>(s => s.Statistic)
-            //.WithOne(ad => ad.Shopping_Cart_Month)
-            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
-
-            // builder.Entity<Shopping_Cart_Month>()
-            //.HasOne<CartStatistics>(s => s.Statistic)
-            //.WithOne(ad => ad.Shopping_Cart_Month)
-            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
-
-            // builder.Entity<Shopping_Cart_Year>()
-            //.HasOne<CartStatistics>(s => s.Statistic)
-            //.WithOne(ad => ad.Shopping_Cart_Year)
-            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
-
-            // builder.Entity<Shopping_Cart_LookFor>()
-            //.HasOne<CartStatistics>(s => s.Statistic)
-            //.WithOne(ad => ad.Shopping_Cart_LookFor)
-            //.HasForeignKey<CartStatistics>(ad => ad.StatisticOfCartId);
-
-
-
-            builder.Entity<ApplicationUser>()
-           .HasOne<Shop>(s => s.OwnedShop)
-           .WithOne(ad => ad.Owner)
-           .HasForeignKey<Shop>(ad => ad.ApplicationUserId);
+            //.HasOne<Shop>(s => s.OwnedShop)
+            //.WithOne(ad => ad.Owner)
+            //.HasForeignKey<Shop>(ad => ad.ApplicationUserId);
 
 
 

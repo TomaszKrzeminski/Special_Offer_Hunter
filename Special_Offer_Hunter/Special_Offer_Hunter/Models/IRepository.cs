@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
+using System.Text.RegularExpressions;
 
 namespace Special_Offer_Hunter.Models
 {
@@ -27,6 +27,7 @@ namespace Special_Offer_Hunter.Models
         bool AddShop(AddShopViewModel model);
         List<string> GetShopNames(string Name);
         List<string> GetOwnerNames(string Name);
+        Dictionary<string, string> GetOwnerNames2(string Name);
         Product GetProductById(int Id);
         Product GetProductByName(string Name);
         Product GetProductByCode(string Code);
@@ -1517,6 +1518,11 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+
+
+
+
+
         public List<string> GetOwnerNames(string Name)
         {
             try
@@ -1531,6 +1537,23 @@ namespace Special_Offer_Hunter.Models
                 return new List<string>();
             }
         }
+
+        public Dictionary<string, string> GetOwnerNames2(string Name)
+        {
+            try
+            {
+
+                Dictionary<string, string> list = context.Users.Where(x => x.Surname.StartsWith(Name)).ToDictionary(x => x.Id, x => x.Surname + " " + x.FirstName + " " + x.PhoneNumber);
+                return list;
+
+            }
+            catch (Exception ex)
+            {
+                return new Dictionary<string, string>();
+            }
+        }
+
+
 
         public bool AddShop(AddShopViewModel model)
         {
@@ -1547,14 +1570,36 @@ namespace Special_Offer_Hunter.Models
                 }
                 else
                 {
+                    string PhoneNumber = "";
+                    string Surname = "";
+                    PhoneNumber = Regex.Match(model.shop.ApplicationUser.UserName, @"\d+").Value; ;
+                    string[] text = model.shop.ApplicationUser.UserName.Split(' ');
+                    Surname = text[0];
 
-                    context.Shops.Add(model.shop);
+
+
+
+
                     Location location = new Location();
+                    location.Name = model.shop.Name;
                     model.SetLocation2(model.ShopLocation);
                     location = model.ShopLocation;
-                    context.Locations.Add(location);
 
-                    //context.Users.Find(model.UserId)
+                    double Latitude = Convert.ToDouble(model.LatitudeText.Replace(".", ","));
+                    double Longitude = Convert.ToDouble(model.LongitudeText.Replace(".", ","));
+
+                    location.Latitude = Latitude;
+                    location.Longitude = Longitude;
+                    location.location = new NetTopologySuite.Geometries.Point(Longitude, Latitude) { SRID = 4326 };
+                    context.Locations.Add(location);
+                    context.SaveChanges();
+
+                    model.shop.Location = location;
+                    context.Shops.Add(model.shop);
+
+                    ApplicationUser user = context.Users.Where(x => x.PhoneNumber == PhoneNumber && x.Surname == Surname).FirstOrDefault();
+
+                    user.Shops.Add(model.shop);
 
 
                 }

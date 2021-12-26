@@ -81,9 +81,9 @@ namespace Special_Offer_Hunter.Controllers
         [HttpPost]
         public JsonResult AutoCompleteOwnerName(string prefix)
         {
-            var customers = repository.GetOwnerNames(prefix);
+            //var customers = repository.GetOwnerNames(prefix);
 
-            //var jsonResult = customers.Select(x => new { text = x });
+            var customers = repository.GetOwnerNames2(prefix);
 
             return Json(customers);
         }

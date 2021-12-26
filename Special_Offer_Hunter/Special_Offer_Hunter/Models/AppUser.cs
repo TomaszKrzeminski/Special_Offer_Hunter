@@ -45,7 +45,7 @@ namespace Special_Offer_Hunter.Models
             this.Street = user.Street;
             this.HouseNumber = user.HouseNumber;
             this.PostalCode = user.PostalCode;
-            this.OwnedShop = new Shop();
+
 
         }
 
@@ -92,6 +92,7 @@ namespace Special_Offer_Hunter.Models
             UserShopRanks = new List<Shop_Rank>();
             UserProductComments = new List<Product_Comment>();
             UserProductRanks = new List<Product_Rank>();
+            Shops = new List<Shop>();
         }
 
         public virtual IList<ProductsBought> ProductsBought { get; set; }
@@ -106,7 +107,8 @@ namespace Special_Offer_Hunter.Models
         public virtual IList<Product_Comment> UserProductComments { get; set; }
         public virtual IList<Product_Rank> UserProductRanks { get; set; }
 
-        public virtual Shop OwnedShop { get; set; }
+        public virtual IList<Shop> Shops { get; set; }
+        //public virtual Shop OwnedShop { get; set; }
 
 
     }
@@ -141,7 +143,7 @@ namespace Special_Offer_Hunter.Models
             Products = new List<Product>();
             //Location = new Location();
             Checked = false;
-            Owner = new ApplicationUser();
+            //Owner = new ApplicationUser();
 
         }
         public int ShopId { get; set; }
@@ -149,7 +151,7 @@ namespace Special_Offer_Hunter.Models
 
         public DateTime Create { get; set; }
 
-        public virtual ApplicationUser Owner { get; set; }
+        //public virtual ApplicationUser Owner { get; set; }
 
 
         public bool CheckShop()
@@ -178,7 +180,12 @@ namespace Special_Offer_Hunter.Models
         public virtual Location Location { get; set; }
 
         //public virtual ApplicationUser ShopOwner { get; set; }
-        public string? ApplicationUserId { get; set; }
+        //public string? ApplicationUserId { get; set; }
+
+
+        public string UserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
 
     }
     public class Product_Price
