@@ -360,9 +360,11 @@ namespace Special_Offer_Hunter.Models
                         {
 
                             Product product = list[i];
-                            Product_Price price = new Product_Price(Prices[i], SpecialOffer[i], "");
-                            price.Products.Add(product);
-                            context.Product_Prices.Add(price);
+                            //Product_Price price = new Product_Price(Prices[i], SpecialOffer[i], "");
+                            //price.Products.Add(product);
+                            //context.Product_Prices.Add(price);
+                            product.Product_Price = Prices[i];
+                            product.SpecialOffer = SpecialOffer[i];
                             context.SaveChanges();
 
                         }

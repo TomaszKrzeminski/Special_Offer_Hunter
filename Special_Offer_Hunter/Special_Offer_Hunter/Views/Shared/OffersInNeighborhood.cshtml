@@ -115,14 +115,14 @@
                 <tr>
                     <th scope="row">@(p.i+1)</th>
                     <td>@p.value.Key.Name</td>
-                    <td>@p.value.Key.Product_Price.Price</td>
+                    <td>@p.value.Key.Product_Price</td>
                     <td>@p.value.Key.Shop.Name</td>
                     <td>@p.value.Value</td>
                     <td>
                         <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">
                             @*<select class="custom-select CartTypeForShoppingCart" asp-items="Html.GetEnumSelectList<ShoppingCartType>()">
-                            </select>*@
-                            <select style="max-width:130px;" class="custom-select CartTypeForShoppingCart" >
+                                </select>*@
+                            <select style="max-width:130px;" class="custom-select CartTypeForShoppingCart">
                                 <option value="0">Dzień</option>
                                 <option value="4">Poszukiwane</option>
                             </select>

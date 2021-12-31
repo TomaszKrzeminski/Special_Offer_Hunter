@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -144,9 +145,11 @@ namespace Special_Offer_Hunter.Models
             //Location = new Location();
             Checked = false;
             //Owner = new ApplicationUser();
+            Create = DateTime.Now;
 
         }
         public int ShopId { get; set; }
+
         public string Name { get; set; }
 
         public DateTime Create { get; set; }
@@ -188,33 +191,33 @@ namespace Special_Offer_Hunter.Models
 
 
     }
-    public class Product_Price
-    {
+    //public class Product_Price
+    //{
 
-        public Product_Price()
-        {
-            SpecialOffer = false;
-            SpecialOffer_Description = "";
-            Products = new List<Product>();
-        }
+    //    public Product_Price()
+    //    {
+    //        SpecialOffer = false;
+    //        SpecialOffer_Description = "";
+    //        Products = new List<Product>();
+    //    }
 
-        public Product_Price(double Price, bool SpecialOffer = false, string SpecialOffer_Description = "")
-        {
-            this.Price = Price;
-            this.SpecialOffer = SpecialOffer;
-            this.SpecialOffer_Description = SpecialOffer_Description;
-            Products = new List<Product>();
-        }
+    //    public Product_Price(double Price, bool SpecialOffer = false, string SpecialOffer_Description = "")
+    //    {
+    //        this.Price = Price;
+    //        this.SpecialOffer = SpecialOffer;
+    //        this.SpecialOffer_Description = SpecialOffer_Description;
+    //        Products = new List<Product>();
+    //    }
 
-        public int Product_PriceId { get; set; }
-        public double Price { get; set; }
-        public bool SpecialOffer { get; set; }
+    //    public int Product_PriceId { get; set; }
+    //    public double Price { get; set; }
+    //    public bool SpecialOffer { get; set; }
 
-        public double LastPrice { get; set; }
-        public string SpecialOffer_Description { get; set; }
+    //    public double LastPrice { get; set; }
+    //    public string SpecialOffer_Description { get; set; }
 
-        public virtual List<Product> Products { get; set; }
-    }
+    //    public virtual List<Product> Products { get; set; }
+    //}
     public class Company
     {
         public Company()
@@ -244,14 +247,10 @@ namespace Special_Offer_Hunter.Models
             this.Ranks = product.Ranks;
             this.ProductCategory = product.ProductCategory;
             this.Product_Code = product.Product_Code;
-            //this.Shopping_Cart_DayId = product.Shopping_Cart_DayId;
-            //this.shopping_Cart_Day = product.shopping_Cart_Day;
-            //this.Shopping_Cart_WeekId = product.Shopping_Cart_WeekId;
-            //this.shopping_Cart_Week = product.shopping_Cart_Week;
             this.ShopId = product.ShopId;
             this.Shop = product.Shop;
             this.Product_PriceId = product.Product_PriceId;
-            this.Product_Price = product.Product_Price;
+            //this.Product_Price = product.Product_Price;
 
 
         }
@@ -301,7 +300,13 @@ namespace Special_Offer_Hunter.Models
         public virtual Shop Shop { get; set; }
 
         public int? Product_PriceId { get; set; }//
-        public virtual Product_Price Product_Price { get; set; }
+
+        public double Product_Price { get; set; }
+        public double Last_ProductPrice { get; set; }
+
+        public bool SpecialOffer { get; set; }
+
+        //public virtual Product_Price Product_Price { get; set; }
 
         public virtual IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
         //public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
@@ -337,7 +342,7 @@ namespace Special_Offer_Hunter.Models
         public Location()
         {
             Country = "Polska";
-            //Shop = new Shop();
+            SecondNumber = "Podaj dodatkowy numer jeśli istnieje";
         }
 
         public int LocationId { get; set; }

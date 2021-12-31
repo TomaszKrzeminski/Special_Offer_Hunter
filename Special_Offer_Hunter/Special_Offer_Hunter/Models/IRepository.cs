@@ -25,6 +25,7 @@ namespace Special_Offer_Hunter.Models
     public interface IRepository
     {
         bool AddShop(AddShopViewModel model);
+        bool AddProduct(AddNewProductViewModel model);
         List<string> GetShopNames(string Name);
         List<string> GetOwnerNames(string Name);
         Dictionary<string, string> GetOwnerNames2(string Name);
@@ -89,14 +90,33 @@ namespace Special_Offer_Hunter.Models
             context = ctx;
         }
 
+        //public bool AddPriceToProduct(int ProductId, double Price)
+        //{
+        //    try
+        //    {
+        //        Product product = context.Products.Find(ProductId);
+        //        Product_Price price = new Product_Price(Price);
+        //        price.Products.Add(product);
+        //        context.Product_Prices.Add(price);
+        //        context.SaveChanges();
+
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
+
+
         public bool AddPriceToProduct(int ProductId, double Price)
         {
             try
             {
                 Product product = context.Products.Find(ProductId);
-                Product_Price price = new Product_Price(Price);
-                price.Products.Add(product);
-                context.Product_Prices.Add(price);
+                product.Last_ProductPrice = product.Product_Price;
+                product.Product_Price = Price;
+
                 context.SaveChanges();
 
                 return true;
@@ -106,6 +126,8 @@ namespace Special_Offer_Hunter.Models
                 return false;
             }
         }
+
+
 
         public bool AddProduct(Product product)
         {
@@ -403,12 +425,27 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        //public List<Product> GetProductsWithPrice(double Price)
+        //{
+        //    try
+        //    {
+        //        Product_Price x = context.Product_Prices.Include(x => x.Products).Where(x => x.Price == Price).FirstOrDefault();
+        //        List<Product> list = context.Product_Prices.Include(x => x.Products).Where(x => x.Price == Price).AsQueryable().ToList().SelectMany(x => x.Products).ToList();
+        //        return list;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
+
+
         public List<Product> GetProductsWithPrice(double Price)
         {
             try
             {
-                Product_Price x = context.Product_Prices.Include(x => x.Products).Where(x => x.Price == Price).FirstOrDefault();
-                List<Product> list = context.Product_Prices.Include(x => x.Products).Where(x => x.Price == Price).AsQueryable().ToList().SelectMany(x => x.Products).ToList();
+
+                List<Product> list = context.Products.Where(x => x.Product_Price == Price).ToList();
                 return list;
             }
             catch (Exception ex)
@@ -416,6 +453,8 @@ namespace Special_Offer_Hunter.Models
                 return null;
             }
         }
+
+
         public static Point CreatePoint(double latitude, double longitude)
         {
             // 4326 is most common coordinate system used by GPS/Maps
@@ -479,7 +518,8 @@ namespace Special_Offer_Hunter.Models
         }
 
         public static Expression<Func<Product, string>> OrderDescending = d => d.Name;
-        public static Expression<Func<Product, double>> OrderDescending2Price = d => d.Product_Price.Price;
+        //public static Expression<Func<Product, double>> OrderDescending2Price = d => d.Product_Price.Price;
+        public static Expression<Func<Product, double>> OrderDescending2Price = d => d.Product_Price;
 
         /// <summary>
         /// Odblokuj lokalizacje przed udostępnieniem
@@ -922,7 +962,8 @@ namespace Special_Offer_Hunter.Models
                         ProductsBought prodB1 = new ProductsBought();
                         prodB1.ProductId = ProductId;
                         prodB1.Number = number;
-                        prodB1.Price = product.Product_Price.Price;
+                        //prodB1.Price = product.Product_Price.Price;
+                        prodB1.Price = product.Product_Price;
                         prodB1.Time = DateTime.Now;
                         prodB1.cartType = type;
 
@@ -937,7 +978,8 @@ namespace Special_Offer_Hunter.Models
                         if (check)
                         {
                             prodB.Number = number;
-                            prodB.Price = product.Product_Price.Price;
+                            //prodB.Price = product.Product_Price.Price;
+                            prodB.Price = product.Product_Price;
                             prodB.Time = DateTime.Now;
                             prodB.cartType = type;
                             context.SaveChanges();
@@ -1609,6 +1651,55 @@ namespace Special_Offer_Hunter.Models
 
                 context.SaveChanges();
 
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool AddProduct(AddNewProductViewModel model)
+        {
+            try
+            {
+                Product product = new Product();
+                product.Name = model.Name;
+                product.Height = model.Height;
+                product.Description = model.Description;
+                product.Weight = model.Weight;
+                product.Product_Price = model.Price;
+                product.Last_ProductPrice = model.Price;
+
+                context.Products.Add(product);
+
+
+
+
+
+                ///
+
+
+                //AddCompany
+
+
+
+
+
+
+                ///
+
+
+                //AddCategory
+
+                //
+
+
+
+
+
+
+                context.SaveChanges();
                 return true;
             }
             catch (Exception ex)

@@ -82,7 +82,8 @@ namespace Special_Offer_Hunter.Models
         {
             if (model.sortMethod == SortMethod.Cena)
             {
-                model.SortProduct = (x) => x.Key.Product_Price.Price;
+                //model.SortProduct = (x) => x.Key.Product_Price.Price;
+                model.SortProduct = (x) => x.Key.Product_Price;
                 Next = null;
             }
 
@@ -197,243 +198,246 @@ namespace Special_Offer_Hunter.Models
         }
     }
 
-        public class SearchCategoryBySpecialOffer : SingleSearch
+    public class SearchCategoryBySpecialOffer : SingleSearch
+    {
+        Expression<Func<Product, bool>>
+       SearchProductBySpecialOfferOne()
         {
-            Expression<Func<Product, bool>>
-           SearchProductBySpecialOfferOne()
-            {
 
-                return (Product c) => c.Product_Price.SpecialOffer == true;
+            //return (Product c) => c.Product_Price.SpecialOffer == true;
+            return (Product c) => c.SpecialOffer == true;
 
-            }
+        }
 
-            Expression<Func<Product, bool>>
-           SearchProductBySpecialOfferAll()
-            {
-                return (Product c) => true;
-            }
-
-
-
-            public SingleSearch Next { get; set; }
-
-            public void SetNextSortObject(SingleSearch sort)
-            {
-                this.Next = sort;
-            }
-
-            public void SetSorting(SpecialOfferViewModel model)
-            {
-
-                if (model.SpecialOffer == false)
-                {
-                    model.SearchProductBySpecialOffer = SearchProductBySpecialOfferAll();
-                }
-                else
-                {
-                    model.SearchProductBySpecialOffer = SearchProductBySpecialOfferOne();
-
-                }
-
-                if (Next != null)
-                {
-                    Next.SetSorting(model);
-                }
-
-            }
+        Expression<Func<Product, bool>>
+       SearchProductBySpecialOfferAll()
+        {
+            return (Product c) => true;
         }
 
 
 
+        public SingleSearch Next { get; set; }
 
-        public class SearchCategoryName : SingleSearch
+        public void SetNextSortObject(SingleSearch sort)
         {
-            Expression<Func<Product, bool>>
-           SearchProductByCategoryOne(string Category)
-            {
-                return (Product c) => c.ProductCategory.Any(x => x.Category.Name == Category);
-            }
-
-            Expression<Func<Product, bool>>
-    SearchProductByCategoryAll(string Category)
-            {
-                return (Product c) => true;
-            }
-
-
-
-            public SingleSearch Next { get; set; }
-
-            public void SetNextSortObject(SingleSearch sort)
-            {
-                this.Next = sort;
-            }
-
-            public void SetSorting(SpecialOfferViewModel model)
-            {
-
-                if (model.CategoryName == "" || model.CategoryName == null)
-                {
-                    model.SearchProductByCategory = SearchProductByCategoryAll(model.CategoryName);
-                }
-                else
-                {
-                    model.SearchProductByCategory = SearchProductByCategoryOne(model.CategoryName);
-                }
-
-                if (Next != null)
-                {
-                    Next.SetSorting(model);
-                }
-
-            }
+            this.Next = sort;
         }
 
-
-        public class SearchShopName : SingleSearch
+        public void SetSorting(SpecialOfferViewModel model)
         {
 
-            Expression<Func<Shop, bool>>
-             SearchShopOne(string Name)
+            if (model.SpecialOffer == false)
             {
-                return (Shop s) => s.Name == Name;
-
+                model.SearchProductBySpecialOffer = SearchProductBySpecialOfferAll();
+            }
+            else
+            {
+                model.SearchProductBySpecialOffer = SearchProductBySpecialOfferOne();
 
             }
 
-
-            Expression<Func<Shop, bool>>
-         SearchShopAll(string Name)
+            if (Next != null)
             {
-                return (Shop s) => true;
+                Next.SetSorting(model);
             }
 
-
-
-            public SingleSearch Next { get; set; }
-
-            public void SetNextSortObject(SingleSearch sort)
-            {
-                this.Next = sort;
-            }
-
-            public void SetSorting(SpecialOfferViewModel model)
-            {
-
-                if (model.ShopName == "" || model.ShopName == null)
-                {
-                    model.SearchShop = SearchShopAll(model.ShopName);
-                }
-                else
-                {
-                    model.SearchShop = SearchShopOne(model.ShopName);
-                }
-
-                if (Next != null)
-                {
-                    Next.SetSorting(model);
-                }
-
-            }
         }
-
-
-        public class SearchProductName : SingleSearch
-        {
-
-            Expression<Func<Product, bool>>
-    SearchProductByProductNameOne(string productName)
-            {
-                return (Product c) => c.Name == productName;
-            }
-
-            Expression<Func<Product, bool>>
-    SearchProductByProductNameAll(string productName)
-            {
-                return (Product c) => true;
-            }
-
-            public SingleSearch Next { get; set; }
-
-            public void SetNextSortObject(SingleSearch sort)
-            {
-                this.Next = sort;
-            }
-
-            public void SetSorting(SpecialOfferViewModel model)
-            {
-
-                if (model.ProductName == "" || model.ProductName == null)
-                {
-                    model.SearchProductByProductName = SearchProductByProductNameAll(model.ProductName);
-                }
-                else
-                {
-                    model.SearchProductByProductName = SearchProductByProductNameOne(model.ProductName);
-                }
-
-                if (Next != null)
-                {
-                    Next.SetSorting(model);
-                }
-
-            }
-        }
-
-        public class SearchPriceValue : SingleSearch
-        {
-
-
-            Expression<Func<Product, bool>>
-    SearchProductByPriceHigher(double productPrice)
-            {
-                return (Product c) => c.Product_Price.Price > productPrice;
-            }
-
-            Expression<Func<Product, bool>>
-    SearchProductByPriceLower(double productPrice)
-            {
-                return (Product c) => c.Product_Price.Price < productPrice;
-            }
-
-            Expression<Func<Product, bool>>
-    SearchProductByPriceAll(double productPrice)
-            {
-                return (Product c) => true;
-            }
-
-            public SingleSearch Next { get; set; }
-
-            public void SetNextSortObject(SingleSearch sort)
-            {
-                this.Next = sort;
-            }
-
-            public void SetSorting(SpecialOfferViewModel model)
-            {
-
-                if (model.priceDescription == PriceDescription.Wszystkie)
-                {
-                    model.SearchProductByPrice = SearchProductByPriceAll(model.PriceValue);
-                }
-                else if (model.priceDescription == PriceDescription.Niższa)
-                {
-                    model.SearchProductByPrice = SearchProductByPriceLower(model.PriceValue);
-                }
-                else
-                {
-                    model.SearchProductByPrice = SearchProductByPriceHigher(model.PriceValue);
-                }
-
-                if (Next != null)
-                {
-                    Next.SetSorting(model);
-                }
-
-
-            }
-        }
-
-
-
     }
+
+
+
+
+    public class SearchCategoryName : SingleSearch
+    {
+        Expression<Func<Product, bool>>
+       SearchProductByCategoryOne(string Category)
+        {
+            return (Product c) => c.ProductCategory.Any(x => x.Category.Name == Category);
+        }
+
+        Expression<Func<Product, bool>>
+SearchProductByCategoryAll(string Category)
+        {
+            return (Product c) => true;
+        }
+
+
+
+        public SingleSearch Next { get; set; }
+
+        public void SetNextSortObject(SingleSearch sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+
+            if (model.CategoryName == "" || model.CategoryName == null)
+            {
+                model.SearchProductByCategory = SearchProductByCategoryAll(model.CategoryName);
+            }
+            else
+            {
+                model.SearchProductByCategory = SearchProductByCategoryOne(model.CategoryName);
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+
+        }
+    }
+
+
+    public class SearchShopName : SingleSearch
+    {
+
+        Expression<Func<Shop, bool>>
+         SearchShopOne(string Name)
+        {
+            return (Shop s) => s.Name == Name;
+
+
+        }
+
+
+        Expression<Func<Shop, bool>>
+     SearchShopAll(string Name)
+        {
+            return (Shop s) => true;
+        }
+
+
+
+        public SingleSearch Next { get; set; }
+
+        public void SetNextSortObject(SingleSearch sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+
+            if (model.ShopName == "" || model.ShopName == null)
+            {
+                model.SearchShop = SearchShopAll(model.ShopName);
+            }
+            else
+            {
+                model.SearchShop = SearchShopOne(model.ShopName);
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+
+        }
+    }
+
+
+    public class SearchProductName : SingleSearch
+    {
+
+        Expression<Func<Product, bool>>
+SearchProductByProductNameOne(string productName)
+        {
+            return (Product c) => c.Name == productName;
+        }
+
+        Expression<Func<Product, bool>>
+SearchProductByProductNameAll(string productName)
+        {
+            return (Product c) => true;
+        }
+
+        public SingleSearch Next { get; set; }
+
+        public void SetNextSortObject(SingleSearch sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+
+            if (model.ProductName == "" || model.ProductName == null)
+            {
+                model.SearchProductByProductName = SearchProductByProductNameAll(model.ProductName);
+            }
+            else
+            {
+                model.SearchProductByProductName = SearchProductByProductNameOne(model.ProductName);
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+
+        }
+    }
+
+    public class SearchPriceValue : SingleSearch
+    {
+
+
+        Expression<Func<Product, bool>>
+SearchProductByPriceHigher(double productPrice)
+        {
+            //return (Product c) => c.Product_Price.Price > productPrice;
+            return (Product c) => c.Product_Price > productPrice;
+        }
+
+        Expression<Func<Product, bool>>
+SearchProductByPriceLower(double productPrice)
+        {
+            //return (Product c) => c.Product_Price.Price < productPrice;
+            return (Product c) => c.Product_Price < productPrice;
+        }
+
+        Expression<Func<Product, bool>>
+SearchProductByPriceAll(double productPrice)
+        {
+            return (Product c) => true;
+        }
+
+        public SingleSearch Next { get; set; }
+
+        public void SetNextSortObject(SingleSearch sort)
+        {
+            this.Next = sort;
+        }
+
+        public void SetSorting(SpecialOfferViewModel model)
+        {
+
+            if (model.priceDescription == PriceDescription.Wszystkie)
+            {
+                model.SearchProductByPrice = SearchProductByPriceAll(model.PriceValue);
+            }
+            else if (model.priceDescription == PriceDescription.Niższa)
+            {
+                model.SearchProductByPrice = SearchProductByPriceLower(model.PriceValue);
+            }
+            else
+            {
+                model.SearchProductByPrice = SearchProductByPriceHigher(model.PriceValue);
+            }
+
+            if (Next != null)
+            {
+                Next.SetSorting(model);
+            }
+
+
+        }
+    }
+
+
+
+}

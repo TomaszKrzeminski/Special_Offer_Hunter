@@ -28,7 +28,7 @@
                     <label class="font-weight-bold">Rosnąco \ Malejąco </label>
                     <select class="custom-select custom-select-sm" asp-for="sortType" asp-items="Html.GetEnumSelectList<SortType>()">
                         @*<option id="sortMethod" selected="selected" value="">Please select</option>*@
-                    </select>                  
+                    </select>
                 </div>
                 <div class="col-lg-2 ">
                     <label class="font-weight-bold">Rodzaj cen</label>
@@ -50,7 +50,7 @@
                 <div class="col-lg-2 ">
                     <label class="font-weight-bold" asp-for="CategoryName">Kategoria</label>
                     @*<input id="CategoryName" class="form-control" asp-for="CategoryName" />*@
-                    <select  id="CategoryName" asp-for="CategoryName" class="custom-select custom-select-sm" asp-items="@Model.CategoryList"></select>
+                    <select id="CategoryName" asp-for="CategoryName" class="custom-select custom-select-sm" asp-items="@Model.CategoryList"></select>
                 </div>
 
                 <div class="col-lg-2 ">
@@ -93,39 +93,39 @@
 
             @foreach (var p in Model.list2.Select((value, i) => new { i, value }))
             {
-            <tr>
-                <th scope="row">@(p.i+1)</th>
-                @*<td>@p.value.Key.Name  </td>*@
-            <td>
-               
-
-                            <form asp-action="ProductRankPanel" asp-controller="Rank">
-                                <input type="hidden" value="@p.value.Key.ProductId" class="ProductRankValue" />
-                                <input type="button" value=" @p.value.Key.Name" class="btn btn-light ProductRank" />
-                            </form>
+                <tr>
+                    <th scope="row">@(p.i+1)</th>
+                    @*<td>@p.value.Key.Name  </td>*@
+                    <td>
 
 
-                        </td>
-                <td>@p.value.Key.Product_Price.Price</td>
-                @*<td><a class="btn btn-primary ShopRank" asp-action="ShopRankPanel" asp-controller="Rank" asp-route-ShopId="@p.value.Key.ShopId" >@p.value.Key.Shop.Name</a></td>*@
-                <td>
-                    <form asp-action="ShopRankPanel" asp-controller="Rank">
-                        <input type="hidden" value="@p.value.Key.ShopId" class="ShopRankValue" />
-                        <input type="button" value="@p.value.Key.Shop.Name" class="btn btn-primary ShopRank" />
-                    </form>
-                </td>
-                <td>@p.value.Value</td>
-                <td>
-                    <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">
-                        <select style="max-width:130px;" class="custom-select CartTypeForShoppingCart">
-                            <option value="0">Dzień</option>
-                            <option value="4">Poszukiwane</option>
-                        </select>
-                        <input class="ProdcutIdForShoppingCart" type="hidden" value="@p.value.Key.ProductId" />
-                        <input class="btn btn-sm btn-warning" id="AddProductToShoppingCart" value="Dodaj" />
-                    </form>
-                </td>
-            </tr>
+                        <form asp-action="ProductRankPanel" asp-controller="Rank">
+                            <input type="hidden" value="@p.value.Key.ProductId" class="ProductRankValue" />
+                            <input type="button" value=" @p.value.Key.Name" class="btn btn-light ProductRank" />
+                        </form>
+
+
+                    </td>
+                    <td>@p.value.Key.Product_Price</td>
+                    @*<td><a class="btn btn-primary ShopRank" asp-action="ShopRankPanel" asp-controller="Rank" asp-route-ShopId="@p.value.Key.ShopId" >@p.value.Key.Shop.Name</a></td>*@
+                    <td>
+                        <form asp-action="ShopRankPanel" asp-controller="Rank">
+                            <input type="hidden" value="@p.value.Key.ShopId" class="ShopRankValue" />
+                            <input type="button" value="@p.value.Key.Shop.Name" class="btn btn-primary ShopRank" />
+                        </form>
+                    </td>
+                    <td>@p.value.Value</td>
+                    <td>
+                        <form asp-action="AddProductToShoppingCart" asp-controller="Cart" method="get">
+                            <select style="max-width:130px;" class="custom-select CartTypeForShoppingCart">
+                                <option value="0">Dzień</option>
+                                <option value="4">Poszukiwane</option>
+                            </select>
+                            <input class="ProdcutIdForShoppingCart" type="hidden" value="@p.value.Key.ProductId" />
+                            <input class="btn btn-sm btn-warning" id="AddProductToShoppingCart" value="Dodaj" />
+                        </form>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

@@ -25,7 +25,7 @@
                             <tr>
                                 <th scope="row">@(p.i+1)</th>
                                 <td>@p.value.product.Name</td>
-                                <td>@p.value.product.Product_Price.Price</td>
+                                <td>@p.value.product.Product_Price</td>
                                 <td>@p.value.product.Shop.Name</td>
                                 <td>
                                     <form asp-action="RemoveProductFromCart" asp-controller="Cart">

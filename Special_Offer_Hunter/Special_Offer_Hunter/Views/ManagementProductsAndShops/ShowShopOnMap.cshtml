@@ -73,10 +73,9 @@
 <input id="Lon" type="hidden" value=""  />
 
 
-<div class="col col-lg-12">
     <div class="row">
         <div class="col col-lg-12">
-            <div id='map' class='map'></div>
+            <div id='map' class='map' style="min-height:320px; min-width:568px;"></div>
         </div>
 
 
@@ -84,7 +83,7 @@
 
 
 
-</div>
+
 
 
 <input id="myTomTomKey" type="hidden" value="@ViewData["MyTomTomKey"]" />
@@ -166,6 +165,12 @@
         popup.setLngLat(lngLat);
         marker.setPopup(popup);
         marker.togglePopup();
+
+
+      var button2=  document.getElementById('LocalizationD');
+        button2.disabled = false;
+
+
     }
 
 

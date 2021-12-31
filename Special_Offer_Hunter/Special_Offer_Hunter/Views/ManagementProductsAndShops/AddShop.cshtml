@@ -15,33 +15,45 @@
 
 
 
-<div class="container" id="AddShop">
+<div class="container-fluid" id="AddShop">
     <div class="col col-lg-12 text-center">
         <h1>Dodaj sklep</h1>
     </div>
+     <div class="col col-lg-2">
 
-    <div class="col col-lg-4">
+    </div>
+    <div class="col col-lg-8">
         <form asp-action="AddShop" asp-controller="ManagementProductsAndShops" method="post">
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
             <h2>Dane podstawowe    </h2>
 
             <div class="col col-lg-12">
+
                 <label class="font-weight-bold">Nazwa sklepu</label>
                 <input type="text" id="ShopNameAutoComplete" class="form-control" asp-for="shop.Name" />
+                <span asp-validation-for="shop.Name" class="text-danger"></span>
             </div>
             <div class="col col-lg-12">
+
+
                 <label class="font-weight-bold">Właściciel</label>
                 <input id="OwnerNameAutoComplete" class="form-control" asp-for="shop.ApplicationUser.UserName" />
+                <span asp-validation-for="shop.ApplicationUser.UserName" class="text-danger"></span>
             </div>
             <h2>Lokalizacja</h2>
-            <div class="col col-lg-12">
+            <div class="row">
+
                 <div class="col col-lg-12" id="ShowShopMap">
 
                 </div>
 
+
             </div>
+
             <div class="col col-lg-12 text-center">
 
-                <input type="button" id="LocalizationData" class="btn btn-primary" value="Pokaż dane lokalizacji" />
+                <input type="button" id="LocalizationD" class="btn btn-primary" value="Pokaż dane lokalizacji" />
+                <span asp-validation-for="LongitudeText" class="text-danger"></span>
             </div>
             <input id="ShopLatitude" class="form-control" type="hidden" asp-for="LatitudeText" />
             <input id="ShopLongitude" class="form-control" type="hidden" asp-for="LongitudeText" />
@@ -54,7 +66,7 @@
 
                 <div class="col col-lg-12">
                     <label class="font-weight-bold">Numer domu</label>
-                    <input class="form-control" asp-for="ShopLocation.Number" />
+                    <input class="form-control" asp-for="ShopLocation.Number" readonly />
                 </div>
 
                 <div class="col col-lg-12">
@@ -63,19 +75,19 @@
                 </div>
                 <div class="col col-lg-12">
                     <label class="font-weight-bold">Kod pocztowy</label>
-                    <input class="form-control" asp-for="ShopLocation.PostalCode" />
+                    <input class="form-control" asp-for="ShopLocation.PostalCode" readonly />
                 </div>
                 <div class="col col-lg-12">
                     <label class="font-weight-bold">Kraj</label>
-                    <input class="form-control" asp-for="ShopLocation.Country" />
+                    <input class="form-control" asp-for="ShopLocation.Country" readonly />
                 </div>
                 <div class="col col-lg-12">
                     <label class="font-weight-bold">Miasto</label>
-                    <input class="form-control" asp-for="ShopLocation.City" />
+                    <input class="form-control" asp-for="ShopLocation.City" readonly/>
                 </div>
                 <div class="col col-lg-12">
                     <label class="font-weight-bold">Ulica</label>
-                    <input class="form-control" asp-for="ShopLocation.Street" />
+                    <input class="form-control" asp-for="ShopLocation.Street" readonly/>
                 </div>
             </div>
             <div class="col col-lg-12">
@@ -86,7 +98,7 @@
 
         </form>
     </div>
-    <div class="col col-lg-4">
+    <div class="col col-lg-2">
 
     </div>
 </div>
@@ -104,6 +116,14 @@
 
         $(document).ready(function ()
         {
+
+
+
+
+            const button = document.getElementById('LocalizationD');
+            button.disabled = true;
+
+
 
              function ShowShopOnMap()
             {
@@ -180,9 +200,10 @@
 
 
 
-    $('#LocalizationData').on('click', function (e)
+    $('#LocalizationD').on('click', function (e)
             {
-
+        
+        button.disabled = true;
         SendCoordinates();
 
             });

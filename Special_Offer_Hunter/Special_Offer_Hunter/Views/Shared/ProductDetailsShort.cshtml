@@ -3,18 +3,18 @@
     @if (Model.Code != null && Model.Code != "")
     {
         <div class="col col-lg-12">
-            <h4>BarCode :  @Model.Code</h4>
+            <h4 id="GetBarCode">BarCode :  @Model.Code</h4>
         </div>
 
         <div class="col col-lg-12">
             @if (Model.Brand != null && Model.Brand != "")
             {
-                <h4>Marka :   @Model.Brand</h4>
+                <h4 id="GetBrand">Marka :   @Model.Brand</h4>
             }
         </div>
 
         <div class="col col-lg-12">
-            <h5>Opis : @Model.Description</h5>
+            <h5 id="GetDescription">Opis : @Model.Description</h5>
         </div>
 
 

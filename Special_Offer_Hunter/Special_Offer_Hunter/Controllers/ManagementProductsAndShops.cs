@@ -73,11 +73,6 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
-
-
-
-
-
         [HttpPost]
         public JsonResult AutoCompleteOwnerName(string prefix)
         {
@@ -87,8 +82,6 @@ namespace Special_Offer_Hunter.Controllers
 
             return Json(customers);
         }
-
-
 
         public async Task<PartialViewResult> ShowShopOnMap()
         {
@@ -107,20 +100,6 @@ namespace Special_Offer_Hunter.Controllers
 
             return PartialView("ShowShopOnMap", model);
         }
-
-
-
-
-
-
-
-
-        //public IActionResult AddShop2()
-        //{
-        //    return View("AddShop2");
-        //}
-
-
         public IActionResult AddShop()
         {
             AddShopViewModel model = new AddShopViewModel();
@@ -133,27 +112,93 @@ namespace Special_Offer_Hunter.Controllers
         {
 
             bool check = false;
-            check = repository.AddShop(model);
 
-            if (!check)
+            if (model.shop.Name == null || model.shop.Name == "")
             {
-                return View("AddShop", model);
+                ModelState.AddModelError("shop.Name", "Uzupełnij nazwę sklepu");
+            }
+
+            if (model.shop.ApplicationUser.UserName == null || model.shop.ApplicationUser.UserName == "")
+            {
+                ModelState.AddModelError("shop.ApplicationUser.UserName", "Wyszukaj właściciela");
+            }
+
+            if (ModelState.IsValid)
+            {
+                check = repository.AddShop(model);
+
+                if (!check)
+                {
+                    return View("AddShop", model);
+                }
+                else
+                {
+                    string Message = "Pomyślnie dodano nowy sklep " + model.shop.Name;
+                    return View("Error_1", Message);
+                }
+
             }
             else
             {
-                string Message = "Pomyślnie dodano nowy sklep " + model.shop.Name;
-                return View("Error_1", Message);
+                return View("AddShop", model);
             }
+
+
+
+
+
 
 
 
         }
 
-
-
         public IActionResult AddProduct()
         {
-            return View();
+            AddNewProductViewModel model = new AddNewProductViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct(AddNewProductViewModel model)
+        {
+            //bool check = false;
+
+            //if (model.shop.Name == null || model.shop.Name == "")
+            //{
+            //    ModelState.AddModelError("shop.Name", "Uzupełnij nazwę sklepu");
+            //}
+
+            //if (model.shop.ApplicationUser.UserName == null || model.shop.ApplicationUser.UserName == "")
+            //{
+            //    ModelState.AddModelError("shop.ApplicationUser.UserName", "Wyszukaj właściciela");
+            //}
+
+
+
+            bool check = repository.AddProduct(model);
+
+
+
+            if (ModelState.IsValid)
+            {
+
+
+                //if (!check)
+                //{
+                //    return View("AddShop", model);
+                //}
+                //else
+                //{
+                string Message = "Pomyślnie dodano nowy produkt ";
+                return View("Error_1", Message);
+                //}
+
+            }
+            else
+            {
+                return View("AddShop", model);
+            }
+
         }
 
         public IActionResult RemoveShop()
