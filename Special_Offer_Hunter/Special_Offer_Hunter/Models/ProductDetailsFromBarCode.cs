@@ -35,6 +35,7 @@ namespace Special_Offer_Hunter.Models
 
                 string status = (string)o["status_verbose"];
                 string code = (string)o["code"];
+               
                 model.Code = code;
                 if (status== "product not found")
                 {
@@ -45,7 +46,8 @@ namespace Special_Offer_Hunter.Models
                 {
                     JArray array = (JArray)o["product"]["_keywords"];
                     string brands = (string)o["product"]["brands"];
-
+                    string productName = (string)o["product"]["product_name"];
+                    string imageUrl = (string)o["product"]["image_front_small_url"];
                     model.Description = "";
                     model.Brand = brands;                 
 

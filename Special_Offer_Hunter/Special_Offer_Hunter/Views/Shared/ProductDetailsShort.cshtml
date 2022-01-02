@@ -1,5 +1,5 @@
 ﻿@model ProductDetailsViewModel
-<div class="row" style="background-color:lightcyan;">
+<div id="DataChange" class="row" style="background-color:lightcyan;">
     @if (Model.Code != null && Model.Code != "")
     {
         <div class="col col-lg-12">
@@ -26,5 +26,13 @@
         <h4>Nie udało się odczytać kodu spróbuj jeszcze raz</h4>
     }
 
-<input type="hidden" id="BarCodeProductDS" value=@Model.Code.ToString()>
+    <textarea id="DescriptionProductDS"  style="display:none;"   >@Model.Description</textarea>   
+    <textarea id="BrandProductDS"  style="display:none;"   >@Model.Brand</textarea>
+    <input id="BarCodeProductDS" type="hidden" value=@Model.Code>
+ 
 </div>
+
+
+
+
+

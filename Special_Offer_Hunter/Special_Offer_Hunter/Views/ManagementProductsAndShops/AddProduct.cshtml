@@ -64,7 +64,7 @@
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Opis</label>
-                            <input class="form-control" asp-for="Description" />
+                            <input id="DescriptionR" class="form-control" asp-for="Description" />
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Waga</label>
@@ -80,16 +80,16 @@
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Kategoria</label>
                             <input class="form-control" asp-for="Category" />
-                            <input class="form-control" asp-for="CategoryId" />
+                            @*<input class="form-control" asp-for="CategoryId" />*@
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Kod kreskowy</label>
-                            <input class="form-control" asp-for="Barcode" />
+                            <input id="BarCodeR" class="form-control" asp-for="Barcode" />
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Firma</label>
-                            <input class="form-control" asp-for="Company" />
-                            <input class="form-control" asp-for="CompanyId" />
+                            <input id="CompanyR" class="form-control" asp-for="Company" />
+                            @*<input class="form-control" asp-for="CompanyId" />*@
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Sklep</label>
@@ -146,32 +146,107 @@
 
 @section Scripts
 {
-    <script src="~/webcamjs/webcam.js"></script>
-    <script>
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
 
        
 
 
+        $('#BarcodeResult').on('DOMSubtreeModified', function () {
+
+            setTimeout(function () {
+
+
+                var barcodeVal = $(this).find('#GetBarCode').val();
+
+
+                var code = $('#BarCodeProductDS').val();
+                var descripton = $('#DescriptionProductDS').val();
+                var company = $('#BrandProductDS').val();
+
+                $('#BarCodeR').val(code);
+                $('#DescriptionR').val(descripton);
+                $('#CompanyR').val(company);
+
+
+               
+
+            }, 1000);
 
 
 
-            Webcam.set({
-                width: 320,
-                height: 240,
-                image_format: 'jpeg',
-                jpeg_quality: 90
+
+
+        });
+
+    });
+</script>
+
+
+   
+   
+
+
+
+
+    <script src="~/webcamjs/webcam.js"></script>
+    <script>
+
+
+
+
+
+
+
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+
+
+        Webcam.attach('#LiveCamera');
+
+
+
+
+
+        function CaptureSnapshot() {
+            Webcam.snap(function (data) {
+                // display results in page
+                document.getElementById('results').innerHTML = '<img src="' + data + '"/>';
+                // Send image data to the controller to store locally or in database
+                Webcam.upload(data,
+                    '/BarCode/CaptureImage',
+                    function (code, text) {
+
+                        $('#BarcodeResult').empty();
+                        $('#BarcodeResult').html(text);
+
+
+
+
+
+
+
+
+                    });
             });
 
 
-            Webcam.attach('#LiveCamera');
 
+        }
 
-            function SetForm1() {
+        $('#ScanBarCode').on('click', '#CaptureSnapshot', function () {
 
-
-                alert("run");
-
-                //var barcode = document.getElementById('BarcodeResult').getElementById('GetBarcode').value;
+            CaptureSnapshot();
 
 
 
@@ -179,68 +254,17 @@
 
 
 
+        });
 
 
 
 
-            }
-
-            $('#ScanBarCode').on('change', '#GetBarCode', function (e) {
-
-
-                alert("start");
-
-                var barcode = $('#GetBarCode').val();
-                var brand = $('#GetBrand').val();
-                var description = $('#GetDescription').val();
-
-
-                //alert(barcode);
-                alert(brand);
-                alert(description);
 
 
 
 
-            });
 
 
-            function CaptureSnapshot() {
-                Webcam.snap(function (data) {
-                    // display results in page
-                    document.getElementById('results').innerHTML = '<img src="' + data + '"/>';
-                    // Send image data to the controller to store locally or in database
-                    Webcam.upload(data,
-                        '/BarCode/CaptureImage',
-                        function (code, text) {
-
-                            $('#BarcodeResult').empty();
-                            $('#BarcodeResult').html(text);
-
-
-
-                        });
-                });
-
-
-                SetForm1();
-            }
-
-            $('#ScanBarCode').on('click', '#CaptureSnapshot', function () {
-
-                CaptureSnapshot();
-
-                var barcode = $('#GetBarCode').val();
-                var brand = $('#GetBrand').val();
-                var description = $('#GetDescription').val();
-
-
-                //alert(barcode);
-                alert(brand);
-                alert(description);
-
-
-            });
     </script>
 
 
