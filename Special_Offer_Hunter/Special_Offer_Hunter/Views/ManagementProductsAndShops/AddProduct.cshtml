@@ -47,6 +47,12 @@
                     </div>
                 </div>
 
+
+                <div class="col col-lg-4">
+
+                </div>
+
+
                 <div class="col col-md-12">
 
 
@@ -56,7 +62,7 @@
 
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Nazwa</label>
-                            <input class="form-control" asp-for="Name" />
+                            <input id="ProductNameResult" class="form-control" asp-for="Name" />
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Cena</label>
@@ -70,17 +76,15 @@
                             <label class="font-weight-bold">Waga</label>
                             <input class="form-control" asp-for="Weight" />
                         </div>
-                        <div class="col col-lg-12">
-                            <label class="font-weight-bold">Rozmiar</label>
-                            <input class="form-control" asp-for="Height" />
-                        </div>
+                       
                         <div class="col col-lg-12">
                             <h2>Zdjęcie</h2>
+                            <img id="ProductImage" style=" max-height: 480px;max-width: 640px;" src="">
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Kategoria</label>
-                            <input class="form-control" asp-for="Category" />
-                            @*<input class="form-control" asp-for="CategoryId" />*@
+                        
+                            <select asp-for="Category" class="custom-select custom-select-sm" asp-items="@Model.Categories"></select>
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Kod kreskowy</label>
@@ -88,13 +92,14 @@
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Firma</label>
-                            <input id="CompanyR" class="form-control" asp-for="Company" />
-                            @*<input class="form-control" asp-for="CompanyId" />*@
+                            <input id="CompanyAutoComplete" class="form-control" asp-for="Company" />
+                            <input id="CompanyId" class="form-control" asp-for="CompanyId" />
+
                         </div>
                         <div class="col col-lg-12">
-                            <label class="font-weight-bold">Sklep</label>
-                            <input class="form-control" asp-for="Shop" />
-                            <input class="form-control" asp-for="ShopId" />
+                            <label class="font-weight-bold">Sklep</label>                         
+                            <input id="ShopAutoComplete" class="form-control" asp-for="Shop" />
+                            <input id="ShopId" class="form-control" asp-for="ShopId" />
                         </div>
                         <div class="col col-lg-12">
 
@@ -149,48 +154,140 @@
 
 
 
-<script>
+    <script>
 
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
 
-       
 
 
-        $('#BarcodeResult').on('DOMSubtreeModified', function () {
 
-            setTimeout(function () {
+            $('#BarcodeResult').on('DOMSubtreeModified', function () {
 
-
-                var barcodeVal = $(this).find('#GetBarCode').val();
+                setTimeout(function () {
 
 
-                var code = $('#BarCodeProductDS').val();
-                var descripton = $('#DescriptionProductDS').val();
-                var company = $('#BrandProductDS').val();
+                    var barcodeVal = $(this).find('#GetBarCode').val();
 
-                $('#BarCodeR').val(code);
-                $('#DescriptionR').val(descripton);
-                $('#CompanyR').val(company);
+                    var prodName = $('#ProductName').val();
+                    var prodImage = $('#ProductImageUrl').val();
+
+                    var code = $('#BarCodeProductDS').val();
+                    var descripton = $('#DescriptionProductDS').val();
+                    var company = $('#BrandProductDS').val();
+
+                    $('#BarCodeR').val(code);
+                    $('#DescriptionR').val(descripton);
+                    $('#CompanyR').val(company);
+
+                    $('#ProductNameResult').val(prodName);
+                    $('#ProductImage').attr("src", prodImage);
 
 
-               
+                }, 1000);
 
-            }, 1000);
+
+
+
+
+            });
+
+
+
+
+              $("#CompanyAutoComplete").autocomplete(
+                {
+
+             source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteCompany", "ManagementProductsAndShops")',
+                            data: { "prefix": document.getElementById('CompanyAutoComplete').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation()
+                        var text = i.item.value;
+                        text = text.substring();
+
+                        $("#CompanyAutoComplete").text(i.item.value);
+
+
+
+                    },
+                    minLength: 1
+                });
+
+
+        $("#ShopAutoComplete").autocomplete(
+                {
+
+             source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteShop", "ManagementProductsAndShops")',
+                            data: { "prefix": document.getElementById('ShopAutoComplete').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation()
+                        $("#ShopAutoComplete").text(i.item.value);
+
+
+
+                    },
+                    minLength: 1
+                });
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
         });
-
-    });
-</script>
+    </script>
 
 
-   
-   
+
+
 
 
 
@@ -256,11 +353,8 @@
 
         });
 
-
-
-
-
-
+        /////AutoComplete
+      
 
 
 

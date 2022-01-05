@@ -26,10 +26,12 @@
         <h4>Nie udało się odczytać kodu spróbuj jeszcze raz</h4>
     }
 
-    <textarea id="DescriptionProductDS"  style="display:none;"   >@Model.Description</textarea>   
-    <textarea id="BrandProductDS"  style="display:none;"   >@Model.Brand</textarea>
+    <textarea id="DescriptionProductDS" style="display:none;">@Model.Description</textarea>
+    <textarea id="BrandProductDS" style="display:none;">@Model.Brand</textarea>
     <input id="BarCodeProductDS" type="hidden" value=@Model.Code>
- 
+    <textarea id="ProductName" style="display:none;">@Model.ProductName</textarea>
+    <textarea id="ProductImageUrl" style="display:none;">@Model.ProductImageUrl</textarea>
+
 </div>
 
 

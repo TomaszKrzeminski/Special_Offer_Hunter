@@ -345,6 +345,16 @@ namespace Special_Offer_Hunter.Models
             SecondNumber = "Podaj dodatkowy numer jeśli istnieje";
         }
 
+     public   string GetShortLocationInfo()
+        {
+
+            string text = "";
+            text = Country + " " + City + " " + Street + " " + Number;
+
+            return text;
+        }
+
+
         public int LocationId { get; set; }
         public string Name { get; set; }
         public double Longitude { get; set; }

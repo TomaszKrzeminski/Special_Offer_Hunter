@@ -286,7 +286,23 @@ namespace Special_Offer_Hunter.Models
 
 
             }
+            void SeedCompany(Company company)
+            {
+                company.Address = "Seed Example";
+                context.Companies.Add(company);
+                context.SaveChanges();
 
+            }
+
+            void SeedProductToCompany(int ProductId, string CompanyName)
+            {
+
+                Product product = context.Products.Find(ProductId);
+                Company company = context.Companies.Where(x => x.Name == CompanyName).FirstOrDefault();
+                company.Products.Add(product);
+                context.SaveChanges();
+
+            }
 
             if (context.Database.EnsureCreated())
             {
@@ -319,6 +335,15 @@ namespace Special_Offer_Hunter.Models
                     SeedLocalization("AlfaGrudziądz", 53.484, 18.745, "86-100", "Poland", "Grudziądz", "Centrum", 83, "Brak");
                     SeedCategories();
 
+                    List<string> listCompany = new List<string>() { "Monster", "Nestle", "Winterfresh", "Blend-a-Med", "Vitalsss", "Lech", "Inka" };
+
+
+                    foreach (var item in listCompany)
+                    {
+                        SeedCompany(new Company() { Name = item });
+                    }
+
+
 
                     void SeedProductsForShop(string ShopName, List<double> Prices, List<bool> SpecialOffer)
                     {
@@ -327,31 +352,35 @@ namespace Special_Offer_Hunter.Models
                         SeedAddCodeToProduct2(p1.ProductId, id);
                         //SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4009900382250");
                         SeedAddProductToCategory(p1, "Przekąski");
+                        SeedProductToCompany(p1.ProductId, "Winterfresh");
 
                         Product p2 = SeedProducts("Blend-a-Med 3D White Fresh Cool Water Wybielajca");
                         int id1 = SeedCode("4015600620035", "EAN13", "", "Winterfresh", "Blend-a-Med 3D White Fresh Cool Water Wybielajca");
                         SeedAddCodeToProduct2(p2.ProductId, id1);
                         //SeedAddCodeToProduct("Winterfresh Original Guma Do Ucia Bez Cukru 35 G", "4015600620035");
                         SeedAddProductToCategory(p2, "Kosmetyki");
+                        SeedProductToCompany(p2.ProductId, "Blend-a-Med");
 
                         Product p3 = SeedProducts("Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)");
                         int id2 = SeedCode("5906204007874", "EAN13", "", "Vitalsss plus", "Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)");
                         SeedAddCodeToProduct2(p3.ProductId, id2);
                         ////SeedAddCodeToProduct("Dwuwarstwowe tabletki musujące o smaku pomarańczowym z sokiem owocowym - Vitalsss plus - 100 g (25 x 4 g)", "5906204007874");
                         SeedAddProductToCategory(p3, "Napoje");
+                        SeedProductToCompany(p3.ProductId, "Vitalsss");
 
                         Product p4 = SeedProducts("Kawa Inka 200G");
                         int id3 = SeedCode("5901154041497", "EAN13", "", "Inka", "Kawa Inka 200G");
                         //SeedAddCodeToProduct("Kawa Inka 200G", "5901154041497");
                         SeedAddCodeToProduct2(p4.ProductId, id3);
                         SeedAddProductToCategory(p4, "Napoje");
+                        SeedProductToCompany(p4.ProductId, "Inka");
 
                         Product p5 = SeedProducts("Lech-shandy-500ml-poland");
                         int id4 = SeedCode("5901359034560", "EAN13", "", "LECH", "Lech - shandy - 500ml - poland");
                         SeedAddCodeToProduct2(p5.ProductId, id4);
                         //SeedAddCodeToProduct("Lech-shandy-500ml-poland", "5901359034560");
                         SeedAddProductToCategory(p5, "Napoje");
-
+                        SeedProductToCompany(p5.ProductId, "Lech");
 
 
                         List<Product> list = new List<Product>() { p1, p2, p3, p4, p5 };

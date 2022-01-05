@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,20 +16,23 @@ namespace Special_Offer_Hunter.Models
             Name = "Dodaj nazwe";
             Price = 0;
             Description = "Jakiś opis";
-            Weight = 10;
-            Height = 20;
+            Weight = 0;
+            
+            Category = "";
         }
-       
+
         public string Name { get; set; }
         public double Price { get; set; }
         public string Description { get; set; }
 
         public double Weight { get; set; }
-        public double Height { get; set; }
+        //public double Height { get; set; }
 
         public string Picture { get; set; }
 
-        public string Category { get; set; }
+        public SelectList Categories { get; set; }
+
+        public string Category{ get; set; }
 
         public int CategoryId { get; set; }
 
@@ -38,11 +42,11 @@ namespace Special_Offer_Hunter.Models
 
         public int CompanyId { get; set; }
 
-        public string Shop { get; set; }     
-        
-        public int ShopId { get; set; }
-                      
+        public string Shop { get; set; }
 
-       
+        public int ShopId { get; set; }
+
+
+
     }
 }

@@ -9,21 +9,21 @@ namespace Special_Offer_Hunter.Models
 {
     public class ProductDetailsFromBarCode
     {
-      public  string BarCode { get; set; }
-      public  string ProductName { get; set; }
+        public string BarCode { get; set; }
+        public string ProductName { get; set; }
 
-      public async Task<ProductDetailsViewModel> GetProductDetails(string barcode)
+        public async Task<ProductDetailsViewModel> GetProductDetails(string barcode)
         {
 
             ProductDetailsViewModel model = new ProductDetailsViewModel();
-            model.Description="Nie udało się znaleźć żadnych informacji o produkcie";
+            model.Description = "Nie udało się znaleźć żadnych informacji o produkcie";
             model.Code = "";
-            model.Brand = ""; 
-            if(barcode== "Nie odczytano spróbuj jeszcze raz")
+            model.Brand = "";
+            if (barcode == "Nie odczytano spróbuj jeszcze raz")
             {
                 return model;
-            }                 
-            
+            }
+
             try
             {
                 var httpClient = new HttpClient();
@@ -35,9 +35,9 @@ namespace Special_Offer_Hunter.Models
 
                 string status = (string)o["status_verbose"];
                 string code = (string)o["code"];
-               
+
                 model.Code = code;
-                if (status== "product not found")
+                if (status == "product not found")
                 {
 
 
@@ -49,7 +49,9 @@ namespace Special_Offer_Hunter.Models
                     string productName = (string)o["product"]["product_name"];
                     string imageUrl = (string)o["product"]["image_front_small_url"];
                     model.Description = "";
-                    model.Brand = brands;                 
+                    model.Brand = brands;
+                    model.ProductName = productName;
+                    model.ProductImageUrl = imageUrl;
 
 
                     if (array != null)
@@ -60,14 +62,14 @@ namespace Special_Offer_Hunter.Models
 
                         }
                     }
-                }                        
-                                    
-                      
+                }
+
+
 
 
                 return model;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return model;
             }

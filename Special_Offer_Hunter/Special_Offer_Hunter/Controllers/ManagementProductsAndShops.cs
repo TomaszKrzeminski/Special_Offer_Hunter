@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Special_Offer_Hunter.Models;
 
@@ -39,6 +40,28 @@ namespace Special_Offer_Hunter.Controllers
                 this.GetUser = GetUser;
             }
         }
+
+        [HttpPost]
+        public JsonResult AutoCompleteCompany(string prefix)
+        {
+            var companies = repository.GetCompanyNamesAutocomplete(prefix);
+
+            //var jsonResult = shops.Select(x => new { text = x });
+
+            return Json(companies);
+        }
+
+
+        [HttpPost]
+        public JsonResult AutoCompleteShop(string prefix)
+        {
+            var shops = repository.GetShopNamesAutocomplete(prefix);
+
+            //var jsonResult = shops.Select(x => new { text = x });
+
+            return Json(shops);
+        }
+
 
         [HttpPost]
         public JsonResult AutoCompleteShopName(string prefix)
@@ -152,9 +175,22 @@ namespace Special_Offer_Hunter.Controllers
 
         }
 
+
+
+
+
+
+        SelectList GetProductCategories()
+        {
+            List<string> list2 = repository.GetCategories();
+            SelectList list = new SelectList(list2.ToList());
+            return list;
+        }
+
         public IActionResult AddProduct()
         {
             AddNewProductViewModel model = new AddNewProductViewModel();
+            model.Categories = GetProductCategories();
             return View(model);
         }
 

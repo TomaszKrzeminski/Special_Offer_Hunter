@@ -26,6 +26,8 @@ namespace Special_Offer_Hunter.Models
     {
         bool AddShop(AddShopViewModel model);
         bool AddProduct(AddNewProductViewModel model);
+        List<string> GetShopNamesAutocomplete(string Name);
+        List<string> GetCompanyNamesAutocomplete(string Name);
         List<string> GetShopNames(string Name);
         List<string> GetOwnerNames(string Name);
         Dictionary<string, string> GetOwnerNames2(string Name);
@@ -1665,7 +1667,7 @@ namespace Special_Offer_Hunter.Models
             {
                 Product product = new Product();
                 product.Name = model.Name;
-                product.Height = model.Height;
+                //product.Height = model.Height;
                 product.Description = model.Description;
                 product.Weight = model.Weight;
                 product.Product_Price = model.Price;
@@ -1705,6 +1707,35 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        public List<string> GetShopNamesAutocomplete(string Name)
+        {
+            List<string> list = new List<string>();
+            try
+            {
+                list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.Name+" "+x.Location.GetShortLocationInfo()+""+x.ShopId).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<string>();
+            }
+        }
+
+        public List<string> GetCompanyNamesAutocomplete(string Name)
+        {
+            List<string> list = new List<string>();
+            try
+            {
+
+                list = context.Companies.Where(x => x.Name.StartsWith(Name)).Select(x => x.Name+" "+x.Address+" "+x.CompanyId).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<string>();
             }
         }
     }
