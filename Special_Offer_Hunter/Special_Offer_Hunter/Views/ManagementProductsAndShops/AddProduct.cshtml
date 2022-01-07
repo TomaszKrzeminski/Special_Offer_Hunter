@@ -76,14 +76,14 @@
                             <label class="font-weight-bold">Waga</label>
                             <input class="form-control" asp-for="Weight" />
                         </div>
-                       
+
                         <div class="col col-lg-12">
                             <h2>Zdjęcie</h2>
                             <img id="ProductImage" style=" max-height: 480px;max-width: 640px;" src="">
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Kategoria</label>
-                        
+
                             <select asp-for="Category" class="custom-select custom-select-sm" asp-items="@Model.Categories"></select>
                         </div>
                         <div class="col col-lg-12">
@@ -97,7 +97,7 @@
 
                         </div>
                         <div class="col col-lg-12">
-                            <label class="font-weight-bold">Sklep</label>                         
+                            <label class="font-weight-bold">Sklep</label>
                             <input id="ShopAutoComplete" class="form-control" asp-for="Shop" />
                             <input id="ShopId" class="form-control" asp-for="ShopId" />
                         </div>
@@ -222,8 +222,7 @@
                     },
                     select: function (e, i) {
                         event.stopPropagation()
-                        var text = i.item.value;
-                        text = text.substring();
+
 
                         $("#CompanyAutoComplete").text(i.item.value);
 
@@ -260,6 +259,11 @@
                     },
                     select: function (e, i) {
                         event.stopPropagation()
+
+
+
+
+
                         $("#ShopAutoComplete").text(i.item.value);
 
 
@@ -270,7 +274,45 @@
 
 
 
+             @*$("#ShopAutoComplete").autocomplete(
+                {
 
+             source: function (request, response) {
+                        $.ajax({
+
+                            url: '@Url.Action("AutoCompleteShop", "ManagementProductsAndShops")',
+                            data: { "prefix": document.getElementById('ShopAutoComplete').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation()
+
+
+
+
+
+                        $("#ShopAutoComplete").text(i.item.value);
+
+
+
+                    },
+                    minLength: 1
+                });*@
 
 
 
@@ -353,8 +395,8 @@
 
         });
 
-        /////AutoComplete
-      
+                /////AutoComplete
+
 
 
 

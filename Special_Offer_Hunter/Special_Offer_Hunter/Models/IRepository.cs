@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
+
 namespace Special_Offer_Hunter.Models
 {
     public interface IRepository
@@ -1549,6 +1550,19 @@ namespace Special_Offer_Hunter.Models
 
         public List<string> GetShopNames(string Name)
         {
+            //try
+            //{
+
+            //    List<string> list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.Name).ToList();
+            //    return list;
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    return new List<string>();
+            //}
+
+
             try
             {
 
@@ -1560,6 +1574,8 @@ namespace Special_Offer_Hunter.Models
             {
                 return new List<string>();
             }
+
+
         }
 
 
@@ -1674,7 +1690,7 @@ namespace Special_Offer_Hunter.Models
                 product.Last_ProductPrice = model.Price;
 
                 context.Products.Add(product);
-
+                context.SaveChanges();
 
 
 
@@ -1683,21 +1699,35 @@ namespace Special_Offer_Hunter.Models
 
 
                 //AddCompany
+                int CompanyId = Int32.Parse(model.Company.Substring(0, model.Company.IndexOf(" ")));
+                Company company = context.Companies.Find(CompanyId);
+                company.Products.Add(product);
 
-
-
-
-
+                context.SaveChanges();
 
                 ///
 
 
                 //AddCategory
 
+                int CategoryId = Int32.Parse(model.Category.Substring(0, model.Category.IndexOf(" ")));
+                Category category = context.Categories.Find(CategoryId);
+
+                ProductCategory prodCategory = new ProductCategory();
+                prodCategory.Product = product;
+                prodCategory.Category = category;
+                context.SaveChanges();
+
                 //
 
 
+                //AddShop
+                int ShopId = Int32.Parse(model.Shop.Substring(0, model.Shop.IndexOf(" ")));
+                Shop shop = context.Shops.Find(ShopId);
+                shop.Products.Add(product);
+                context.SaveChanges();
 
+                //
 
 
 
@@ -1715,13 +1745,16 @@ namespace Special_Offer_Hunter.Models
             List<string> list = new List<string>();
             try
             {
-                list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.Name+" "+x.Location.GetShortLocationInfo()+""+x.ShopId).ToList();
+                list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.ShopId + " " /*+ x.Location.GetShortLocationInfo() + ""*/ + x.Name).ToList();
                 return list;
             }
             catch (Exception ex)
             {
                 return new List<string>();
             }
+
+
+
         }
 
         public List<string> GetCompanyNamesAutocomplete(string Name)
@@ -1730,7 +1763,7 @@ namespace Special_Offer_Hunter.Models
             try
             {
 
-                list = context.Companies.Where(x => x.Name.StartsWith(Name)).Select(x => x.Name+" "+x.Address+" "+x.CompanyId).ToList();
+                list = context.Companies.Where(x => x.Name.StartsWith(Name)).Select(x => x.CompanyId + " " + x.Address + " " + x.Name).ToList();
                 return list;
             }
             catch (Exception ex)

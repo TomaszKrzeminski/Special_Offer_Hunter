@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Special_Offer_Hunter.Models;
 
 namespace Special_Offer_Hunter.Controllers
@@ -46,14 +47,14 @@ namespace Special_Offer_Hunter.Controllers
         {
             var companies = repository.GetCompanyNamesAutocomplete(prefix);
 
-            //var jsonResult = shops.Select(x => new { text = x });
+
 
             return Json(companies);
         }
 
 
         [HttpPost]
-        public JsonResult AutoCompleteShop(string prefix)
+        public JsonResult AutoCompleteShop1(string prefix)
         {
             var shops = repository.GetShopNamesAutocomplete(prefix);
 
@@ -68,13 +69,20 @@ namespace Special_Offer_Hunter.Controllers
         {
             var shops = repository.GetShopNames(prefix);
 
-            //var jsonResult = shops.Select(x => new { text = x });
+
 
             return Json(shops);
         }
 
 
+        [HttpPost]
+        public JsonResult AutoCompleteShop(string prefix)
+        {
+            var shops = repository.GetShopNamesAutocomplete(prefix);
 
+
+            return Json(shops);
+        }
 
 
         public async Task<IActionResult> ReverseGeocodingAsync(string Latitude, string Longitude)
@@ -194,24 +202,26 @@ namespace Special_Offer_Hunter.Controllers
             return View(model);
         }
 
+
+
+
+
+
+
+
+
+
+
         [HttpPost]
         public IActionResult AddProduct(AddNewProductViewModel model)
         {
-            //bool check = false;
-
-            //if (model.shop.Name == null || model.shop.Name == "")
-            //{
-            //    ModelState.AddModelError("shop.Name", "Uzupełnij nazwę sklepu");
-            //}
-
-            //if (model.shop.ApplicationUser.UserName == null || model.shop.ApplicationUser.UserName == "")
-            //{
-            //    ModelState.AddModelError("shop.ApplicationUser.UserName", "Wyszukaj właściciela");
-            //}
 
 
 
-            bool check = repository.AddProduct(model);
+
+
+
+
 
 
 
@@ -219,20 +229,25 @@ namespace Special_Offer_Hunter.Controllers
             {
 
 
-                //if (!check)
-                //{
-                //    return View("AddShop", model);
-                //}
-                //else
-                //{
-                string Message = "Pomyślnie dodano nowy produkt ";
-                return View("Error_1", Message);
-                //}
+                bool check = repository.AddProduct(model);
+
+                if (!check)
+                {
+                    return View("AddProduct", model);
+                }
+                else
+                {
+                    string Message = "Pomyślnie dodano nowy produkt ";
+                    return View("Error_1", Message);
+                }
+
+
+
 
             }
             else
             {
-                return View("AddShop", model);
+                return View("AddProduct", model);
             }
 
         }

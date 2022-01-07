@@ -146,6 +146,7 @@ namespace Special_Offer_Hunter.Models
             Checked = false;
             //Owner = new ApplicationUser();
             Create = DateTime.Now;
+            Location = new Location();
 
         }
         public int ShopId { get; set; }
@@ -343,6 +344,9 @@ namespace Special_Offer_Hunter.Models
         {
             Country = "Polska";
             SecondNumber = "Podaj dodatkowy numer jeśli istnieje";
+            City = "Miasto";
+            Street = "Brak";
+            Number = 0;
         }
 
      public   string GetShortLocationInfo()
