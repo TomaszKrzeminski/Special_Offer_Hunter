@@ -160,6 +160,7 @@ namespace Special_Offer_Hunter.Controllers
 
                 if (!check)
                 {
+
                     return View("AddShop", model);
                 }
                 else
@@ -216,32 +217,43 @@ namespace Special_Offer_Hunter.Controllers
         public IActionResult AddProduct(AddNewProductViewModel model)
         {
 
+            //            check
+
+            //             Kod kreskowy
+
+            //             Firma
+
+            //             Sklep
 
 
 
 
 
-
-
-
-
+            model.Categories = GetProductCategories();
             if (ModelState.IsValid)
             {
 
+                string message = repository.CheckIfNewProductExists(model.Barcode, model.Shop, model.Price);
 
-                bool check = repository.AddProduct(model);
 
-                if (!check)
+
+                if (message == "")
                 {
-                    return View("AddProduct", model);
+                    bool check = repository.AddProduct(model);
+                    if (!check)
+                    {
+                        return View("AddProduct", model);
+                    }
+                    else
+                    {
+                        string Message = "Pomyślnie dodano nowy produkt ";
+                        return View("Error_1", Message);
+                    }
                 }
                 else
                 {
-                    string Message = "Pomyślnie dodano nowy produkt ";
-                    return View("Error_1", Message);
+                    return View("Error_1", message);
                 }
-
-
 
 
             }

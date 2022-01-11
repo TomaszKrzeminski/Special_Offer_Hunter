@@ -48,11 +48,12 @@ namespace Special_Offer_Hunter.Models
                     string brands = (string)o["product"]["brands"];
                     string productName = (string)o["product"]["product_name"];
                     string imageUrl = (string)o["product"]["image_front_small_url"];
+                    string CodeCountry = (string)o["product"]["countries"];
                     model.Description = "";
                     model.Brand = brands;
                     model.ProductName = productName;
                     model.ProductImageUrl = imageUrl;
-
+                    model.CodeCountry = CodeCountry;
 
                     if (array != null)
                     {

@@ -38,9 +38,9 @@
                         <div class="col col-md-12">
                             <div style="max-width:320px;" id="BarcodeResult"></div>
                         </div>
-                        <div class="col col-md-12">
-                            <input id="SearchProductByFoundBarCode" class="btn btn-success" value="Poszukaj produktu" />
-                        </div>
+                        @*<div class="col col-md-12">
+                                <input id="SearchProductByFoundBarCode" class="btn btn-success" value="Poszukaj produktu" />
+                            </div>*@
 
                         <br />
                         <br />
@@ -63,10 +63,12 @@
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Nazwa</label>
                             <input id="ProductNameResult" class="form-control" asp-for="Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Cena</label>
                             <input class="form-control" asp-for="Price" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Opis</label>
@@ -75,31 +77,45 @@
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Waga</label>
                             <input class="form-control" asp-for="Weight" />
+                            <span asp-validation-for="Weight" class="text-danger"></span>
                         </div>
 
                         <div class="col col-lg-12">
                             <h2>Zdjęcie</h2>
                             <img id="ProductImage" style=" max-height: 480px;max-width: 640px;" src="">
+                            <input style="display:none;" id="ProductImage2" class="form-control" asp-for="Picture" />
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Kategoria</label>
 
                             <select asp-for="Category" class="custom-select custom-select-sm" asp-items="@Model.Categories"></select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Kod kreskowy</label>
                             <input id="BarCodeR" class="form-control" asp-for="Barcode" />
+                            <span asp-validation-for="Barcode" class="text-danger"></span>
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Firma</label>
                             <input id="CompanyAutoComplete" class="form-control" asp-for="Company" />
-                            <input id="CompanyId" class="form-control" asp-for="CompanyId" />
+                            <input style="display:none;" id="CompanyId" class="form-control" asp-for="CompanyId" />
+                            <span asp-validation-for="Company" class="text-danger"></span>
 
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Sklep</label>
                             <input id="ShopAutoComplete" class="form-control" asp-for="Shop" />
-                            <input id="ShopId" class="form-control" asp-for="ShopId" />
+                            <input style="display:none;" id="ShopId" class="form-control" asp-for="ShopId" />
+                            <span asp-validation-for="Shop" class="text-danger"></span>
+                        </div>
+                        <div class="col col-lg-12">
+                            <label class="font-weight-bold">Produckt w promocji</label>
+                            <input class="form-control" asp-for="SpecialOffer" />
+
+                        </div>
+                        <div class="col col-lg-12">
+                            <input style="display:none;" id="CodeCountry" class="form-control" asp-for="CodeCountry" />
                         </div>
                         <div class="col col-lg-12">
 
@@ -176,6 +192,7 @@
                     var code = $('#BarCodeProductDS').val();
                     var descripton = $('#DescriptionProductDS').val();
                     var company = $('#BrandProductDS').val();
+                    var country = $('#ProductCountry').val();
 
                     $('#BarCodeR').val(code);
                     $('#DescriptionR').val(descripton);
@@ -183,7 +200,8 @@
 
                     $('#ProductNameResult').val(prodName);
                     $('#ProductImage').attr("src", prodImage);
-
+                    $('#ProductImage2').val( prodImage);
+                    $('#CodeCountry').val(country);
 
                 }, 1000);
 
@@ -395,7 +413,7 @@
 
         });
 
-                /////AutoComplete
+                            /////AutoComplete
 
 
 

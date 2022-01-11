@@ -250,7 +250,7 @@ namespace Special_Offer_Hunter.Models
             this.Product_Code = product.Product_Code;
             this.ShopId = product.ShopId;
             this.Shop = product.Shop;
-            this.Product_PriceId = product.Product_PriceId;
+            //this.Product_PriceId = product.Product_PriceId;
             //this.Product_Price = product.Product_Price;
 
 
@@ -283,36 +283,25 @@ namespace Special_Offer_Hunter.Models
         public virtual List<Product_Rank> Ranks { get; set; }
         public virtual List<ProductCategory> ProductCategory { get; set; }
 
-        //public virtual Product_Code Product_Code { get; set; }
-
         public int? Product_CodeId { get; set; }
         public virtual Product_Code Product_Code { get; set; }
-
-
-        //public int? Shopping_Cart_DayId { get; set; }//
-        //public Shopping_Cart_Day shopping_Cart_Day;
-
-        //public int? Shopping_Cart_WeekId { get; set; }//
-        //public Shopping_Cart_Week shopping_Cart_Week;
 
         public int? CompanyId { get; set; }//
         public virtual Company Company { get; set; }
         public int? ShopId { get; set; }//
         public virtual Shop Shop { get; set; }
 
-        public int? Product_PriceId { get; set; }//
+        //public int? Product_PriceId { get; set; }//
 
         public double Product_Price { get; set; }
         public double Last_ProductPrice { get; set; }
 
         public bool SpecialOffer { get; set; }
 
-        //public virtual Product_Price Product_Price { get; set; }
+
 
         public virtual IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
-        //public virtual IList<ProductShopping_Cart_Week> ProductShopping_Cart_Weeks { get; set; }
-        //public virtual IList<ProductShopping_Cart_Month> ProductShopping_Cart_Months { get; set; }
-        //public virtual IList<ProductShopping_Cart_Year> ProductShopping_Cart_Years { get; set; }
+
         public virtual IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
 
 
@@ -349,7 +338,7 @@ namespace Special_Offer_Hunter.Models
             Number = 0;
         }
 
-     public   string GetShortLocationInfo()
+        public string GetShortLocationInfo()
         {
 
             string text = "";

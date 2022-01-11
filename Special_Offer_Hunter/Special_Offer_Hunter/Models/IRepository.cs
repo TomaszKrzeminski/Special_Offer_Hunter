@@ -25,6 +25,10 @@ namespace Special_Offer_Hunter.Models
 {
     public interface IRepository
     {
+
+        string CheckIfNewProductExists(string Barcode, string Shop, double Price);
+
+
         bool AddShop(AddShopViewModel model);
         bool AddProduct(AddNewProductViewModel model);
         List<string> GetShopNamesAutocomplete(string Name);
@@ -1688,6 +1692,7 @@ namespace Special_Offer_Hunter.Models
                 product.Weight = model.Weight;
                 product.Product_Price = model.Price;
                 product.Last_ProductPrice = model.Price;
+                product.Picture = model.Picture;
 
                 context.Products.Add(product);
                 context.SaveChanges();
@@ -1710,8 +1715,8 @@ namespace Special_Offer_Hunter.Models
 
                 //AddCategory
 
-                int CategoryId = Int32.Parse(model.Category.Substring(0, model.Category.IndexOf(" ")));
-                Category category = context.Categories.Find(CategoryId);
+
+                Category category = context.Categories.Where(x => x.Name == model.Category).FirstOrDefault();
 
                 ProductCategory prodCategory = new ProductCategory();
                 prodCategory.Product = product;
@@ -1731,7 +1736,48 @@ namespace Special_Offer_Hunter.Models
 
 
 
+
+
+
                 context.SaveChanges();
+
+
+
+
+                //Add BarCode
+
+
+
+                Product_Code code = context.Product_Codes.Where(x => x.Code == model.Barcode).FirstOrDefault();
+                if (code != null)
+                {
+
+
+                    code.Products.Add(product);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Product_Code code1 = new Product_Code();
+                    code1.Code = model.Barcode;
+                    code1.Country = model.CodeCountry;
+                    code1.ProductInfo = model.Description;
+                    code1.Producer = model.Company;
+
+                    context.Product_Codes.Add(code1);
+                    context.SaveChanges();
+
+                    code1.Products.Add(product);
+                    context.SaveChanges();
+
+                }
+
+
+
+                //
+
+
+
                 return true;
             }
             catch (Exception ex)
@@ -1745,7 +1791,8 @@ namespace Special_Offer_Hunter.Models
             List<string> list = new List<string>();
             try
             {
-                list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.ShopId + " " /*+ x.Location.GetShortLocationInfo() + ""*/ + x.Name).ToList();
+                list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.ShopId + " . " + x.Name + " " + x.Location.Country + " " + x.Location.City + " " + x.Location.Street + " " + x.Location.Number).ToList();
+
                 return list;
             }
             catch (Exception ex)
@@ -1769,6 +1816,36 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return new List<string>();
+            }
+        }
+
+        public string CheckIfNewProductExists(string Barcode, string Shop, double Price)
+        {
+            string message = "";
+            try
+            {
+
+
+
+
+                int ShopId = Int32.Parse(Shop.Substring(0, Shop.IndexOf(" "))); ;
+
+
+                bool check = context.Shops.Include(x => x.Products).Where(x => x.ShopId == ShopId).FirstOrDefault().Products.Where(x => x.Product_Code.Code == Barcode && x.Product_Price == Price).Any();
+
+
+                if (check)
+                {
+                    message = "Sklep zawiera już ten produkt w takiej cenie ";
+                }
+
+
+                return message;
+
+            }
+            catch (Exception ex)
+            {
+                return "Błąd podczas dodawania obiektu";
             }
         }
     }

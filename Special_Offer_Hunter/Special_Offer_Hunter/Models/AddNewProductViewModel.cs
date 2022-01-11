@@ -21,13 +21,23 @@ namespace Special_Offer_Hunter.Models
             Category = "";
         }
 
+
+
+
+
+        public string CodeCountry { get; set; }
+
+
+
         [Required(ErrorMessage = "Uzupełnij nazwe")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Uzupełnij cenę")]
+        [Range(1, int.MaxValue, ErrorMessage = "Cena musi być  większa od 0")]
         public double Price { get; set; }
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Uzupełnij wage")]
+        [Range(1, int.MaxValue, ErrorMessage = "Waga musi być większa od zera")]
         public double Weight { get; set; }
         //public double Height { get; set; }
 
@@ -49,6 +59,8 @@ namespace Special_Offer_Hunter.Models
 
         [Required(ErrorMessage = "Wyszukaj sklep ")]
         public string Shop { get; set; }
+
+        public bool SpecialOffer { get; set; }
 
         public int ShopId { get; set; }
 
