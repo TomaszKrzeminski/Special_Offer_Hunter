@@ -1693,6 +1693,7 @@ namespace Special_Offer_Hunter.Models
                 product.Product_Price = model.Price;
                 product.Last_ProductPrice = model.Price;
                 product.Picture = model.Picture;
+                product.SpecialOffer = model.SpecialOffer;
 
                 context.Products.Add(product);
                 context.SaveChanges();

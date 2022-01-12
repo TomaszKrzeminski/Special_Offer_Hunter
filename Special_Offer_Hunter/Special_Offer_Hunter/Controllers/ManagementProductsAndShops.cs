@@ -217,18 +217,6 @@ namespace Special_Offer_Hunter.Controllers
         public IActionResult AddProduct(AddNewProductViewModel model)
         {
 
-            //            check
-
-            //             Kod kreskowy
-
-            //             Firma
-
-            //             Sklep
-
-
-
-
-
             model.Categories = GetProductCategories();
             if (ModelState.IsValid)
             {
@@ -246,8 +234,8 @@ namespace Special_Offer_Hunter.Controllers
                     }
                     else
                     {
-                        string Message = "Pomyślnie dodano nowy produkt ";
-                        return View("Error_1", Message);
+                        model.TextMessage = "Pomyślnie dodano nowy produkt ";
+                        return View("ShowProduct", model);
                     }
                 }
                 else

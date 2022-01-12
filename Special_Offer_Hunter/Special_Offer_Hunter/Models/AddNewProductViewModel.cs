@@ -17,17 +17,13 @@ namespace Special_Offer_Hunter.Models
             Price = 0;
             Description = "Jakiś opis";
             Weight = 0;
-
+            SpecialOffer = false;
             Category = "";
         }
 
 
-
-
-
+        public string TextMessage { get; set; }
         public string CodeCountry { get; set; }
-
-
 
         [Required(ErrorMessage = "Uzupełnij nazwe")]
         public string Name { get; set; }
