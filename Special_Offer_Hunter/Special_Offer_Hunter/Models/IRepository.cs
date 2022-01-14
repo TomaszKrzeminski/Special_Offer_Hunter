@@ -27,10 +27,11 @@ namespace Special_Offer_Hunter.Models
     {
 
         string CheckIfNewProductExists(string Barcode, string Shop, double Price);
-
+        string CheckIfNewProductExists2(string Barcode, int ShopId, double Price);
 
         bool AddShop(AddShopViewModel model);
         bool AddProduct(AddNewProductViewModel model);
+        bool AddProduct2(AddNewProductViewModel model);
         List<string> GetShopNamesAutocomplete(string Name);
         List<string> GetCompanyNamesAutocomplete(string Name);
         List<string> GetShopNames(string Name);
@@ -1681,6 +1682,113 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        public bool AddProduct2(AddNewProductViewModel model)
+        {
+            try
+            {
+                Product product = new Product();
+                product.Name = model.Name;
+                //product.Height = model.Height;
+                product.Description = model.Description;
+                product.Weight = model.Weight;
+                product.Product_Price = model.Price;
+                product.Last_ProductPrice = model.Price;
+                product.Picture = model.Picture;
+                product.SpecialOffer = model.SpecialOffer;
+
+                context.Products.Add(product);
+                context.SaveChanges();
+
+
+
+
+                ///
+
+
+                //AddCompany
+
+                Company company = context.Companies.Find(model.CompanyId);
+                company.Products.Add(product);
+
+                context.SaveChanges();
+
+                ///
+
+
+                //AddCategory
+
+
+                Category category = context.Categories.Where(x => x.Name == model.Category).FirstOrDefault();
+
+                ProductCategory prodCategory = new ProductCategory();
+                prodCategory.Product = product;
+                prodCategory.Category = category;
+                context.SaveChanges();
+
+                //
+
+
+                //AddShop
+
+                Shop shop = context.Shops.Find(model.ShopId);
+                shop.Products.Add(product);
+                context.SaveChanges();
+
+                //
+
+
+
+
+
+
+                context.SaveChanges();
+
+
+
+
+                //Add BarCode
+
+
+
+                Product_Code code = context.Product_Codes.Where(x => x.Code == model.Barcode).FirstOrDefault();
+                if (code != null)
+                {
+
+
+                    code.Products.Add(product);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Product_Code code1 = new Product_Code();
+                    code1.Code = model.Barcode;
+                    code1.Country = model.CodeCountry;
+                    code1.ProductInfo = model.Description;
+                    code1.Producer = model.Company;
+
+                    context.Product_Codes.Add(code1);
+                    context.SaveChanges();
+
+                    code1.Products.Add(product);
+                    context.SaveChanges();
+
+                }
+
+
+
+                //
+
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
         public bool AddProduct(AddNewProductViewModel model)
         {
             try
@@ -1792,7 +1900,7 @@ namespace Special_Offer_Hunter.Models
             List<string> list = new List<string>();
             try
             {
-                list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.ShopId + " . " + x.Name + " " + x.Location.Country + " " + x.Location.City + " " + x.Location.Street + " " + x.Location.Number).ToList();
+                list = context.Shops.Where(x => x.Name.StartsWith(Name)).Select(x => x.ShopId + "  " + x.Name + " " + x.Location.Country + " " + x.Location.City + " " + x.Location.Street + " " + x.Location.Number).ToList();
 
                 return list;
             }
@@ -1819,6 +1927,33 @@ namespace Special_Offer_Hunter.Models
                 return new List<string>();
             }
         }
+
+        public string CheckIfNewProductExists2(string Barcode, int ShopId, double Price)
+        {
+            string message = "";
+            try
+            {
+
+
+                bool check = context.Shops.Include(x => x.Products).Where(x => x.ShopId == ShopId).FirstOrDefault().Products.Where(x => x.Product_Code.Code == Barcode && x.Product_Price == Price).Any();
+
+
+                if (check)
+                {
+                    message = "Sklep zawiera już ten produkt w takiej cenie ";
+                }
+
+
+                return message;
+
+            }
+            catch (Exception ex)
+            {
+                return "Błąd podczas dodawania obiektu";
+            }
+        }
+
+
 
         public string CheckIfNewProductExists(string Barcode, string Shop, double Price)
         {

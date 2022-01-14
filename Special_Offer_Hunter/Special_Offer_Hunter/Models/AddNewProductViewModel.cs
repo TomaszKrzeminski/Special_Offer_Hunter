@@ -55,10 +55,10 @@ namespace Special_Offer_Hunter.Models
 
         [Required(ErrorMessage = "Wyszukaj sklep ")]
         public string Shop { get; set; }
-
+        public int ShopId { get; set; }
         public bool SpecialOffer { get; set; }
 
-        public int ShopId { get; set; }
+
 
 
 

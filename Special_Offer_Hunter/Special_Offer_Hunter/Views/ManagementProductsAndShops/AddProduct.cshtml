@@ -96,14 +96,14 @@
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Firma</label>
                             <input id="CompanyAutoComplete" class="form-control" asp-for="Company" />
-                            <input style="display:none;" id="CompanyId" class="form-control" asp-for="CompanyId" />
+                            <input type="hidden" id="CompanyIdX" class="form-control" asp-for="CompanyId" />
                             <span asp-validation-for="Company" class="text-danger"></span>
 
                         </div>
                         <div class="col col-lg-12">
                             <label class="font-weight-bold">Sklep</label>
                             <input id="ShopAutoComplete" class="form-control" asp-for="Shop" />
-                            <input style="display:none;" id="ShopId" class="form-control" asp-for="ShopId" />
+                            <input type="hidden" id="ShopIdX" class="form-control" asp-for="ShopId" />
                             <span asp-validation-for="Shop" class="text-danger"></span>
                         </div>
                         <div class="col col-lg-12">
@@ -223,7 +223,44 @@
 
 
                                 response($.map(data, function (item) {
-                                    return item;
+
+
+
+                                    var x = item;
+
+
+                                    if (x != null) {
+
+                                        var number2 = x.substring(x.indexOf(' ') + 1);
+
+                                        var number = x.substr(0, x.indexOf(' '));
+
+
+                                        $('#CompanyAutoComplete').val(number2);
+
+                                        //$("#ShopAutoComplete").text(i.item.value);
+                                        $('#CompanyIdX').val(number);
+
+
+
+
+                                        return number2;
+
+
+
+
+                                    }
+                                    else {
+                                        return item;
+                                    }
+
+
+
+
+
+
+
+                                   
                                 }))
 
                             },
@@ -236,12 +273,16 @@
                         });
                     },
                     select: function (e, i) {
-                        event.stopPropagation()
+                        event.stopPropagation();
 
 
-                        $("#CompanyAutoComplete").text(i.item.value);
+                        //$("#CompanyAutoComplete").text(i.item.value);
 
-
+                        //var x = i.item.value;
+                        //var number = x.substr(0, x.indexOf(' '));
+                        //var number2 = x.substr(x.indexOf(' ') + 1);
+                        //$('#CompanyAutoComplete').text(number2);
+                        //$('#CompanyIdX').val(number);
 
                     },
                     minLength: 1
@@ -260,7 +301,31 @@
 
 
                                 response($.map(data, function (item) {
-                                    return item;
+
+                                    var x = item;
+
+
+                                    if (x != null) {
+
+                                        var number2 = x.substring(x.indexOf(' ') + 1);
+
+                                        var number = x.substr(0, x.indexOf(' '));
+
+
+                                        $('#ShopAutoComplete').val(number2);
+
+                                        //$("#ShopAutoComplete").text(i.item.value);
+                                        $('#ShopIdX').val(number);
+
+
+
+
+                                        return number2;
+                                    }
+                                    else {
+                                        return item;
+                                    }
+
                                 }))
 
                             },
@@ -273,14 +338,17 @@
                         });
                     },
                     select: function (e, i) {
-                        event.stopPropagation()
+                        event.stopPropagation();
 
 
+                        //var x = i.item.value;
+                        //var number = x.substr(0, x.indexOf(' '));
 
-
+                        //var number2=x.substr(x.indexOf(' ') + 1);
+                        //$('#ShopAutoComplete').val(number2);
 
                         $("#ShopAutoComplete").text(i.item.value);
-
+                        //$('#ShopIdX').val(number);
 
 
                     },
@@ -289,51 +357,7 @@
 
 
 
-             @*$("#ShopAutoComplete").autocomplete(
-                {
-
-             source: function (request, response) {
-                        $.ajax({
-
-                            url: '@Url.Action("AutoCompleteShop", "ManagementProductsAndShops")',
-                            data: { "prefix": document.getElementById('ShopAutoComplete').value },
-                            type: "POST",
-                            success: function (data) {
-
-
-                                response($.map(data, function (item) {
-                                    return item;
-                                }))
-
-                            },
-                            error: function (response) {
-                                alert("Error");
-                            },
-                            failure: function (response) {
-                                alert("Error");
-                            }
-                        });
-                    },
-                    select: function (e, i) {
-                        event.stopPropagation()
-
-
-
-
-
-                        $("#ShopAutoComplete").text(i.item.value);
-
-
-
-                    },
-                    minLength: 1
-                });*@
-
-
-
-
-
-
+           
 
 
 
@@ -410,7 +434,7 @@
 
         });
 
-                                /////AutoComplete
+                                                                
 
 
 

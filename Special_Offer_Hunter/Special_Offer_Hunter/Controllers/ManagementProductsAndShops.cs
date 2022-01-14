@@ -184,11 +184,6 @@ namespace Special_Offer_Hunter.Controllers
 
         }
 
-
-
-
-
-
         SelectList GetProductCategories()
         {
             List<string> list2 = repository.GetCategories();
@@ -221,13 +216,13 @@ namespace Special_Offer_Hunter.Controllers
             if (ModelState.IsValid)
             {
 
-                string message = repository.CheckIfNewProductExists(model.Barcode, model.Shop, model.Price);
+                string message = repository.CheckIfNewProductExists2(model.Barcode, model.ShopId, model.Price);
 
 
 
                 if (message == "")
                 {
-                    bool check = repository.AddProduct(model);
+                    bool check = repository.AddProduct2(model);
                     if (!check)
                     {
                         return View("AddProduct", model);
