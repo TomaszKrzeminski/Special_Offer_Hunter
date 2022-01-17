@@ -107,7 +107,7 @@ namespace Special_Offer_Hunter.Controllers
         [HttpPost]
         public JsonResult AutoCompleteOwnerName(string prefix)
         {
-            //var customers = repository.GetOwnerNames(prefix);
+
 
             var customers = repository.GetOwnerNames2(prefix);
 
@@ -133,9 +133,12 @@ namespace Special_Offer_Hunter.Controllers
         }
         public IActionResult AddShop()
         {
+            string UserId = GetUser();
+            ApplicationUserData user = repository.GetUserData2(UserId);
             AddShopViewModel model = new AddShopViewModel();
+            model.userData = user;
 
-            return View(model);
+            return View("AddShop3", model);
         }
 
         [HttpPost]
@@ -149,19 +152,19 @@ namespace Special_Offer_Hunter.Controllers
                 ModelState.AddModelError("shop.Name", "Uzupełnij nazwę sklepu");
             }
 
-            if (model.shop.ApplicationUser.UserName == null || model.shop.ApplicationUser.UserName == "")
-            {
-                ModelState.AddModelError("shop.ApplicationUser.UserName", "Wyszukaj właściciela");
-            }
+            //if (model.shop.ApplicationUser.UserName == null || model.shop.ApplicationUser.UserName == "")
+            //{
+            //    ModelState.AddModelError("shop.ApplicationUser.UserName", "Wyszukaj właściciela");
+            //}
 
             if (ModelState.IsValid)
             {
-                check = repository.AddShop(model);
+                check = repository.AddShop2(model);
 
                 if (!check)
                 {
 
-                    return View("AddShop", model);
+                    return View("AddShop3", model);
                 }
                 else
                 {
@@ -172,7 +175,7 @@ namespace Special_Offer_Hunter.Controllers
             }
             else
             {
-                return View("AddShop", model);
+                return View("AddShop3", model);
             }
 
 
@@ -197,16 +200,6 @@ namespace Special_Offer_Hunter.Controllers
             model.Categories = GetProductCategories();
             return View(model);
         }
-
-
-
-
-
-
-
-
-
-
 
         [HttpPost]
         public IActionResult AddProduct(AddNewProductViewModel model)

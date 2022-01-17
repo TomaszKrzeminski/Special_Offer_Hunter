@@ -14,7 +14,12 @@ namespace Special_Offer_Hunter.Models
         {
             shop = new Shop();
             ShopLocation = new Location();
+            userData = new ApplicationUserData();
         }
+
+
+
+        public ApplicationUserData userData { get; set; }
 
 
         public Shop shop { get; set; }
@@ -36,7 +41,7 @@ namespace Special_Offer_Hunter.Models
 
         public void SetLocation2(Location data)
         {
-            this.ShopLocation.SecondNumber = data.SecondNumber== "Podaj dodatkowy numer jeśli istnieje"?data.SecondNumber:"Brak";
+            this.ShopLocation.SecondNumber = data.SecondNumber == "Podaj dodatkowy numer jeśli istnieje" ? data.SecondNumber : "Brak";
             this.ShopLocation.City = data.City;
             this.ShopLocation.Country = data.Country;
             this.ShopLocation.Number = data.Number;
@@ -48,7 +53,7 @@ namespace Special_Offer_Hunter.Models
 
         [Required(ErrorMessage = "Wskaż na mapie położenie sklepu")]
         public string LongitudeText { get; set; }
-       
+
         public string LatitudeText { get; set; }
 
         public Location ShopLocation { get; set; }

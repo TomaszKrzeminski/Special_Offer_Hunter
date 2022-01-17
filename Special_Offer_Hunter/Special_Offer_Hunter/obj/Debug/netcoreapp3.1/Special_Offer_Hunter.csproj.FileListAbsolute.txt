@@ -515,7 +515,6 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
-C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.csprojAssemblyReference.cache
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.AssemblyInfoInputs.cache
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.AssemblyInfo.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Special_Offer_Hunter.csproj.CoreCompileInputs.cache
@@ -585,6 +584,7 @@ C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Off
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\AddProduct.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\AddShop.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\AddShop2.cshtml.g.cs
+C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\AddShop3.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\ManagementProductPanel.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\ReverseGeocoding.cshtml.g.cs
 C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\obj\Debug\netcoreapp3.1\Razor\Views\ManagementProductsAndShops\ShowProduct.cshtml.g.cs

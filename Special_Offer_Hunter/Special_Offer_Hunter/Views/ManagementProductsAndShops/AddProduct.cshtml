@@ -172,7 +172,7 @@
 
         $(document).ready(function () {
 
-
+          
 
 
 
@@ -377,21 +377,38 @@
     <script>
 
 
+        navigator.getMedia = (navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia);
 
 
+        navigator.getMedia({ video: true }, function () {
+            Webcam.set({
+                width: 320,
+                height: 240,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            });
 
 
-
-        Webcam.set({
-            width: 320,
-            height: 240,
-            image_format: 'jpeg',
-            jpeg_quality: 90
+            Webcam.attach('#LiveCamera');
+        }, function () {
+                alert("Podłącz kamerę by zeskanować kod");
         });
 
+       
 
-        Webcam.attach('#LiveCamera');
 
+
+        //////
+
+
+       
+
+
+
+        ////
 
 
 
@@ -422,20 +439,36 @@
 
         }
 
+        //$('#ScanBarCode').on('click', '#CaptureSnapshot', function () {
+
+        //    CaptureSnapshot();
+
+
+
+
+
+
+
+        //});
+
+                                                                
         $('#ScanBarCode').on('click', '#CaptureSnapshot', function () {
 
-            CaptureSnapshot();
+           
 
 
+          
 
+            navigator.getMedia({ video: true }, function () {
+                CaptureSnapshot();
+            }, function () {
+                alert("Podłącz kamerę aby zeskanować kod");
+            });
 
 
 
 
         });
-
-                                                                
-
 
 
 

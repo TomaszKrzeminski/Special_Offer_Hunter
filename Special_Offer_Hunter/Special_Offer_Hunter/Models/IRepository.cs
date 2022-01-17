@@ -28,8 +28,9 @@ namespace Special_Offer_Hunter.Models
 
         string CheckIfNewProductExists(string Barcode, string Shop, double Price);
         string CheckIfNewProductExists2(string Barcode, int ShopId, double Price);
-
+        ApplicationUserData GetUserData2(string UserId);
         bool AddShop(AddShopViewModel model);
+        bool AddShop2(AddShopViewModel model);
         bool AddProduct(AddNewProductViewModel model);
         bool AddProduct2(AddNewProductViewModel model);
         List<string> GetShopNamesAutocomplete(string Name);
@@ -37,6 +38,7 @@ namespace Special_Offer_Hunter.Models
         List<string> GetShopNames(string Name);
         List<string> GetOwnerNames(string Name);
         Dictionary<string, string> GetOwnerNames2(string Name);
+        Dictionary<string, string> GetOwnerNames3(string Name);
         Product GetProductById(int Id);
         Product GetProductByName(string Name);
         Product GetProductByCode(string Code);
@@ -134,9 +136,6 @@ namespace Special_Offer_Hunter.Models
                 return false;
             }
         }
-
-
-
         public bool AddProduct(Product product)
         {
             try
@@ -432,20 +431,6 @@ namespace Special_Offer_Hunter.Models
                 return null;
             }
         }
-
-        //public List<Product> GetProductsWithPrice(double Price)
-        //{
-        //    try
-        //    {
-        //        Product_Price x = context.Product_Prices.Include(x => x.Products).Where(x => x.Price == Price).FirstOrDefault();
-        //        List<Product> list = context.Product_Prices.Include(x => x.Products).Where(x => x.Price == Price).AsQueryable().ToList().SelectMany(x => x.Products).ToList();
-        //        return list;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //    }
-        //}
 
 
         public List<Product> GetProductsWithPrice(double Price)
@@ -1468,6 +1453,33 @@ namespace Special_Offer_Hunter.Models
 
         }
 
+
+        public ApplicationUserData GetUserData2(string UserId)
+        {
+            ApplicationUserData model = new ApplicationUserData();
+
+            try
+            {
+                ApplicationUser user = context.Users.Find(UserId);
+
+                model.Email = user.Email;
+                model.Surname = user.Surname;
+                model.FirstName = user.FirstName;
+                model.PhoneNumber = user.PhoneNumber;
+                model.UserId = user.Id;
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+
+
+
         public bool ChangeUser(ApplicationUser user)
         {
             try
@@ -1618,6 +1630,20 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
+        public Dictionary<string, string> GetOwnerNames3(string Name)
+        {
+            try
+            {
+
+                Dictionary<string, string> list = context.Users.Where(x => x.Surname.StartsWith(Name)).ToDictionary(x => x.Id, x => x.Surname + " " + x.FirstName + " " + x.PhoneNumber);
+                return list;
+
+            }
+            catch (Exception ex)
+            {
+                return new Dictionary<string, string>();
+            }
+        }
 
 
         public bool AddShop(AddShopViewModel model)
@@ -1663,6 +1689,68 @@ namespace Special_Offer_Hunter.Models
                     context.Shops.Add(model.shop);
 
                     ApplicationUser user = context.Users.Where(x => x.PhoneNumber == PhoneNumber && x.Surname == Surname).FirstOrDefault();
+
+                    user.Shops.Add(model.shop);
+
+
+                }
+
+
+
+
+                context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool AddShop2(AddShopViewModel model)
+        {
+            try
+            {
+                bool checkName = context.Shops.Any(x => x.Name == model.shop.Name);
+
+                bool checkLocalization = context.Locations.Any(x => x.Country == model.ShopLocation.Country && x.City == model.ShopLocation.City && x.Street == model.ShopLocation.Street && x.Number == model.ShopLocation.Number && x.SecondNumber == model.ShopLocation.SecondNumber);
+
+
+                if (checkLocalization && checkName)
+                {
+                    return false;
+                }
+                else
+                {
+                    //string PhoneNumber = "";
+                    //string Surname = "";
+                    //PhoneNumber = Regex.Match(model.shop.ApplicationUser.UserName, @"\d+").Value; ;
+                    //string[] text = model.shop.ApplicationUser.UserName.Split(' ');
+                    //Surname = text[0];
+
+
+
+
+
+                    Location location = new Location();
+                    location.Name = model.shop.Name;
+                    model.SetLocation2(model.ShopLocation);
+                    location = model.ShopLocation;
+
+                    double Latitude = Convert.ToDouble(model.LatitudeText.Replace(".", ","));
+                    double Longitude = Convert.ToDouble(model.LongitudeText.Replace(".", ","));
+
+                    location.Latitude = Latitude;
+                    location.Longitude = Longitude;
+                    location.location = new NetTopologySuite.Geometries.Point(Longitude, Latitude) { SRID = 4326 };
+                    context.Locations.Add(location);
+                    context.SaveChanges();
+
+                    model.shop.Location = location;
+                    context.Shops.Add(model.shop);
+
+                    ApplicationUser user = context.Users.Find(model.UserId);
 
                     user.Shops.Add(model.shop);
 
