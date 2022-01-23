@@ -48,6 +48,24 @@ namespace Special_Offer_Hunter.Controllers
             }
         }
 
+
+        [HttpPost]
+        public JsonResult AutoCompleteShopShort(string prefix)
+        {
+            prefix = prefix.ToUpper();
+            var shops = repository.GetShopNamesAutocompleteShort(prefix);
+            return Json(shops);
+        }
+
+
+        [HttpPost]
+        public JsonResult AutoCompleteProductNameShort(string prefix)
+        {
+            var names = repository.AutoCompleteProductName(prefix);
+            return Json(names);
+        }
+
+
         List<Places> MakeLocationString2(List<ProductLocation> list)
         {
             List<Places> list2 = new List<Places>();

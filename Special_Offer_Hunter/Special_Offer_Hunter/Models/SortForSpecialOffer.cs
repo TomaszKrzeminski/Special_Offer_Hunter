@@ -382,6 +382,64 @@ SearchProductByProductNameAll(string productName)
         }
     }
 
+    //    public class SearchPriceValue : SingleSearch
+    //    {
+
+
+    //        Expression<Func<Product, bool>>
+    //SearchProductByPriceHigher(double productPrice)
+    //        {
+    //            //return (Product c) => c.Product_Price.Price > productPrice;
+    //            return (Product c) => c.Product_Price > productPrice;
+    //        }
+
+    //        Expression<Func<Product, bool>>
+    //SearchProductByPriceLower(double productPrice)
+    //        {
+    //            //return (Product c) => c.Product_Price.Price < productPrice;
+    //            return (Product c) => c.Product_Price < productPrice;
+    //        }
+
+    //        Expression<Func<Product, bool>>
+    //SearchProductByPriceAll(double productPrice)
+    //        {
+    //            return (Product c) => true;
+    //        }
+
+    //        public SingleSearch Next { get; set; }
+
+    //        public void SetNextSortObject(SingleSearch sort)
+    //        {
+    //            this.Next = sort;
+    //        }
+
+    //        public void SetSorting(SpecialOfferViewModel model)
+    //        {
+
+    //            if (model.priceDescription == PriceDescription.Wszystkie)
+    //            {
+    //                model.SearchProductByPrice = SearchProductByPriceAll(model.PriceValue);
+    //            }
+    //            else if (model.priceDescription == PriceDescription.Niższa)
+    //            {
+    //                model.SearchProductByPrice = SearchProductByPriceLower(model.PriceValue);
+    //            }
+    //            else
+    //            {
+    //                model.SearchProductByPrice = SearchProductByPriceHigher(model.PriceValue);
+    //            }
+
+    //            if (Next != null)
+    //            {
+    //                Next.SetSorting(model);
+    //            }
+
+
+    //        }
+    //    }
+
+
+
     public class SearchPriceValue : SingleSearch
     {
 
@@ -437,6 +495,9 @@ SearchProductByPriceAll(double productPrice)
 
         }
     }
+
+
+
 
 
 

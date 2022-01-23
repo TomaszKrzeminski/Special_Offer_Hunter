@@ -33,7 +33,9 @@ namespace Special_Offer_Hunter.Models
         bool AddShop2(AddShopViewModel model);
         bool AddProduct(AddNewProductViewModel model);
         bool AddProduct2(AddNewProductViewModel model);
+        List<string> AutoCompleteProductName(string Name);
         List<string> GetShopNamesAutocomplete(string Name);
+        List<string> GetShopNamesAutocompleteShort(string Name);
         List<string> GetCompanyNamesAutocomplete(string Name);
         List<string> GetShopNames(string Name);
         List<string> GetOwnerNames(string Name);
@@ -530,25 +532,47 @@ namespace Special_Offer_Hunter.Models
                 Point mylocation = CreatePoint(53.411, 18.451);
 
 
-                List<Product> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
-                   .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
-                   .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode).ToList();
+                //List<Product> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                //   .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                //   .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode).ToList();
 
 
-                List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
-                   .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
-                   .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode)
-                   .Where(offer.SearchProductBySpecialOffer)
-                   .Where(offer.SearchProductByCategory)
-                   .Where(offer.SearchProductByProductName)
-                   .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();
+                List<Product> listProd2 = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Location)
+                  .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                  .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode).ToList();
+
+
+
+                List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Location)
+                  .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                  .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode)
+                  .Where(offer.SearchProductBySpecialOffer)
+                  .Where(offer.SearchProductByCategory)
+                  .Where(offer.SearchProductByProductName)
+                  .Where(offer.SearchProductByPrice)
+                 .Take<Product>(15).ToList();
+
+
+
+                //List<Product> listProd = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location)
+                //   .Where(x => (x.Location.location.Distance(mylocation) / 1000) < offer.Distance)
+                //   .Where(offer.SearchShop).SelectMany(x => x.Products).AsQueryable().Where(offer.SearchProductByBarCode)
+                //   .Where(offer.SearchProductBySpecialOffer)
+                //   .Where(offer.SearchProductByCategory)
+                //   .Where(offer.SearchProductByProductName)
+                //   .Where(offer.SearchProductByPrice).Take<Product>(15).ToList();
 
                 Dictionary<Product, double> dictionary = new Dictionary<Product, double>();
 
                 foreach (var item in listProd)
                 {
-                    Dictionary<Shop, double> shop = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location).Where(x => x.ShopId == item.Shop.ShopId)
+                    // Dictionary<Shop, double> shop = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Products).ThenInclude(x => x.Product_Price).Include(x => x.Location).Where(x => x.ShopId == item.Shop.ShopId)
+                    //.Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation) / 1000)).ToDictionary(x => x.Key, x => x.Value);
+
+
+                    Dictionary<Shop, double> shop = context.Shops.Include(x => x.Products).ThenInclude(x => x.ProductCategory).Include(x => x.Location).Where(x => x.ShopId == item.Shop.ShopId)
                    .Select(x => new KeyValuePair<Shop, double>(x, x.Location.location.Distance(mylocation) / 1000)).ToDictionary(x => x.Key, x => x.Value);
+
 
                     var x = shop.First();
                     dictionary.Add(item, x.Value);
@@ -934,8 +958,6 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-
-
         public bool ChangeNumberOfProducts(double number, int ProductId, string UserId, ShoppingCartType type)
         {
             try
@@ -1277,8 +1299,6 @@ namespace Special_Offer_Hunter.Models
             }
         }
 
-
-
         public Product_Rank AddRankToProduct(string UserId, Product_Rank rank)
         {
             try
@@ -1477,9 +1497,6 @@ namespace Special_Offer_Hunter.Models
 
         }
 
-
-
-
         public bool ChangeUser(ApplicationUser user)
         {
             try
@@ -1594,11 +1611,6 @@ namespace Special_Offer_Hunter.Models
 
 
         }
-
-
-
-
-
 
         public List<string> GetOwnerNames(string Name)
         {
@@ -2001,6 +2013,26 @@ namespace Special_Offer_Hunter.Models
 
         }
 
+
+        public List<string> GetShopNamesAutocompleteShort(string Name)
+        {
+            Name = Name.ToUpper();
+            List<string> list = new List<string>();
+            try
+            {
+                list = context.Shops.Where(x => x.Name.ToUpper().StartsWith(Name)).Select(x => x.Name).ToList();
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                return new List<string>();
+            }
+
+
+
+        }
+
         public List<string> GetCompanyNamesAutocomplete(string Name)
         {
             List<string> list = new List<string>();
@@ -2070,6 +2102,20 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return "Błąd podczas dodawania obiektu";
+            }
+        }
+
+        public List<string> AutoCompleteProductName(string Name)
+        {
+            try
+            {
+                List<string> list = context.Products.Where(x => x.Name.ToUpper().StartsWith(Name.ToUpper())).Select(x => x.Name).Take(10).ToList();
+                return list;
+
+            }
+            catch (Exception ex)
+            {
+                return new List<string>();
             }
         }
     }

@@ -99,7 +99,68 @@
                 navigator.mozGetUserMedia ||
                 navigator.msGetUserMedia);
 
-           
+
+
+
+            //NameAutoComplete
+
+
+
+            $('#OffersInNeighborhoodElement').on('click', '#ProductName', function (e) {
+
+
+
+                $(this)>$("#OffersInNeighborhoodFiltr")>$("#ProductName").autocomplete(
+                    {
+
+
+
+             source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteProductNameShort", "Home")',
+                            data: { "prefix": document.getElementById('ProductName').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+
+                                    var x = item;
+
+
+                                    if (x != null) {
+
+
+                                        return item;
+                                    }
+                                    else {
+                                        return item;
+                                    }
+
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation();
+                        $("#ProductName").text(i.item.value);
+
+                    },
+                    minLength: 1
+                });
+
+
+
+
+
+            });
 
 
 
@@ -109,6 +170,136 @@
 
 
 
+
+
+
+
+
+
+
+
+          ////
+
+        //// AutoComplete Shop
+
+
+
+
+
+
+
+            $('#OffersInNeighborhoodElement').on('click', '#ShopName', function (e) {
+
+
+
+                $(this) > $("#OffersInNeighborhoodFiltr") > $("#ShopName").autocomplete(
+                    {
+
+
+
+             source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteShopShort", "Home")',
+                            data: { "prefix": document.getElementById('ShopName').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+
+                                    var x = item;
+
+
+                                    if (x != null) {
+
+
+                                        return item;
+                                    }
+                                    else {
+                                        return item;
+                                    }
+
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation();
+                        $("#ShopName").text(i.item.value);
+
+                    },
+                    minLength: 1
+                });
+
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+            @*$("#OffersInNeighborhoodElement   #ShopName").autocomplete(
+                {
+
+             source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("AutoCompleteShopShort", "Home")',
+                            data: { "prefix": document.getElementById('ShopName').value },
+                            type: "POST",
+                            success: function (data) {
+
+
+                                response($.map(data, function (item) {
+
+                                    var x = item;
+
+
+                                    if (x != null) {
+
+
+                                        return item;
+                                    }
+                                    else {
+                                        return item;
+                                    }
+
+                                }))
+
+                            },
+                            error: function (response) {
+                                alert("Error");
+                            },
+                            failure: function (response) {
+                                alert("Error");
+                            }
+                        });
+                    },
+                    select: function (e, i) {
+                        event.stopPropagation();
+                        $("#ShopName").text(i.item.value);
+
+                    },
+                    minLength: 1
+                });*@
+
+
+
+
+        /////
 
              ///Change NavigationView
 
@@ -128,7 +319,7 @@
                         //"RequestVerificationToken": t
                     },
                     success: function (result) {
-                        
+
                         $('#NavigationOnMap').empty();
                         $('#NavigationOnMap').html(result);
 
@@ -138,7 +329,7 @@
 
 
 
-            }                         
+            }
 
 
             ////
@@ -494,7 +685,7 @@
                     alert("Podłącz kamerę by zeskanować kod");
             });
 
-           
+
 
 
 
@@ -529,7 +720,7 @@
                     CaptureSnapshot();
                 }, function () {
                         alert("Brak kamery");
-                });               
+                });
 
             });
             //////
@@ -723,7 +914,7 @@
             });
             /////
             ////Remove Product from cart
-           
+
             $('#ShoppingCartDetails').on('click',/* '#RemoveProductFromCartSubmit'*/ '.RemoveProductFromCartSubmit', function (e)
             {
                 var FormElem = $(this).closest('form');

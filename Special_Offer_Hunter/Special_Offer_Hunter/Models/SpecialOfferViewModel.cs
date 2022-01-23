@@ -33,8 +33,8 @@ namespace Special_Offer_Hunter.Models
         public Expression<Func<Product, bool>> SearchProductBySpecialOffer;
         public Expression<Func<Product, bool>> SearchProductByCategory;
         public Expression<Func<Product, bool>> SearchProductByProductName;
+        //public Expression<Func<Product, bool>> SearchProductByPrice;
         public Expression<Func<Product, bool>> SearchProductByPrice;
-
 
 
         public Func<KeyValuePair<Product, double>, object> SortProduct;

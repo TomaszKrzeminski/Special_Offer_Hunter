@@ -59,12 +59,6 @@ namespace Special_Offer_Hunter.Controllers
             return PartialView("AddProductToShoppingCart", viewModel);
         }
 
-
-
-
-
-
-
         [HttpGet]
         public PartialViewResult AddProductToShoppingCart(AddProcutToShoppingCart model)
         {
