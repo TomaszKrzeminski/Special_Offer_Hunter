@@ -1,7 +1,9 @@
-﻿|
+﻿
 
-<div class="row">
-
+@*<div class="row">
+    <div class="col-md-12 text-center">
+        <h2>Zrób zdjęcie kodu kreskowego</h2>
+    </div>
     <div class="col-md-6" style="padding-top:50px;">
         <div class="panel panel-default">
             <div class="panel-heading"></div>
@@ -18,7 +20,7 @@
         <div class="panel panel-default">
             <div class="panel-heading"></div>
             <div class="panel-body">
-                <div id="results">Twój kod pojawi się tutaj</div>
+                <div id="results"><p>Twój kod pojawi się tutaj</p></div>
             </div>
             <div class="col col-md-12">
                 <div style="max-width:320px;" id="BarcodeResult"></div>
@@ -41,13 +43,56 @@
 
 
 
+</div>*@
+
+
+
+
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2>Zrób zdjęcie kodu kreskowego</h2>
+    </div>
+    <div class="col-md-6" style="padding-top:50px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div id="LiveCamera" style="margin-bottom:50px;"></div>
+                <form>
+                    <input id="CaptureSnapshot" type="button" class="btn btn-primary" value="Zrób zdjęcie kodu">
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" style="padding-top:50px;">
+        <div class="panel panel-default">
+            <div class="panel-heading"></div>
+            <div class="panel-body col col-md-12">
+                <div id="results"><h5>Twój kod pojawi się tutaj</h5></div>
+            </div>
+            <div class="col col-md-12">
+                <div style="max-width:320px;" id="BarcodeResult"></div>
+            </div>
+            <div class="col col-md-12">
+                <input id="SearchProductByFoundBarCode" class="btn btn-success" value="Poszukaj produktu" />
+            </div>
+
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+    <script src="~/webcamjs/webcam.js"></script>
+
+
+
+
+
+
+
 </div>
-
-
-
-
-
-
 
 
 

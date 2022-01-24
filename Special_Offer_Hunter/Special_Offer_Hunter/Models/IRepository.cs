@@ -965,7 +965,8 @@ namespace Special_Offer_Hunter.Models
 
 
                 ProductsBought prodB = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault().ProductsBought.Where(x => x.ProductId == ProductId && x.Time.Day == DateTime.Now.Day).FirstOrDefault();
-                Product product = context.Products.Include(x => x.Product_Price).Where(x => x.ProductId == ProductId).FirstOrDefault();
+                //Product product = context.Products.Include(x => x.Product_Price).Where(x => x.ProductId == ProductId).FirstOrDefault();
+                Product product = context.Products.Where(x => x.ProductId == ProductId).FirstOrDefault();
                 ApplicationUser user = context.Users.Include(x => x.ProductsBought).Where(x => x.Id == UserId).FirstOrDefault();
                 bool check = false;
 
