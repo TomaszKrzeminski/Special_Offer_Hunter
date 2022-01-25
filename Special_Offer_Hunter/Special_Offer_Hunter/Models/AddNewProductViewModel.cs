@@ -57,6 +57,7 @@ namespace Special_Offer_Hunter.Models
         public string Shop { get; set; }
         public int ShopId { get; set; }
         public bool SpecialOffer { get; set; }
+        public string UserId { get; set; }
 
 
 

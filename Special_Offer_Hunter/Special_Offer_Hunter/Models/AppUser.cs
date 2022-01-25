@@ -94,6 +94,7 @@ namespace Special_Offer_Hunter.Models
             UserProductComments = new List<Product_Comment>();
             UserProductRanks = new List<Product_Rank>();
             Shops = new List<Shop>();
+            ProductsAdded = new List<Product>();
         }
 
         public virtual IList<ProductsBought> ProductsBought { get; set; }
@@ -111,6 +112,7 @@ namespace Special_Offer_Hunter.Models
         public virtual IList<Shop> Shops { get; set; }
         //public virtual Shop OwnedShop { get; set; }
 
+        public virtual IList<Product> ProductsAdded { get; set; }
 
     }
     public class Category
@@ -303,6 +305,9 @@ namespace Special_Offer_Hunter.Models
         public virtual IList<ProductShopping_Cart_Day> ProductShopping_Cart_Days { get; set; }
 
         public virtual IList<ProductShopping_Cart_LookFor> ProductShopping_Cart_LookFor { get; set; }
+
+        public string UserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
 
     }

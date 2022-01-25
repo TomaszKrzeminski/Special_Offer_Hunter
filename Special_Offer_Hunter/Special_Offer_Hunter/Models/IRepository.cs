@@ -26,6 +26,8 @@ namespace Special_Offer_Hunter.Models
     public interface IRepository
     {
 
+        string AddPointToUser(string UserId, int ProductId);
+
         string CheckIfNewProductExists(string Barcode, string Shop, double Price);
         string CheckIfNewProductExists2(string Barcode, int ShopId, double Price);
         ApplicationUserData GetUserData2(string UserId);
@@ -1879,6 +1881,7 @@ namespace Special_Offer_Hunter.Models
 
                 //
 
+                AddPointToUser(model.UserId, product.ProductId);
 
 
                 return true;
@@ -2117,6 +2120,43 @@ namespace Special_Offer_Hunter.Models
             catch (Exception ex)
             {
                 return new List<string>();
+            }
+        }
+
+        public string AddPointToUser(string UserId, int ProductId)
+        {
+            bool action = false;
+            try
+            {
+                ApplicationUser user = context.Users.Find(UserId);
+                Product product = context.Products.Find(ProductId);
+
+
+                //// check if product Added
+
+                bool check = user.ProductsAdded.Where(x => x.ProductId == ProductId).Any();
+
+                if (!check)
+                {
+                    user.ProductsAdded.Add(product);
+                    context.SaveChanges();
+                    action = true;
+                }
+
+
+                if (action)
+                {
+                    return "Otrzymałeś jeden punkt";
+                }
+                else
+                {
+                    return "Coś poszło nie tak";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return "Coś poszło nie tak nie otrzymałeś punktu";
             }
         }
     }

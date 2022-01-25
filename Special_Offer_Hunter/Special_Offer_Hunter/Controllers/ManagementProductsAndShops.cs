@@ -204,6 +204,8 @@ namespace Special_Offer_Hunter.Controllers
         [HttpPost]
         public IActionResult AddProduct(AddNewProductViewModel model)
         {
+            string UserId = GetUser();
+            model.UserId = UserId;
 
             model.Categories = GetProductCategories();
             if (ModelState.IsValid)
