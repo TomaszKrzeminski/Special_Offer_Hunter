@@ -2129,12 +2129,12 @@ namespace Special_Offer_Hunter.Models
             try
             {
                 ApplicationUser user = context.Users.Find(UserId);
-                Product product = context.Products.Find(ProductId);
+                Product product = context.Products.Include(x => x.Product_Code).Include(x => x.Shop).Where(x => x.ProductId == ProductId).FirstOrDefault();
+                string BarCode = product.Product_Code.Code;
+                double Price = product.Product_Price;
+                int ShopId = product.Shop.ShopId;
+                bool check = context.Users.Include(x => x.ProductsAdded).ThenInclude(x => x.Product_Code).Include(x => x.ProductsAdded).ThenInclude(x => x.Shop).Where(x => x.Id == UserId).SelectMany(x => x.ProductsAdded).Any(x => x.Product_Price == Price && x.Product_Code.Code == BarCode && x.ShopId == ShopId);
 
-
-                //// check if product Added
-
-                bool check = user.ProductsAdded.Where(x => x.ProductId == ProductId).Any();
 
                 if (!check)
                 {
