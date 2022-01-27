@@ -100,6 +100,14 @@ namespace Special_Offer_Hunter.Controllers
         }
 
 
+        public PartialViewResult GetUserRank(int HowMany = 20)
+        {
+            string UserId = GetUser();
+
+            UserRankViewModel model = repository.GetUsersRank(HowMany);
+
+            return PartialView("GetUserRank", model);
+        }
 
 
     }

@@ -1,0 +1,58 @@
+﻿@model UserRankViewModel
+
+
+<div class="container">
+
+    <div class="row">
+
+
+        @if (Model.RankList != null && Model.RankList.Count() > 0)
+        {
+            <div class="col col-lg-4">
+                <table class="table">
+                    <caption>Ranking Użytkowników</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Punkty</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Imię</th>
+                            <th scope="col">Nazwisko</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var u in Model.RankList)
+                        {
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>@u.Points</td>
+                                <td>@u.Email</td>
+                                <td>@u.Name</td>
+                                <td>@u.Surname</td>
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <h1>Brak Rankingu</h1>
+        }
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+</div>

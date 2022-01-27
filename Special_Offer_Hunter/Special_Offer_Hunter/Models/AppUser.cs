@@ -71,8 +71,18 @@ namespace Special_Offer_Hunter.Models
 
         public string UserImagePath { get; set; }
 
+        int Points { get; set; }
+
+        public void AddPoint()
+        {
+            Points += 1;
+        }
 
 
+        public int GetPoints()
+        {
+            return Points;
+        }
 
 
         public ApplicationUser()

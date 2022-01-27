@@ -28,6 +28,8 @@ namespace Special_Offer_Hunter.Models
 
         string AddPointToUser(string UserId, int ProductId);
 
+        UserRankViewModel GetUsersRank(int HowMany);
+
         string CheckIfNewProductExists(string Barcode, string Shop, double Price);
         string CheckIfNewProductExists2(string Barcode, int ShopId, double Price);
         ApplicationUserData GetUserData2(string UserId);
@@ -2079,6 +2081,7 @@ namespace Special_Offer_Hunter.Models
 
 
 
+
         public string CheckIfNewProductExists(string Barcode, string Shop, double Price)
         {
             string message = "";
@@ -2122,6 +2125,25 @@ namespace Special_Offer_Hunter.Models
                 return new List<string>();
             }
         }
+        public UserRankViewModel GetUsersRank(int HowMany)
+        {
+            UserRankViewModel model = new UserRankViewModel();
+
+            try
+            {
+                List<UserRank> list = context.Users.OrderBy(x => x.GetPoints()).Select(x => new UserRank(x.Email, x.FirstName, x.Surname, x.GetPoints())).ToList();
+
+                model.RankList = list;
+
+                return model;
+            }
+            catch (Exception ex)
+            {
+                return model;
+            }
+
+
+        }
 
         public string AddPointToUser(string UserId, int ProductId)
         {
@@ -2139,6 +2161,7 @@ namespace Special_Offer_Hunter.Models
                 if (!check)
                 {
                     user.ProductsAdded.Add(product);
+                    user.AddPoint();
                     context.SaveChanges();
                     action = true;
                 }
