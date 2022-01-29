@@ -31,6 +31,12 @@ namespace Special_Offer_Hunter.Models
             RankList = new List<UserRank>();
         }
 
+
+        public void Sort()
+        {
+            RankList.OrderBy(x => x.Points);
+        }
+
         public List<UserRank> RankList { get; set; }
 
     }

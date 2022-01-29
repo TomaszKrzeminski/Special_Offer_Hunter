@@ -21,17 +21,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var u in Model.RankList)
+                        @foreach (var u in Model.RankList.OrderByDescending(x => x.Points).Select((value, i) => new { i, value }))
                         {
                             <tr>
-                                <th scope="row">1</th>
-                                <td>@u.Points</td>
-                                <td>@u.Email</td>
-                                <td>@u.Name</td>
-                                <td>@u.Surname</td>
+                                <th scope="row">@(u.i+1)</th>
+                                <td>@u.value.Points</td>
+                                <td>@u.value.Email</td>
+                                <td>@u.value.Name</td>
+                                <td>@u.value.Surname</td>
                             </tr>
 
                         }
+
+
+
+
+
+                        @*@foreach (var u in Model.RankList.OrderByDescending(x => x.Points))
+        {
+            <tr>
+                <th scope="row">1</th>
+                <td>@u.Points</td>
+                <td>@u.Email</td>
+                <td>@u.Name</td>
+                <td>@u.Surname</td>
+            </tr>
+
+        }*@
 
 
                     </tbody>

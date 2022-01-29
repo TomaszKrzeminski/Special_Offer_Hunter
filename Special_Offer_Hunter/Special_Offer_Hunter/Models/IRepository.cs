@@ -2131,7 +2131,7 @@ namespace Special_Offer_Hunter.Models
 
             try
             {
-                List<UserRank> list = context.Users.OrderBy(x => x.GetPoints()).Select(x => new UserRank(x.Email, x.FirstName, x.Surname, x.GetPoints())).ToList();
+                List<UserRank> list = context.Users.Where(x => x.Points > 0).OrderBy(x => x.Points).Take(10).Select(x => new UserRank(x.Email, x.FirstName, x.Surname, x.Points)).ToList();
 
                 model.RankList = list;
 

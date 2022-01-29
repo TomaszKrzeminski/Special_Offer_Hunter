@@ -105,6 +105,8 @@ namespace Special_Offer_Hunter.Controllers
             string UserId = GetUser();
 
             UserRankViewModel model = repository.GetUsersRank(HowMany);
+           
+
 
             return PartialView("GetUserRank", model);
         }
