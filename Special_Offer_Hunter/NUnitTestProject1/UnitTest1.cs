@@ -133,82 +133,7 @@ namespace Special_Offer_Hunter.Tests
         }
 
 
-        [Test]
-        public void GetPicture_When_Gets_Correct_Id_returns_PictureFile()
-        {
 
-            var userManager = IdentityMocking.MockUserManager<ApplicationUser>(_users);
-
-            var mockEnvironment = new Mock<IHostingEnvironment>();
-            mockEnvironment
-                .Setup(m => m.EnvironmentName)
-                .Returns("Hosting:UnitTestEnvironment");
-
-
-            var logger = new Mock<ILogger<HomeController>>();
-
-
-            Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
-
-            Mock<IRepository> repo = new Mock<IRepository>();
-
-            List<string> listofProductNames = new List<string>() { "ExampleProduct3", "ExampleProduct4", "ExampleProduct5", "ExampleProduct6", "ExampleProduct7" };
-
-            repo.Setup(r => r.AutoCompleteProductName("ProductX")).Returns(listofProductNames);
-
-
-
-
-
-
-            HomeController controller = new HomeController(logger.Object, mockEnvironment.Object, repo.Object, userManager.Object, httpContextAccessor.Object, GetUserX);
-
-            JsonResult result = controller.AutoCompleteProductNameShort("ProductX") as JsonResult;
-
-            Assert.That(result, Is.InstanceOf<JsonResult>());
-
-
-            List<string> list = result.Value as List<string>;
-
-            Assert.AreEqual("ExampleProduct3", list[0]);
-        }
-        [Test]
-        public void GetPicture_When_Gets_InCorrect_Id_returns_unnamed_jpg()
-        {
-
-            var userManager = IdentityMocking.MockUserManager<ApplicationUser>(_users);
-
-            var mockEnvironment = new Mock<IHostingEnvironment>();
-            mockEnvironment
-                .Setup(m => m.EnvironmentName)
-                .Returns("Hosting:UnitTestEnvironment");
-
-            mockEnvironment.Setup(x => x.ContentRootPath).Returns(@"C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\");
-
-            var logger = new Mock<ILogger<HomeController>>();
-
-
-            Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
-
-            Mock<IRepository> repo = new Mock<IRepository>();
-
-            repo.Setup(x => x.CheckPictureOwner("/Home/GetPicture/" + "FakeId", "TestId1")).Returns(false);
-
-
-
-
-
-            HomeController controller = new HomeController(logger.Object, mockEnvironment.Object, repo.Object, userManager.Object, httpContextAccessor.Object, GetUserX);
-
-            FileStreamResult result = ((FileStreamResult)controller.GetPicture("FakeId"));
-
-            string FileName = result.FileDownloadName;
-
-
-
-
-            Assert.AreEqual(result.FileDownloadName, @"C:\Users\tomek\Desktop\Repository_Special_Offer\Special_Offer_Hunter\Special_Offer_Hunter\UserImages\unnamed.jpg");
-        }
 
 
 
@@ -274,23 +199,101 @@ namespace Special_Offer_Hunter.Tests
 
             repo.Setup(r => r.AddProductToUserShoppingCart("TestId1", ShoppingCartType.Dzień, 666)).Returns(true);
             ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
-            repo.Setup(r => r.GetShoppingCart("TestId1", ShoppingCartType.Rok)).Returns(viewModel);
+            viewModel.type = ShoppingCartType.Dzień;
+            repo.Setup(r => r.GetShoppingCart("TestId1", ShoppingCartType.Dzień)).Returns(viewModel);
 
 
 
             CartController controller = new CartController(logger.Object, repo.Object, userManager.Object, httpContextAccessor.Object, GetUserX);
 
             MoveProductToCart model = new MoveProductToCart();
+            model.MoveType = ShoppingCartType.Dzień;
+            model.ProductId = 666;
 
             ShoppingCartViewModel result = controller.MoveProductToAnotherCart(model).ViewData.Model as ShoppingCartViewModel;
 
-            Assert.That(result, Is.InstanceOf<JsonResult>());
+            Assert.AreEqual(result.type, ShoppingCartType.Dzień);
 
-
-
-
-            Assert.AreEqual("ExampleShop1", list[0]);
         }
+
+        [Test]
+        public void When_ProductId_In_Model_Is_Larger_Than_0_In_AddProductToShoppingCart_Than_AddProductToUserShoppingCart_Fires()
+        {
+
+            var userManager = IdentityMocking.MockUserManager<ApplicationUser>(_users);
+
+            var mockEnvironment = new Mock<IHostingEnvironment>();
+            mockEnvironment
+                .Setup(m => m.EnvironmentName)
+                .Returns("Hosting:UnitTestEnvironment");
+
+
+            var logger = new Mock<ILogger<CartController>>();
+
+
+            Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            Mock<IRepository> repo = new Mock<IRepository>();
+
+            repo.Setup(x => x.AddProductToUserShoppingCart(It.IsAny<string>(), It.IsAny<ShoppingCartType>(), It.IsAny<int>())).Returns(true);
+
+
+
+
+            CartController controller = new CartController(logger.Object, repo.Object, userManager.Object, httpContextAccessor.Object, GetUserX);
+
+            AddProcutToShoppingCart model = new AddProcutToShoppingCart();
+            model.ProductId = 1;
+
+            ShoppingCartViewModel result = controller.AddProductToShoppingCart(model).ViewData.Model as ShoppingCartViewModel;
+
+            Mock.Get(repo.Object).Verify(x => x.AddProductToUserShoppingCart(It.IsAny<string>(), It.IsAny<ShoppingCartType>(), It.IsAny<int>()), Times.Once);
+
+        }
+
+
+
+        [Test]
+        public void When_ProductId_In_Model_Is_Smaller_Or_Equal_0_In_AddProductToShoppingCart_Than_AddProductToUserShoppingCart_Doesnt_Fire()
+        {
+
+            var userManager = IdentityMocking.MockUserManager<ApplicationUser>(_users);
+
+            var mockEnvironment = new Mock<IHostingEnvironment>();
+            mockEnvironment
+                .Setup(m => m.EnvironmentName)
+                .Returns("Hosting:UnitTestEnvironment");
+
+
+            var logger = new Mock<ILogger<CartController>>();
+
+
+            Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            Mock<IRepository> repo = new Mock<IRepository>();
+
+            repo.Setup(x => x.AddProductToUserShoppingCart(It.IsAny<string>(), It.IsAny<ShoppingCartType>(), It.IsAny<int>())).Returns(true);
+
+
+
+
+            CartController controller = new CartController(logger.Object, repo.Object, userManager.Object, httpContextAccessor.Object, GetUserX);
+
+            AddProcutToShoppingCart model = new AddProcutToShoppingCart();
+            model.ProductId = 0;
+
+            ShoppingCartViewModel result = controller.AddProductToShoppingCart(model).ViewData.Model as ShoppingCartViewModel;
+
+            Mock.Get(repo.Object).Verify(x => x.AddProductToUserShoppingCart(It.IsAny<string>(), It.IsAny<ShoppingCartType>(), It.IsAny<int>()), Times.Never);
+
+        }
+
+
+
+
+
+
+
 
 
 
