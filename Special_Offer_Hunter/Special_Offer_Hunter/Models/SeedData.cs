@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
 using Special_Offer_Hunter.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Special_Offer_Hunter.Models
 {

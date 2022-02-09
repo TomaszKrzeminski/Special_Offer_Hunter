@@ -1,23 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using Special_Offer_Hunter.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using Special_Offer_Hunter.Models;
 using System.Globalization;
 using System.IO;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 
@@ -1524,7 +1515,7 @@ namespace Special_Offer_Hunter.Models
             try
             {
                 ApplicationUser User = context.Users.Where(x => x.Id == UserId).FirstOrDefault();
-
+                bool check = true;
 
                 string rootFolder = "";
                 string authorsFile = "";
@@ -1542,21 +1533,32 @@ namespace Special_Offer_Hunter.Models
                         {
                             // If file found, delete it    
                             File.Delete(pathToRemoveFull);
-                            Console.WriteLine("File deleted.");
+
                         }
-                        else Console.WriteLine("File not found");
+                        else
+                        {
+                            check = false;
+                        }
                     }
                     catch (IOException ioExp)
                     {
+                        check = false;
                         Console.WriteLine(ioExp.Message);
                     }
                 }
 
 
+                if (check)
+                {
+                    User.UserImagePath = Path;
+                    context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
-                User.UserImagePath = Path;
-                context.SaveChanges();
-                return true;
             }
             catch (Exception ex)
             {

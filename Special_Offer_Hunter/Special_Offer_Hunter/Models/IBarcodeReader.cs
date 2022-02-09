@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Drawing;
 using System.IO;
@@ -32,7 +31,7 @@ namespace Special_Offer_Hunter.Models
 
 
 
-       
+
 
 
 
@@ -46,7 +45,8 @@ namespace Special_Offer_Hunter.Models
         public string ReadBarCode(string FilePath)
         {
             try
-            {  string text = FilePath;               
+            {
+                string text = FilePath;
 
                 Bitmap image;
                 try
@@ -84,11 +84,11 @@ namespace Special_Offer_Hunter.Models
 
 
 
-           
 
-               
 
-            
+
+
+
         }
     }
 

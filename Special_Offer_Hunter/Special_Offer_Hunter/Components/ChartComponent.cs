@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Newtonsoft.Json;
 using Special_Offer_Hunter.Models;
-using Special_Offer_Hunter.Models2;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Special_Offer_Hunter.Components
 {

@@ -1,11 +1,9 @@
-﻿using Castle.Core.Logging;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using Special_Offer_Hunter.Controllers;
 using Special_Offer_Hunter.Models;
@@ -139,8 +137,6 @@ namespace Special_Offer_Hunter.Tests
 
     }
 
-
-
     public class CartControllerTests
     {
 
@@ -175,6 +171,7 @@ namespace Special_Offer_Hunter.Tests
          };
 
         [Test]
+
         public void When_MoveProductToAnotherCart_Gets_Model_Changes_ShoppingCartType_And_Moves_Product()
         {
 
@@ -288,9 +285,110 @@ namespace Special_Offer_Hunter.Tests
 
         }
 
+    }
+
+    public class LoginControllerTests
+    {
+
+
+        public class IdentityMocking
+        {
+            public static Mock<UserManager<TUser>> MockUserManager<TUser>(List<TUser> ls) where TUser : class
+            {
+                var store = new Mock<IUserStore<TUser>>();
+                var mgr = new Mock<UserManager<TUser>>(store.Object, null, null, null, null, null, null, null, null);
+                mgr.Object.UserValidators.Add(new UserValidator<TUser>());
+                mgr.Object.PasswordValidators.Add(new PasswordValidator<TUser>());
+
+                mgr.Setup(x => x.DeleteAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
+                mgr.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<TUser, string>((x, y) => ls.Add(x));
+                mgr.Setup(x => x.UpdateAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
+
+                return mgr;
+            }
+
+        }
+
+        string GetUserX()
+        {
+            return "TestId1";
+        }
+
+        private List<ApplicationUser> _users = new List<ApplicationUser>()
+         {
+      new ApplicationUser(){UserName="User1",Id="Id1" } ,
+      new ApplicationUser(){UserName="User2",Id="Id2" }
+         };
+
+
+        [Test]
+        public async Task When_RemovePicture_Gets_Valid_Path_Returns_Model_With_Message_Empty()
+        {
+
+            var userManager = IdentityMocking.MockUserManager<ApplicationUser>(_users);
+
+            var mockEnvironment = new Mock<IHostingEnvironment>();
+            mockEnvironment
+                .Setup(m => m.EnvironmentName)
+                .Returns("Hosting:UnitTestEnvironment");
+
+
+            var logger = new Mock<ILogger<CartController>>();
+
+
+            Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            Mock<IRepository> repo = new Mock<IRepository>();
+
+
+            repo.Setup(r => r.ChangeUserPicture(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+
+            LoginController controller = new LoginController(mockEnvironment.Object, repo.Object, httpContextAccessor.Object, GetUserX);
 
 
 
+            var result = await controller.RemovePicture("ExamplePath");
+            PartialViewResult result2 = (PartialViewResult)(await controller.RemovePicture("ExamplePath"));
+            UserImageFileNameViewModel x = result2.Model as UserImageFileNameViewModel;
+
+            Assert.AreEqual(x.Message, "");
+
+        }
+
+
+        [Test]
+        public async Task When_RemovePicture_Gets_InValid_Path_Returns_Model_With_Message_Problemyzusunięciempliku()
+        {
+
+            var userManager = IdentityMocking.MockUserManager<ApplicationUser>(_users);
+
+            var mockEnvironment = new Mock<IHostingEnvironment>();
+            mockEnvironment
+                .Setup(m => m.EnvironmentName)
+                .Returns("Hosting:UnitTestEnvironment");
+
+
+            var logger = new Mock<ILogger<CartController>>();
+
+
+            Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            Mock<IRepository> repo = new Mock<IRepository>();
+
+
+            repo.Setup(r => r.ChangeUserPicture(It.IsAny<string>(), It.IsAny<string>())).Returns(false);
+
+            LoginController controller = new LoginController(mockEnvironment.Object, repo.Object, httpContextAccessor.Object, GetUserX);
+
+
+
+            var result = await controller.RemovePicture("ExamplePath");
+            PartialViewResult result2 = (PartialViewResult)(await controller.RemovePicture("ExamplePath"));
+            UserImageFileNameViewModel x = result2.Model as UserImageFileNameViewModel;
+
+            Assert.AreEqual(x.Message, "Problemy z usunięciem pliku");
+
+        }
 
 
 
@@ -299,6 +397,9 @@ namespace Special_Offer_Hunter.Tests
 
 
     }
+
+
+
 
 
 

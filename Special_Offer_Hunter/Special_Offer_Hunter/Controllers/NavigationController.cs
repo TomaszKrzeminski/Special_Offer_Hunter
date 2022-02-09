@@ -1,20 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Special_Offer_Hunter.Models;
+using Special_Offer_Hunter.Models2;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using NetTopologySuite.Index.Bintree;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Special_Offer_Hunter.Models;
-using Special_Offer_Hunter.Models2;
 
 namespace Special_Offer_Hunter.Controllers
 {

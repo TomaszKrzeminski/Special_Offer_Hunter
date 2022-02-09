@@ -1,8 +1,6 @@
 ﻿using Special_Offer_Hunter.Models2;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Special_Offer_Hunter.Models
 {

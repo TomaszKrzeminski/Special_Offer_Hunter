@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Special_Offer_Hunter.Models
+﻿namespace Special_Offer_Hunter.Models
 {
     public class UserImageFileNameViewModel
     {
         public UserImageFileNameViewModel(string name)
         {
             FileName = name;
+            Message = "";
         }
         public string FileName { get; set; }
+        public string Message { get; set; }
     }
 }

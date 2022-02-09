@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 
 
@@ -25,14 +24,14 @@ namespace Special_Offer_Hunter.Models
 
             var d1 = location.Latitude * (Math.PI / 180.0);
             var num1 = location.Longitude * (Math.PI / 180.0);
-            List<Shop> except = new List<Shop>();            
+            List<Shop> except = new List<Shop>();
 
 
             foreach (var item in @this)
             {
 
 
-              double distance=  ExtensionMethods.CalculateDistance(item.Location, location);
+                double distance = ExtensionMethods.CalculateDistance(item.Location, location);
 
                 //Location loc = item.Location;
 
@@ -43,7 +42,7 @@ namespace Special_Offer_Hunter.Models
 
                 //double distance = 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
 
-                if (distance>Distance)
+                if (distance > Distance)
                 {
                     except.Add(item);
                 }
@@ -56,7 +55,7 @@ namespace Special_Offer_Hunter.Models
             var x = @this.Except(except);
 
             return x.AsQueryable();
-            
+
         }
 
     }

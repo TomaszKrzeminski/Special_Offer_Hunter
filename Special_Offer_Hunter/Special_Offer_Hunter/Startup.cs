@@ -1,21 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Special_Offer_Hunter.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Special_Offer_Hunter.Models;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Hosting;
+using Special_Offer_Hunter.Data;
+using Special_Offer_Hunter.Models;
 
 namespace Special_Offer_Hunter
 {
@@ -44,7 +37,8 @@ namespace Special_Offer_Hunter
                 options.Cookie.SameSite = SameSiteMode.Unspecified;
             });
 
-            services.AddAntiforgery(opts => {
+            services.AddAntiforgery(opts =>
+            {
                 opts.Cookie.SameSite = SameSiteMode.Unspecified;
             });
 

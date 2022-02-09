@@ -2,5 +2,8 @@
 
 <div>
     <input id="FileName" type="hidden" name="Input.UserImagePath" @*type="hidden"*@ value="@Model.FileName" />
-   
+    @if (Model.Message != "")
+    {
+        <h3>@Model.Message</h3>
+    }
 </div>
