@@ -398,6 +398,89 @@ namespace Special_Offer_Hunter.Tests
 
     }
 
+    public class ManagementProductsAndShopsControllerTests
+    {
+
+
+        public class IdentityMocking
+        {
+            public static Mock<UserManager<TUser>> MockUserManager<TUser>(List<TUser> ls) where TUser : class
+            {
+                var store = new Mock<IUserStore<TUser>>();
+                var mgr = new Mock<UserManager<TUser>>(store.Object, null, null, null, null, null, null, null, null);
+                mgr.Object.UserValidators.Add(new UserValidator<TUser>());
+                mgr.Object.PasswordValidators.Add(new PasswordValidator<TUser>());
+
+                mgr.Setup(x => x.DeleteAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
+                mgr.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<TUser, string>((x, y) => ls.Add(x));
+                mgr.Setup(x => x.UpdateAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
+
+                return mgr;
+            }
+
+        }
+
+        string GetUserX()
+        {
+            return "TestId1";
+        }
+
+        private List<ApplicationUser> _users = new List<ApplicationUser>()
+         {
+      new ApplicationUser(){UserName="User1",Id="Id1" } ,
+      new ApplicationUser(){UserName="User2",Id="Id2" }
+         };
+
+
+        [Test]
+        public async Task When_ShopName_Is_Null_In_AddShop_MOdelState_Is_Uzupelnijnazwesklepu()
+        {
+
+            var userManager = IdentityMocking.MockUserManager<ApplicationUser>(_users);
+
+            var mockEnvironment = new Mock<IHostingEnvironment>();
+            mockEnvironment
+                .Setup(m => m.EnvironmentName)
+                .Returns("Hosting:UnitTestEnvironment");
+
+
+            var logger = new Mock<ILogger<ManagementProductsAndShopsController>>();
+
+
+            Mock<IHttpContextAccessor> httpContextAccessor = new Mock<IHttpContextAccessor>();
+
+            Mock<IRepository> repo = new Mock<IRepository>();
+
+
+            repo.Setup(r => r.ChangeUserPicture(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+
+            ManagementProductsAndShopsController controller = new ManagementProductsAndShopsController(logger.Object, mockEnvironment.Object, repo.Object, userManager.Object, httpContextAccessor.Object, GetUserX);
+
+
+
+            AddShopViewModel model = new AddShopViewModel();
+            model.shop.Name = null;
+
+            ViewResult result = controller.AddShop(model) as ViewResult;
+
+            Assert.IsTrue(result.ViewData.ModelState["shop.Name"].Errors.Count > 0);
+
+            Assert.AreEqual(result.ViewData.ModelState["shop.Name"].Errors[0].ErrorMessage, "Uzupełnij nazwę sklepu");
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+    }
 
 
 

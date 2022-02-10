@@ -14,16 +14,16 @@ using System.Threading.Tasks;
 
 namespace Special_Offer_Hunter.Controllers
 {
-    public class ManagementProductsAndShops : Controller
+    public class ManagementProductsAndShopsController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ManagementProductsAndShopsController> _logger;
         private IRepository repository;
         private Func<string> GetUser;
         IHttpContextAccessor httpContextAccessor;
         IHostingEnvironment _environment;
 
 
-        public ManagementProductsAndShops(ILogger<HomeController> logger, IHostingEnvironment env, IRepository repo, UserManager<ApplicationUser> userMgr, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
+        public ManagementProductsAndShopsController(ILogger<ManagementProductsAndShopsController> logger, IHostingEnvironment env, IRepository repo, UserManager<ApplicationUser> userMgr, IHttpContextAccessor httpContextAccessor, Func<string> GetUser = null)
         {
             _logger = logger;
             repository = repo;
